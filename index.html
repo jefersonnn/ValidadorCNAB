@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validador CNAB · Banrisul (240) · Safra (400) · Unicred (400)</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+        body { background: #f0f4f8; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .container { max-width: 1600px; width: 100%; background: white; border-radius: 24px; padding: 28px 32px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        h1 { font-size: 26px; font-weight: 600; color: #0b2b4a; margin-top: 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #e2e8f0; padding-bottom: 16px; flex-wrap: wrap; }
+        h1 small { font-size: 16px; font-weight: 400; color: #2c5282; background: #ebf4ff; padding: 4px 16px; border-radius: 40px; margin-left: 8px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+        .grid-full { grid-column: 1 / -1; }
+        .card { background: #f9fafc; border-radius: 16px; padding: 20px 24px; border: 1px solid #e2e8f0; }
+        .card-header { font-weight: 600; font-size: 18px; color: #1a365d; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+        .file-drop { border: 2px dashed #bdd3e8; border-radius: 16px; padding: 40px 20px; text-align: center; background: #f8faff; cursor: pointer; transition: 0.2s; }
+        .file-drop:hover { background: #eef6ff; border-color: #2b6cb0; }
+        .file-drop input { display: none; }
+        .btn { background: #1a56db; border: none; color: white; font-weight: 500; padding: 10px 22px; border-radius: 40px; font-size: 14px; cursor: pointer; transition: 0.15s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn:hover { background: #1e3a8a; transform: scale(0.97); }
+        .btn-outline { background: transparent; border: 1.5px solid #1a56db; color: #1a56db; }
+        .btn-outline:hover { background: #ebf4ff; transform: none; }
+        .btn-success { background: #0d7a3e; }
+        .btn-success:hover { background: #0b5e30; }
+        .btn-detail { background: #805ad5; color: white; border: none; padding: 4px 14px; border-radius: 14px; font-size: 12px; cursor: pointer; font-weight: 600; transition: 0.2s; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .btn-detail:hover { background: #6b46c1; transform: scale(1.05); }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 40px; font-size: 13px; font-weight: 500; }
+        .badge-ok { background: #c6f6d5; color: #22543d; }
+        .badge-error { background: #fed7d7; color: #9b2c2c; }
+        .badge-warn { background: #fefcbf; color: #744210; }
+        .badge-info { background: #bee3f8; color: #2a4365; }
+        .log-area { background: #0f172a; color: #e2e8f0; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; padding: 16px 18px; border-radius: 14px; max-height: 320px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; line-height: 1.5; margin-top: 12px; }
+        .log-area .line-ok { color: #68d391; }
+        .log-area .line-error { color: #fc8181; }
+        .log-area .line-info { color: #81e6d9; }
+        .log-area .line-warn { color: #f6ad55; }
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap: 12px; margin: 12px 0; }
+        .summary-item { background: white; border-radius: 12px; padding: 8px 12px; border: 1px solid #e2e8f0; text-align: center; }
+        .summary-item .num { font-size: 24px; font-weight: 700; color: #0b2b4a; }
+        .summary-item .label { font-size: 12px; color: #4a5568; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .mt-16 { margin-top: 16px; }
+        .mt-8 { margin-top: 8px; }
+        .text-muted { color: #4a5568; font-size: 14px; }
+        .btn-group { display: flex; gap: 12px; flex-wrap: wrap; }
+        .bank-badge { display: inline-block; padding: 2px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; background: #e2e8f0; color: #1a202c; }
+        .bank-badge.safra { background: #f6e05e; color: #744210; }
+        .bank-badge.banrisul { background: #bee3f8; color: #2a4365; }
+        .bank-badge.unicred { background: #c6f6d5; color: #22543d; }
+        .data-table-wrapper { overflow-x: auto; margin-top: 12px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; background: white; }
+        .data-table th { background: #edf2f7; color: #1a365d; font-weight: 600; padding: 8px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; position: sticky; top: 0; z-index: 10; white-space: nowrap; }
+        .data-table td { padding: 6px 12px; border-bottom: 1px solid #f0f4f8; vertical-align: middle; }
+        .data-table td .mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12px; }
+        .data-table tr:hover td { background: #f7fafc; }
+        .data-table .row-error { background: #fff5f5; }
+        .data-table .row-error td { border-left: 3px solid #fc8181; }
+        .data-table .row-warn { background: #fffff0; }
+        .data-table .row-warn td { border-left: 3px solid #f6ad55; }
+        .data-table .row-ok td { border-left: 3px solid #68d391; }
+        .badge-status { display: inline-block; padding: 1px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .badge-status.ok { background: #c6f6d5; color: #22543d; }
+        .badge-status.error { background: #fed7d7; color: #9b2c2c; }
+        .badge-status.warn { background: #fefcbf; color: #744210; }
+        .tab-bar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+        .tab-btn { padding: 6px 16px; border: 1px solid #e2e8f0; border-radius: 20px; background: white; cursor: pointer; font-size: 13px; font-weight: 500; transition: 0.15s; }
+        .tab-btn:hover { background: #edf2f7; }
+        .tab-btn.active { background: #1a56db; color: white; border-color: #1a56db; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .segment-tag { display: inline-block; padding: 1px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; background: #edf2f7; color: #2d3748; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .segment-tag.header { background: #bee3f8; color: #2a4365; }
+        .segment-tag.lote { background: #c6f6d5; color: #22543d; }
+        .segment-tag.p { background: #fefcbf; color: #744210; }
+        .segment-tag.q { background: #fbd38d; color: #7b341e; }
+        .segment-tag.r { background: #f6ad55; color: #7b341e; }
+        .segment-tag.s { background: #fc8181; color: #742a2a; }
+        .segment-tag.t { background: #9f7aea; color: #44337a; }
+        .segment-tag.u { background: #b794f4; color: #44337a; }
+        .segment-tag.y { background: #68d391; color: #22543d; }
+        .segment-tag.trailer { background: #e2e8f0; color: #2d3748; }
+        .segment-tag.opcional { background: #e2e8f0; color: #4a5568; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: white; border-radius: 16px; max-width: 1000px; width: 100%; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .modal-header { padding: 16px 24px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
+        .modal-header h3 { margin: 0; font-size: 18px; color: #1a365d; }
+        .modal-close { background: none; border: none; font-size: 28px; cursor: pointer; color: #4a5568; padding: 0 8px; line-height: 1; }
+        .modal-close:hover { color: #1a202c; }
+        .modal-body { padding: 16px 24px; overflow-y: auto; flex: 1; }
+        .detail-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .detail-table th { background: #edf2f7; color: #1a365d; font-weight: 600; padding: 6px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; position: sticky; top: 0; z-index: 5; }
+        .detail-table td { padding: 5px 12px; border-bottom: 1px solid #f0f4f8; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 12px; }
+        .detail-table tr:hover td { background: #f7fafc; }
+        .detail-table .seg-header td { background: #ebf8ff; }
+        .detail-table .seg-p td { background: #fffff0; }
+        .detail-table .seg-q td { background: #fffbeb; }
+        .detail-table .seg-separator td { background: #edf2f7; font-weight: 700; color: #1a365d; font-family: 'Segoe UI', system-ui, sans-serif; text-align: center; padding: 8px 12px; }
+        .detail-table .campo-nome { font-family: 'Segoe UI', system-ui, sans-serif; font-weight: 500; color: #2d3748; }
+        .detail-table .valor-lido { font-weight: 600; color: #1a202c; }
+        .detail-table .valor-vazio { color: #a0aec0; font-style: italic; }
+        .segment-list { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+        .segment-info { font-size: 13px; color: #4a5568; margin-top: 4px; }
+        .resumo-titulo { display: flex; flex-wrap: wrap; gap: 16px 24px; padding: 10px 16px; background: #f7fafc; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #4299e1; }
+        .resumo-titulo .item { display: flex; align-items: baseline; gap: 4px; }
+        .resumo-titulo .label { font-family: 'Segoe UI', system-ui, sans-serif; font-size: 12px; color: #718096; font-weight: 500; }
+        .resumo-titulo .value { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; font-weight: 600; color: #1a365d; }
+        .detail-table .seg-pagador-preenchido td { background: #e6fffa; }
+        .detail-table .seg-pagador-preenchido td.valor-lido { font-weight: 700; color: #234e52; }
+        .bank-index { display: flex; flex-wrap: wrap; gap: 12px; padding: 12px 16px; background: #f7fafc; border-radius: 12px; border: 1px solid #e2e8f0; margin-top: 16px; }
+        .bank-index-item { display: flex; align-items: center; gap: 8px; padding: 4px 14px; border-radius: 20px; background: white; border: 1px solid #e2e8f0; font-size: 13px; font-weight: 500; }
+        .bank-index-item .codigo { font-weight: 700; color: #1a365d; font-family: 'JetBrains Mono', monospace; }
+        .bank-index-item .layout { font-size: 11px; background: #edf2f7; padding: 1px 8px; border-radius: 10px; color: #4a5568; }
+        .bank-index-item .nome { color: #2d3748; }
+        .bank-index-item .badge { display: inline-block; padding: 0px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; background: #c6f6d5; color: #22543d; }
+        .bank-index-item.safra { border-left: 3px solid #f6e05e; }
+        .bank-index-item.unicred { border-left: 3px solid #48bb78; }
+        .bank-index-item.banrisul { border-left: 3px solid #63b3ed; }
+        .footer-text { font-size: 13px; color: #718096; text-align: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #e2e8f0; }
+        @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } .container { padding: 16px; } .data-table { font-size: 11px; } .data-table th, .data-table td { padding: 4px 8px; } .modal-content { max-width: 100%; margin: 10px; } .detail-table { font-size: 11px; } .resumo-titulo { flex-direction: column; gap: 6px; } .bank-index { flex-direction: column; gap: 6px; } .bank-index-item { width: 100%; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📄 Validador CNAB · Banrisul (240) · Safra (400) · Unicred (400) <small>v4.1</small></h1>
+    <div class="grid-2">
+        <div>
+            <div class="card">
+                <div class="card-header">📤 1. Carregar arquivo</div>
+                <div class="file-drop" id="dropArea">
+                    <div style="font-size:40px;line-height:1.2;">📂</div>
+                    <div style="font-weight:500;color:#1a365d;">Arraste ou clique para selecionar</div>
+                    <div style="font-size:13px;color:#4a5568;">.240 · .rem · .txt · até 10 MB</div>
+                    <input type="file" id="fileInput" accept=".240,.rem,.txt">
+                </div>
+                <div id="fileInfo" class="text-muted mt-16" style="font-size:14px;">Nenhum arquivo carregado</div>
+                <div class="flex-between mt-16">
+                    <div class="btn-group">
+                        <button class="btn" id="btnValidate" disabled>🔍 Validar</button>
+                        <button class="btn btn-success" id="btnGenerateReturn" disabled>🔄 Gerar retorno</button>
+                    </div>
+                    <button class="btn btn-outline" id="btnClear">Limpar</button>
+                </div>
+            </div>
+            <div class="card" style="margin-top:16px;">
+                <div class="card-header">📊 Resumo da análise</div>
+                <div id="summaryContainer">
+                    <div class="summary-grid">
+                        <div class="summary-item"><div class="num" id="sumTotal">0</div><div class="label">Registros</div></div>
+                        <div class="summary-item"><div class="num" id="sumLotes">0</div><div class="label">Lotes</div></div>
+                        <div class="summary-item"><div class="num" id="sumOk">0</div><div class="label">Válidos</div></div>
+                        <div class="summary-item"><div class="num" id="sumErrors">0</div><div class="label">Erros</div></div>
+                    </div>
+                    <div id="statusMessage" style="font-size:15px;margin-top:4px;">Aguardando arquivo...</div>
+                    <div id="bankDetected" style="font-size:14px;margin-top:4px;color:#4a5568;"></div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="card" style="height:100%;display:flex;flex-direction:column;">
+                <div class="card-header" style="justify-content:space-between;">
+                    <span>📋 Log de validação</span>
+                    <span style="font-weight:400;font-size:13px;color:#4a5568;" id="logCount">0 linhas</span>
+                </div>
+                <div class="log-area" id="logArea"><span class="line-info">➜ Aguardando ação...</span></div>
+                <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">
+                    <button class="btn btn-outline" style="padding:4px 16px;font-size:12px;" id="btnCopyLog">📋 Copiar</button>
+                    <button class="btn btn-outline" style="padding:4px 16px;font-size:12px;" id="btnClearLog">🗑️ Limpar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid-full mt-16" id="dataSection" style="display:none;">
+        <div class="card">
+            <div class="card-header" style="justify-content:space-between;">
+                <span>📋 Dados dos Títulos</span>
+                <span id="tituloCount" style="font-weight:400;font-size:14px;color:#4a5568;">0 títulos</span>
+            </div>
+            <div class="tab-bar">
+                <button class="tab-btn active" data-tab="safra">Safra (CNAB 400)</button>
+                <button class="tab-btn" data-tab="unicred">Unicred (CNAB 400)</button>
+                <button class="tab-btn" data-tab="banrisul240">Banrisul (CNAB 240)</button>
+                <button class="tab-btn" data-tab="segmentos">📊 Segmentos</button>
+            </div>
+            <div id="tabSafra" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="safraTable"><thead><tr><th>#</th><th>Nosso Número</th><th>Seu Número</th><th>Vencimento</th><th>Valor (R$)</th><th>Espécie</th><th>Carteira</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="safraTableBody"></tbody></table></div></div>
+            <div id="tabUnicred" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="unicredTable"><thead><tr><th>#</th><th>Seu Número</th><th>Nosso Número</th><th>Vencimento</th><th>Valor (R$)</th><th>Carteira</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="unicredTableBody"></tbody></table></div></div>
+            <div id="tabBanrisul240" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="banrisul240Table"><thead><tr><th>#</th><th>Lote</th><th>Nosso Número</th><th>Seu Número</th><th>Vencimento</th><th>Valor (R$)</th><th>Carteira</th><th>Movimento</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="banrisul240TableBody"></tbody></table></div></div>
+            <div id="tabSegmentos" class="tab-content"><div id="segmentosContainer" style="padding:8px 0;"><div class="segment-info">Carregando...</div></div></div>
+        </div>
+    </div>
+    
+    <div class="grid-full mt-16">
+        <div class="bank-index">
+            <span style="font-weight:600;color:#1a365d;font-size:14px;display:flex;align-items:center;gap:4px;">🏦 Bancos Homologados:</span>
+            <div class="bank-index-item safra">
+                <span class="codigo">422</span>
+                <span class="layout">CNAB 400</span>
+                <span class="nome">Safra</span>
+                <span class="badge">✅</span>
+            </div>
+            <div class="bank-index-item unicred">
+                <span class="codigo">136</span>
+                <span class="layout">CNAB 400</span>
+                <span class="nome">Unicred</span>
+                <span class="badge">✅</span>
+            </div>
+            <div class="bank-index-item banrisul">
+                <span class="codigo">041</span>
+                <span class="layout">CNAB 240</span>
+                <span class="nome">Banrisul</span>
+                <span class="badge">✅</span>
+            </div>
+            <span style="font-size:12px;color:#a0aec0;margin-left:auto;">Total: 3 bancos homologados</span>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-header"><h3 id="modalTitle">Detalhes do Título</h3><button class="modal-close" id="modalClose">×</button></div>
+            <div class="modal-body" id="modalBody"><div id="modalContent">Carregando...</div></div>
+        </div>
+    </div>
+    <a id="downloadLink" style="display:none;"></a>
+    
+    <div class="footer-text">
+        Ferramenta de validação CNAB · Desenvolvida para homologação de arquivos de remessa
+    </div>
+</div>
+<script>
+(function(){
+    // ==============================
+    // HELPERS
+    // ==============================
+    function getVal(linha, pos) {
+        if (!linha || typeof linha !== 'string') return '';
+        const start = pos[0] - 1;
+        const end = pos[1];
+        if (linha.length < end) return '';
+        return linha.substring(start, end);
+    }
+    
+    function padRight(str, len, char) { if (char === undefined) char = ' '; return String(str).padEnd(len, char); }
+    
+    function formatValor(val) {
+        if (!val || val.trim() === '') return '0,00';
+        const num = parseInt(val);
+        if (isNaN(num)) return val;
+        return (num / 100).toFixed(2).replace('.', ',');
+    }
+    
+    function formatVencimento6(val) {
+        if (!val || val.length < 6) return val || 'N/I';
+        return val.substring(0,2) + '/' + val.substring(2,4) + '/' + val.substring(4,6);
+    }
+    
+    function formatVencimento8(val) {
+        if (!val || val.length < 8) return val || 'N/I';
+        return val.substring(0,2) + '/' + val.substring(2,4) + '/' + val.substring(4,8);
+    }
+
+    // ==============================
+    // VALIDAÇÃO DE INTEGRIDADE DO ARQUIVO
+    // ==============================
+    function validateFileIntegrity(lines, bank) {
+        const errors = [];
+        const warns = [];
+        const expectedLength = bank.type === '240' ? 240 : 400;
+        const bankName = bank.label;
+        
+        // Verificar se há linhas no arquivo
+        if (lines.length === 0) {
+            errors.push('Arquivo vazio ou sem registros.');
+            return { errors, warns, hasError: true };
+        }
+        
+        // Verificar tamanho de cada linha
+        let linhaNum = 0;
+        for (let line of lines) {
+            linhaNum++;
+            if (line.length === 0) {
+                warns.push(`Linha ${linhaNum} está vazia.`);
+                continue;
+            }
+            if (line.length < expectedLength) {
+                errors.push(`Linha ${linhaNum} tem ${line.length} caracteres, mas o esperado para ${bankName} é ${expectedLength}.`);
+            } else if (line.length > expectedLength) {
+                warns.push(`Linha ${linhaNum} tem ${line.length} caracteres (${line.length - expectedLength} a mais que o esperado).`);
+            }
+        }
+        
+        // Verificar se há pelo menos Header (tipo 0)
+        let hasHeader = false;
+        let hasTrailer = false;
+        let hasDetalhe = false;
+        
+        for (let line of lines) {
+            if (line.length < 1) continue;
+            if (bank.type === '240') {
+                if (line.length >= 8) {
+                    const tipoReg = line.substring(7, 8);
+                    if (tipoReg === '0') hasHeader = true;
+                    else if (tipoReg === '1') { /* header lote */ }
+                    else if (tipoReg === '3') hasDetalhe = true;
+                    else if (tipoReg === '9') hasTrailer = true;
+                }
+            } else {
+                const tipoReg = line.substring(0, 1);
+                if (tipoReg === '0') hasHeader = true;
+                else if (tipoReg === '1') hasDetalhe = true;
+                else if (tipoReg === '9') hasTrailer = true;
+            }
+        }
+        
+        if (!hasHeader) errors.push('Header de Arquivo (tipo 0) não encontrado.');
+        if (!hasDetalhe) warns.push('Nenhum registro de detalhe (título) encontrado.');
+        if (!hasTrailer) errors.push('Trailer de Arquivo (tipo 9) não encontrado.');
+        
+        return { errors, warns, hasError: errors.length > 0 };
+    }
+
+    // ==============================
+    // MAPEAMENTO DE CAMPOS - CNAB 400 UNICRED
+    // ==============================
+    const CAMPOS_UNICRED_HEADER = [
+        { nome: 'Identificação Registro', pos: [1,1], seg: 'HEADER', desc: '0' },
+        { nome: 'Identificação Arquivo', pos: [2,2], seg: 'HEADER', desc: '1=Remessa' },
+        { nome: 'Literal Remessa', pos: [3,9], seg: 'HEADER', desc: 'REMESSA' },
+        { nome: 'Código Serviço', pos: [10,11], seg: 'HEADER', desc: '01' },
+        { nome: 'Literal Serviço', pos: [12,26], seg: 'HEADER', desc: 'COBRANCA' },
+        { nome: 'Código Beneficiário', pos: [27,46], seg: 'HEADER', desc: '20 posições' },
+        { nome: 'Nome Empresa', pos: [47,76], seg: 'HEADER', desc: '30 posições' },
+        { nome: 'Código UNICRED', pos: [77,79], seg: 'HEADER', desc: '136' },
+        { nome: 'Nome Banco', pos: [80,94], seg: 'HEADER', desc: 'UNICRED' },
+        { nome: 'Data Gravação', pos: [95,100], seg: 'HEADER', desc: 'DDMMAA' },
+        { nome: 'Branco', pos: [101,107], seg: 'HEADER', desc: 'Brancos' },
+        { nome: 'Código Variação', pos: [108,110], seg: 'HEADER', desc: '000' },
+        { nome: 'Nº Sequencial Arquivo', pos: [111,117], seg: 'HEADER', desc: '7 dígitos' },
+        { nome: 'Branco', pos: [118,394], seg: 'HEADER', desc: 'Brancos' },
+        { nome: 'Nº Sequencial Registro', pos: [395,400], seg: 'HEADER', desc: '000001' }
+    ];
+
+    const CAMPOS_UNICRED_TITULO = [
+        { nome: 'Identificação Registro', pos: [1,1], seg: 'TÍTULO', desc: '1' },
+        { nome: 'Agência', pos: [2,6], seg: 'TÍTULO', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [7,7], seg: 'TÍTULO', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [8,19], seg: 'TÍTULO', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [20,20], seg: 'TÍTULO', desc: 'Dígito verificador' },
+        { nome: 'Zero', pos: [21,21], seg: 'TÍTULO', desc: 'Zero' },
+        { nome: 'Código Carteira', pos: [22,24], seg: 'TÍTULO', desc: '21=Cobrança Com Registro' },
+        { nome: 'Zeros', pos: [25,37], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Nº Controle Participante', pos: [38,62], seg: 'TÍTULO', desc: 'Uso da empresa' },
+        { nome: 'Código Banco', pos: [63,65], seg: 'TÍTULO', desc: '136' },
+        { nome: 'Zeros', pos: [66,67], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Branco', pos: [68,92], seg: 'TÍTULO', desc: 'Brancos' },
+        { nome: 'Filler', pos: [93,93], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Código Multa', pos: [94,94], seg: 'TÍTULO', desc: '1=Valor, 2=Taxa, 3=Isento' },
+        { nome: 'Valor/Percentual Multa', pos: [95,104], seg: 'TÍTULO', desc: '10 dígitos, 2 decimais' },
+        { nome: 'Tipo Valor Mora', pos: [105,105], seg: 'TÍTULO', desc: '1=Valor Dia, 2=Taxa Mensal, 5=Isento' },
+        { nome: 'Título Descontável', pos: [106,106], seg: 'TÍTULO', desc: 'S=Sim, N=Não' },
+        { nome: 'Branco', pos: [107,108], seg: 'TÍTULO', desc: 'Brancos' },
+        { nome: 'Identificação Ocorrência', pos: [109,110], seg: 'TÍTULO', desc: '01=Remessa, 02=Baixa, 09=Protesto' },
+        { nome: 'Nº Documento (Seu Número)', pos: [111,120], seg: 'TÍTULO', desc: '10 posições' },
+        { nome: 'Data Vencimento', pos: [121,126], seg: 'TÍTULO', desc: 'DDMMAA' },
+        { nome: 'Valor Título', pos: [127,139], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Filler', pos: [140,149], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Código Desconto', pos: [150,150], seg: 'TÍTULO', desc: '0=Isento, 1=Valor Fixo' },
+        { nome: 'Data Emissão', pos: [151,156], seg: 'TÍTULO', desc: 'DDMMAA' },
+        { nome: 'Filler', pos: [157,157], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Código Protesto/Negativação', pos: [158,158], seg: 'TÍTULO', desc: '1=Protesto Dias, 4=Negativar' },
+        { nome: 'Dias Protesto/Negativação', pos: [159,160], seg: 'TÍTULO', desc: '2 dígitos' },
+        { nome: 'Valor Mora', pos: [161,173], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Data Limite Desconto', pos: [174,179], seg: 'TÍTULO', desc: 'DDMMAA' },
+        { nome: 'Valor Desconto', pos: [180,192], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Nosso Número', pos: [193,203], seg: 'TÍTULO', desc: '11 dígitos (10+DV)' },
+        { nome: 'Zeros', pos: [204,205], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Valor Abatimento', pos: [206,218], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Tipo Inscrição Pagador', pos: [219,220], seg: 'PAGADOR', desc: '01=CPF, 02=CNPJ' },
+        { nome: 'Nº Inscrição Pagador', pos: [221,234], seg: 'PAGADOR', desc: '14 dígitos' },
+        { nome: 'Nome Pagador', pos: [235,274], seg: 'PAGADOR', desc: '40 posições' },
+        { nome: 'Endereço Pagador', pos: [275,314], seg: 'PAGADOR', desc: '40 posições' },
+        { nome: 'Bairro Pagador', pos: [315,326], seg: 'PAGADOR', desc: '12 posições' },
+        { nome: 'CEP Pagador', pos: [327,334], seg: 'PAGADOR', desc: '8 dígitos' },
+        { nome: 'Cidade Pagador', pos: [335,354], seg: 'PAGADOR', desc: '20 posições' },
+        { nome: 'UF Pagador', pos: [355,356], seg: 'PAGADOR', desc: '2 posições' },
+        { nome: 'Pagador/Avalista', pos: [357,394], seg: 'PAGADOR', desc: '38 posições' },
+        { nome: 'Nº Sequencial Registro', pos: [395,400], seg: 'TÍTULO', desc: '6 dígitos' }
+    ];
+
+    // ==============================
+    // MAPEAMENTO DE CAMPOS - BANRISUL (mantido)
+    // ==============================
+    const CAMPOS_BANRISUL_HEADER_ARQUIVO = [
+        { nome: 'Código Banco', pos: [1,3], seg: 'HEADER ARQUIVO', desc: '041 - Banrisul' },
+        { nome: 'Lote', pos: [4,7], seg: 'HEADER ARQUIVO', desc: '0000' },
+        { nome: 'Tipo Registro', pos: [8,8], seg: 'HEADER ARQUIVO', desc: '0 = Header de Arquivo' },
+        { nome: 'CNAB', pos: [9,17], seg: 'HEADER ARQUIVO', desc: 'Brancos' },
+        { nome: 'Tipo Inscrição', pos: [18,18], seg: 'HEADER ARQUIVO', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição', pos: [19,32], seg: 'HEADER ARQUIVO', desc: '14 dígitos' },
+        { nome: 'Código Convênio', pos: [33,52], seg: 'HEADER ARQUIVO', desc: '20 posições' },
+        { nome: 'Agência', pos: [53,57], seg: 'HEADER ARQUIVO', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [58,58], seg: 'HEADER ARQUIVO', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [59,70], seg: 'HEADER ARQUIVO', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [71,71], seg: 'HEADER ARQUIVO', desc: 'Dígito verificador' },
+        { nome: 'DV Ag/Conta', pos: [72,72], seg: 'HEADER ARQUIVO', desc: 'Dígito verificador' },
+        { nome: 'Nome Beneficiário', pos: [73,102], seg: 'HEADER ARQUIVO', desc: '30 posições' },
+        { nome: 'Nome Banco', pos: [103,132], seg: 'HEADER ARQUIVO', desc: 'BANRISUL' },
+        { nome: 'CNAB', pos: [133,142], seg: 'HEADER ARQUIVO', desc: 'Brancos' },
+        { nome: 'Código Remessa/Retorno', pos: [143,143], seg: 'HEADER ARQUIVO', desc: '1=Remessa, 2=Retorno' },
+        { nome: 'Data Geração', pos: [144,151], seg: 'HEADER ARQUIVO', desc: 'DDMMAAAA' },
+        { nome: 'Hora Geração', pos: [152,157], seg: 'HEADER ARQUIVO', desc: 'HHMMSS' },
+        { nome: 'Sequência (NSA)', pos: [158,163], seg: 'HEADER ARQUIVO', desc: '6 dígitos' },
+        { nome: 'Leiaute Arquivo', pos: [164,166], seg: 'HEADER ARQUIVO', desc: '103' },
+        { nome: 'Densidade', pos: [167,171], seg: 'HEADER ARQUIVO', desc: '5 dígitos' },
+        { nome: 'Reservado Banco', pos: [172,191], seg: 'HEADER ARQUIVO', desc: '20 posições' },
+        { nome: 'Reservado Empresa', pos: [192,211], seg: 'HEADER ARQUIVO', desc: '20 posições' },
+        { nome: 'CNAB', pos: [212,240], seg: 'HEADER ARQUIVO', desc: 'Brancos' }
+    ];
+
+    const CAMPOS_BANRISUL_HEADER_LOTE = [
+        { nome: 'Código Banco', pos: [1,3], seg: 'HEADER LOTE', desc: '041 - Banrisul' },
+        { nome: 'Lote', pos: [4,7], seg: 'HEADER LOTE', desc: '0001 a 9999' },
+        { nome: 'Tipo Registro', pos: [8,8], seg: 'HEADER LOTE', desc: '1 = Header de Lote' },
+        { nome: 'Operação', pos: [9,9], seg: 'HEADER LOTE', desc: 'R=Remessa, T=Retorno' },
+        { nome: 'Serviço', pos: [10,11], seg: 'HEADER LOTE', desc: '01=Cobrança' },
+        { nome: 'CNAB', pos: [12,13], seg: 'HEADER LOTE', desc: 'Brancos' },
+        { nome: 'Leiaute Lote', pos: [14,16], seg: 'HEADER LOTE', desc: '060' },
+        { nome: 'CNAB', pos: [17,17], seg: 'HEADER LOTE', desc: 'Brancos' },
+        { nome: 'Tipo Inscrição Empresa', pos: [18,18], seg: 'HEADER LOTE', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição Empresa', pos: [19,33], seg: 'HEADER LOTE', desc: '15 dígitos' },
+        { nome: 'Código Convênio', pos: [34,53], seg: 'HEADER LOTE', desc: '20 posições' },
+        { nome: 'Agência', pos: [54,58], seg: 'HEADER LOTE', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [59,59], seg: 'HEADER LOTE', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [60,71], seg: 'HEADER LOTE', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [72,72], seg: 'HEADER LOTE', desc: 'Dígito verificador' },
+        { nome: 'DV Ag/Conta', pos: [73,73], seg: 'HEADER LOTE', desc: 'Dígito verificador' },
+        { nome: 'Nome Empresa', pos: [74,103], seg: 'HEADER LOTE', desc: '30 posições' },
+        { nome: 'Informação 1', pos: [104,143], seg: 'HEADER LOTE', desc: '40 posições' },
+        { nome: 'Informação 2', pos: [144,183], seg: 'HEADER LOTE', desc: '40 posições' },
+        { nome: 'Nº Remessa/Retorno', pos: [184,191], seg: 'HEADER LOTE', desc: '8 dígitos' },
+        { nome: 'Data Gravação', pos: [192,199], seg: 'HEADER LOTE', desc: 'DDMMAAAA' },
+        { nome: 'Data Crédito', pos: [200,207], seg: 'HEADER LOTE', desc: 'DDMMAAAA' },
+        { nome: 'CNAB', pos: [208,240], seg: 'HEADER LOTE', desc: 'Brancos' }
+    ];
+
+    const CAMPOS_BANRISUL_P = [
+        { nome: 'Nº Sequencial', pos: [9,13], seg: 'SEGMENTO P', desc: 'Número sequencial no lote' },
+        { nome: 'Segmento', pos: [14,14], seg: 'SEGMENTO P', desc: 'P = Dados do título' },
+        { nome: 'Código Movimento', pos: [16,17], seg: 'SEGMENTO P', desc: '01=Entrada, 02=Baixa' },
+        { nome: 'Agência', pos: [18,22], seg: 'SEGMENTO P', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [23,23], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [24,35], seg: 'SEGMENTO P', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [36,36], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'DV Ag/Conta', pos: [37,37], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'Nosso Número', pos: [38,57], seg: 'SEGMENTO P', desc: '20 posições' },
+        { nome: 'Carteira', pos: [58,58], seg: 'SEGMENTO P', desc: '1=Simples, 4=Descontada' },
+        { nome: 'Forma Cadastramento', pos: [59,59], seg: 'SEGMENTO P', desc: '1=Com cadastramento' },
+        { nome: 'Tipo Documento', pos: [60,60], seg: 'SEGMENTO P', desc: '1=Tradicional' },
+        { nome: 'Emissão Boleto', pos: [61,61], seg: 'SEGMENTO P', desc: '1=Banco emite, 2=Cliente emite' },
+        { nome: 'Distribuição Boleto', pos: [62,62], seg: 'SEGMENTO P', desc: '1=Banco distribui' },
+        { nome: 'Nº Documento', pos: [63,77], seg: 'SEGMENTO P', desc: '15 posições' },
+        { nome: 'Data Vencimento', pos: [78,85], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
+        { nome: 'Valor Título', pos: [86,100], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Agência Cobradora', pos: [101,105], seg: 'SEGMENTO P', desc: '5 dígitos' },
+        { nome: 'DV Agência Cobradora', pos: [106,106], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'Espécie Título', pos: [107,108], seg: 'SEGMENTO P', desc: '02=DM, 12=NP' },
+        { nome: 'Aceite', pos: [109,109], seg: 'SEGMENTO P', desc: 'A=Aceito, N=Não' },
+        { nome: 'Data Emissão', pos: [110,117], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
+        { nome: 'Código Juros Mora', pos: [118,118], seg: 'SEGMENTO P', desc: '1=Valor/Dia, 2=Taxa' },
+        { nome: 'Data Juros Mora', pos: [119,126], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
+        { nome: 'Juros Mora', pos: [127,141], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Código Desconto 1', pos: [142,142], seg: 'SEGMENTO P', desc: '1=Valor, 2=Percentual' },
+        { nome: 'Data Desconto 1', pos: [143,150], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
+        { nome: 'Valor Desconto 1', pos: [151,165], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor IOF', pos: [166,180], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor Abatimento', pos: [181,195], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Uso Empresa', pos: [196,220], seg: 'SEGMENTO P', desc: '25 posições' },
+        { nome: 'Código Protesto', pos: [221,221], seg: 'SEGMENTO P', desc: '1=Protestar, 3=Não' },
+        { nome: 'Prazo Protesto', pos: [222,223], seg: 'SEGMENTO P', desc: '2 dígitos' },
+        { nome: 'Código Baixa', pos: [224,224], seg: 'SEGMENTO P', desc: '1=Baixar' },
+        { nome: 'Prazo Baixa', pos: [225,227], seg: 'SEGMENTO P', desc: '3 dígitos' },
+        { nome: 'Código Moeda', pos: [228,229], seg: 'SEGMENTO P', desc: '09=Real' },
+        { nome: 'Código Espécie Cobrança', pos: [230,239], seg: 'SEGMENTO P', desc: '10 dígitos' },
+        { nome: 'Autorização Pagamento Parcial', pos: [240,240], seg: 'SEGMENTO P', desc: '1=Não, 2=Sim' }
+    ];
+
+    const CAMPOS_BANRISUL_Q = [
+        { nome: 'Tipo Inscrição Pagador', pos: [18,18], seg: 'SEGMENTO Q', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição Pagador', pos: [19,33], seg: 'SEGMENTO Q', desc: '15 dígitos' },
+        { nome: 'Nome Pagador', pos: [34,73], seg: 'SEGMENTO Q', desc: '40 posições' },
+        { nome: 'Endereço Pagador', pos: [74,113], seg: 'SEGMENTO Q', desc: '40 posições' },
+        { nome: 'Bairro Pagador', pos: [114,128], seg: 'SEGMENTO Q', desc: '15 posições' },
+        { nome: 'CEP Pagador', pos: [129,133], seg: 'SEGMENTO Q', desc: '5 dígitos' },
+        { nome: 'Sufixo CEP', pos: [134,136], seg: 'SEGMENTO Q', desc: '3 dígitos' },
+        { nome: 'Cidade Pagador', pos: [137,151], seg: 'SEGMENTO Q', desc: '15 posições' },
+        { nome: 'UF Pagador', pos: [152,153], seg: 'SEGMENTO Q', desc: '2 posições' },
+        { nome: 'Tipo Inscrição Sacador', pos: [154,154], seg: 'SEGMENTO Q', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição Sacador', pos: [155,169], seg: 'SEGMENTO Q', desc: '15 dígitos' },
+        { nome: 'Nome Sacador', pos: [170,209], seg: 'SEGMENTO Q', desc: '40 posições' }
+    ];
+
+    // ==============================
+    // MAPEAMENTO DE CAMPOS - CNAB 400 SAFRA
+    // ==============================
+    const CAMPOS_SAFRA_HEADER = [
+        { nome: 'Tipo Registro', pos: [1,1], seg: 'HEADER', desc: '0=Header' },
+        { nome: 'Código Arquivo', pos: [2,2], seg: 'HEADER', desc: '1=Remessa, 2=Retorno' },
+        { nome: 'Identificação Arquivo', pos: [3,9], seg: 'HEADER', desc: '"REMESSA" ou "RETORNO"' },
+        { nome: 'Código Serviço', pos: [10,11], seg: 'HEADER', desc: '01=Cobrança' },
+        { nome: 'Identificação Serviço', pos: [12,19], seg: 'HEADER', desc: '"COBRANCA"' },
+        { nome: 'Código Empresa', pos: [27,40], seg: 'HEADER', desc: 'Agência(5)+Conta(9)' },
+        { nome: 'Nome Empresa', pos: [47,76], seg: 'HEADER', desc: '30 posições' },
+        { nome: 'Código Banco', pos: [77,79], seg: 'HEADER', desc: '422=Safra' },
+        { nome: 'Nome Banco', pos: [80,90], seg: 'HEADER', desc: '11 posições' },
+        { nome: 'Data Gravação', pos: [95,100], seg: 'HEADER', desc: 'DDMMAA' },
+        { nome: 'Nº Arquivo', pos: [392,394], seg: 'HEADER', desc: '3 dígitos' },
+        { nome: 'Nº Sequencial', pos: [395,400], seg: 'HEADER', desc: '6 dígitos' }
+    ];
+
+    const CAMPOS_SAFRA_TITULO = [
+        { nome: 'Tipo Registro', pos: [1,1], seg: 'TÍTULO', desc: '1 = Título' },
+        { nome: 'Código Inscrição', pos: [2,3], seg: 'TÍTULO', desc: '01=CPF, 02=CNPJ' },
+        { nome: 'Número Inscrição', pos: [4,17], seg: 'TÍTULO', desc: '14 dígitos' },
+        { nome: 'Código Empresa', pos: [18,31], seg: 'TÍTULO', desc: 'Agência(5)+Conta(9)' },
+        { nome: 'Uso Empresa', pos: [38,62], seg: 'TÍTULO', desc: '25 posições' },
+        { nome: 'Nosso Número', pos: [63,71], seg: 'TÍTULO', desc: '9 dígitos' },
+        { nome: 'Data Juros Mora', pos: [86,91], seg: 'TÍTULO', desc: 'DDMMAA' },
+        { nome: 'Código IOF', pos: [102,102], seg: 'TÍTULO', desc: '0=Isento, 1=2%, 2=4%' },
+        { nome: 'Código Moeda', pos: [103,104], seg: 'TÍTULO', desc: '00=Real' },
+        { nome: 'Instrução 3', pos: [106,107], seg: 'TÍTULO', desc: 'Dias para protesto' },
+        { nome: 'Código Carteira', pos: [108,108], seg: 'TÍTULO', desc: '1=Simples, 2=Vinculada' },
+        { nome: 'Código Ocorrência', pos: [109,110], seg: 'TÍTULO', desc: '01=Entrada, 02=Baixa' },
+        { nome: 'Seu Número', pos: [111,120], seg: 'TÍTULO', desc: '10 posições' },
+        { nome: 'Vencimento', pos: [121,126], seg: 'TÍTULO', desc: 'DDMMAA' },
+        { nome: 'Valor Título', pos: [127,139], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Banco Depositária', pos: [140,142], seg: 'TÍTULO', desc: '3 dígitos' },
+        { nome: 'Agência Depositária', pos: [143,147], seg: 'TÍTULO', desc: '5 dígitos' },
+        { nome: 'Espécie', pos: [148,149], seg: 'TÍTULO', desc: '01=DM, 02=NP' },
+        { nome: 'Aceite', pos: [150,150], seg: 'TÍTULO', desc: 'A=Aceito, N=Não' },
+        { nome: 'Emissão', pos: [151,156], seg: 'TÍTULO', desc: 'DDMMAA' },
+        { nome: 'Instrução 1', pos: [157,158], seg: 'TÍTULO', desc: '2 dígitos' },
+        { nome: 'Instrução 2', pos: [159,160], seg: 'TÍTULO', desc: '2 dígitos' },
+        { nome: 'Juros 1 Dia', pos: [161,173], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Data Desconto 1', pos: [174,179], seg: 'TÍTULO', desc: 'DDMMAA' },
+        { nome: 'Valor Desconto 1', pos: [180,192], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Valor IOF', pos: [193,205], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Abatimento/Multa', pos: [206,218], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Cód. Inscrição Pagador', pos: [219,220], seg: 'PAGADOR', desc: '01=CPF, 02=CNPJ' },
+        { nome: 'Nº Inscrição Pagador', pos: [221,234], seg: 'PAGADOR', desc: '14 dígitos' },
+        { nome: 'Nome Pagador', pos: [235,274], seg: 'PAGADOR', desc: '40 posições' },
+        { nome: 'Endereço Pagador', pos: [275,314], seg: 'PAGADOR', desc: '40 posições' },
+        { nome: 'Bairro Pagador', pos: [315,324], seg: 'PAGADOR', desc: '10 posições' },
+        { nome: 'CEP Pagador', pos: [327,334], seg: 'PAGADOR', desc: '8 dígitos' },
+        { nome: 'Cidade Pagador', pos: [335,349], seg: 'PAGADOR', desc: '15 posições' },
+        { nome: 'UF Pagador', pos: [350,351], seg: 'PAGADOR', desc: '2 posições' },
+        { nome: 'Mensagem', pos: [352,381], seg: 'TÍTULO', desc: '30 posições' },
+        { nome: 'Dias Baixa', pos: [382,384], seg: 'TÍTULO', desc: '3 dígitos' },
+        { nome: 'Tipo Desconto 1', pos: [388,388], seg: 'TÍTULO', desc: '0=sem, 1=valor, 2=percentual' },
+        { nome: 'Banco Emitente', pos: [389,391], seg: 'TÍTULO', desc: '3 dígitos' },
+        { nome: 'Nº Arquivo', pos: [392,394], seg: 'TÍTULO', desc: '3 dígitos' },
+        { nome: 'Nº Sequencial', pos: [395,400], seg: 'TÍTULO', desc: '6 dígitos' }
+    ];
+
+    // ==============================
+    // DETECTAR BANCO
+    // ==============================
+    function detectBank(lines) {
+        if (!lines || lines.length === 0) return null;
+        let first = null;
+        for (let l of lines) { if (l.trim().length > 0) { first = l; break; } }
+        if (!first) return null;
+        
+        // CNAB 240 - Banrisul
+        if (first.length >= 8) {
+            const tipoReg = first.substring(7, 8);
+            if (tipoReg === '0') {
+                const codBanco = first.substring(0, 3);
+                if (codBanco === '041') return { bank: 'banrisul240', type: '240', label: 'Banrisul (CNAB 240)' };
+            }
+        }
+        
+        // CNAB 400 - verificar código na posição 77-79
+        if (first.length >= 79) {
+            const codBanco = first.substring(76, 79);
+            const nomeBanco = first.length >= 94 ? first.substring(79, 94) : '';
+            
+            if (codBanco === '136' || nomeBanco.toUpperCase().includes('UNICRED')) {
+                return { bank: 'unicred', type: '400', label: 'Unicred (CNAB 400)' };
+            }
+            
+            if (codBanco === '422' || nomeBanco.toUpperCase().includes('SAFRA')) {
+                return { bank: 'safra', type: '400', label: 'Safra (CNAB 400)' };
+            }
+        }
+        
+        const content = first.toUpperCase();
+        if (content.includes('UNICRED')) return { bank: 'unicred', type: '400', label: 'Unicred (CNAB 400)' };
+        if (content.includes('SAFRA')) return { bank: 'safra', type: '400', label: 'Safra (CNAB 400)' };
+        if (content.includes('BANRISUL')) {
+            if (first.length >= 8 && first.substring(7,8) === '0') {
+                return { bank: 'banrisul240', type: '240', label: 'Banrisul (CNAB 240)' };
+            }
+        }
+        return null;
+    }
+
+    // ==============================
+    // VALIDAÇÕES COM VERIFICAÇÃO DE TAMANHO
+    // ==============================
+    function validateUnicred(lines, bank) {
+        // Primeiro, valida integridade do arquivo
+        const integrity = validateFileIntegrity(lines, bank);
+        if (integrity.hasError) return { errors: integrity.errors, warns: integrity.warns, infos: [], total: lines.length, lotes: 1 };
+        
+        let total = 0, hasHeader = false, hasTrailer = false;
+        let linhaNum = 0;
+        for (let line of lines) {
+            if (line.trim().length === 0) continue;
+            linhaNum++;
+            total++;
+            
+            // Verifica tamanho da linha para CNAB 400
+            if (line.length < 400) {
+                integrity.errors.push(`Linha ${linhaNum} tem ${line.length} caracteres (esperado 400 para Unicred).`);
+                continue;
+            }
+            
+            const tipoReg = getVal(line, [1,1]);
+            if (tipoReg === '0') hasHeader = true;
+            else if (tipoReg === '9') hasTrailer = true;
+        }
+        const errors = integrity.errors.slice();
+        const warns = integrity.warns.slice();
+        if (!hasHeader) errors.push('Header (tipo 0) não encontrado.');
+        if (!hasTrailer) errors.push('Trailer (tipo 9) não encontrado.');
+        return { errors, warns, infos: [], total, lotes: 1 };
+    }
+
+    function validateSafra(lines, bank) {
+        const integrity = validateFileIntegrity(lines, bank);
+        if (integrity.hasError) return { errors: integrity.errors, warns: integrity.warns, infos: [], total: lines.length, lotes: 1 };
+        
+        let total = 0, hasHeader = false, hasTrailer = false;
+        let linhaNum = 0;
+        for (let line of lines) {
+            if (line.trim().length === 0) continue;
+            linhaNum++;
+            total++;
+            
+            if (line.length < 400) {
+                integrity.errors.push(`Linha ${linhaNum} tem ${line.length} caracteres (esperado 400 para Safra).`);
+                continue;
+            }
+            
+            const tipoReg = getVal(line, [1,1]);
+            if (tipoReg === '0') hasHeader = true;
+            else if (tipoReg === '9') hasTrailer = true;
+        }
+        const errors = integrity.errors.slice();
+        const warns = integrity.warns.slice();
+        if (!hasHeader) errors.push('Header (tipo 0) não encontrado.');
+        if (!hasTrailer) errors.push('Trailer (tipo 9) não encontrado.');
+        return { errors, warns, infos: [], total, lotes: 1 };
+    }
+
+    function validateBanrisul240(lines, bank) {
+        const integrity = validateFileIntegrity(lines, bank);
+        if (integrity.hasError) return { errors: integrity.errors, warns: integrity.warns, infos: [], total: lines.length, lotes: 0 };
+        
+        let total = lines.length, lotes = 0;
+        let hasHeaderArq = false, hasHeaderLote = false, hasTrailer = false;
+        let linhaNum = 0;
+        for (let line of lines) {
+            if (line.trim().length === 0) continue;
+            linhaNum++;
+            
+            if (line.length < 240) {
+                integrity.errors.push(`Linha ${linhaNum} tem ${line.length} caracteres (esperado 240 para Banrisul).`);
+                continue;
+            }
+            
+            const tipoReg = getVal(line, [8,8]);
+            if (tipoReg === '0') hasHeaderArq = true;
+            else if (tipoReg === '1') { hasHeaderLote = true; lotes++; }
+            else if (tipoReg === '9') hasTrailer = true;
+        }
+        const errors = integrity.errors.slice();
+        const warns = integrity.warns.slice();
+        if (!hasHeaderArq) errors.push('Header de Arquivo (tipo 0) não encontrado.');
+        if (!hasHeaderLote) errors.push('Header de Lote (tipo 1) não encontrado.');
+        if (!hasTrailer) errors.push('Trailer (tipo 9) não encontrado.');
+        return { errors, warns, infos: [], total, lotes };
+    }
+
+    // ==============================
+    // EXTRAIR DADOS UNICRED
+    // ==============================
+    function extractUnicredData(lines) {
+        const titulos = [];
+        let headerLine = null;
+        let linhaNum = 0;
+        
+        for (let line of lines) {
+            if (line.trim().length === 0) continue;
+            linhaNum++;
+            if (line.length < 400) continue; // Pular linhas inválidas
+            
+            const tipoReg = getVal(line, [1,1]);
+            if (tipoReg === '0') {
+                headerLine = line;
+            } else if (tipoReg === '1') {
+                titulos.push({
+                    tipo: 'unicred',
+                    nossoNum: getVal(line, [193,203]).trim() || 'NÃO INFORMADO',
+                    seuNum: getVal(line, [111,120]).trim() || 'NÃO INFORMADO',
+                    vencimento: getVal(line, [121,126]),
+                    vencimentoFormat: formatVencimento6(getVal(line, [121,126])),
+                    valor: getVal(line, [127,139]),
+                    valorFormat: formatValor(getVal(line, [127,139])),
+                    carteira: getVal(line, [22,24]) || 'N/I',
+                    codMov: getVal(line, [109,110]) || 'N/I',
+                    pagador: getVal(line, [235,274]).trim() || 'NÃO INFORMADO',
+                    endereco: getVal(line, [275,314]).trim() || 'NÃO INFORMADO',
+                    bairro: getVal(line, [315,326]).trim() || 'NÃO INFORMADO',
+                    cep: getVal(line, [327,334]).trim() || 'NÃO INFORMADO',
+                    cidade: getVal(line, [335,354]).trim() || 'NÃO INFORMADO',
+                    uf: getVal(line, [355,356]).trim() || 'NÃO INFORMADO',
+                    linha: line,
+                    headerLine: headerLine
+                });
+            }
+        }
+        return titulos;
+    }
+
+    // ==============================
+    // GERAR RETORNO UNICRED
+    // ==============================
+    function generateReturnUnicred(lines) {
+        let ret = [];
+        let header = null, detalhes = [];
+        for (let line of lines) {
+            if (line.trim().length === 0) continue;
+            if (line.length < 400) continue;
+            const tipo = getVal(line, [1,1]);
+            if (tipo === '0') header = line;
+            else if (tipo === '1') detalhes.push(line);
+        }
+        if (!header) { 
+            header = '0 1REMESSA  01COBRANCA         136UNICRED        '; 
+            header = padRight(header, 400, ' '); 
+        } else { 
+            let h = header.split(''); 
+            h[1]='2'; 
+            const now=new Date(); 
+            const ds=String(now.getFullYear()).slice(2,4)+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0'); 
+            for(let i=0;i<6;i++) h[94+i]=ds[i]||'0'; 
+            header=h.join(''); 
+        }
+        ret.push(header.substring(0,400));
+        let seq=2;
+        for(let det of detalhes) {
+            let r=det.split('');
+            r[108]='0'; r[109]='6';
+            const now=new Date(); 
+            const ds=String(now.getFullYear()).slice(2,4)+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0');
+            for(let i=0;i<6;i++) r[110+i]=ds[i]||'0';
+            const valor=getVal(det,[127,139]);
+            for(let i=0;i<13;i++) r[253+i]=valor[i]||'0';
+            for(let i=0;i<6;i++) r[295+i]=ds[i]||'0';
+            const seqStr=String(seq).padStart(6,'0');
+            for(let i=0;i<6;i++) r[394+i]=seqStr[i]||'0';
+            ret.push(r.join('').substring(0,400));
+            seq++;
+        }
+        const qtde=detalhes.length;
+        let trailer='9'+padRight('',368,' ')+String(qtde).padStart(8,'0')+padRight('',15,' ')+String(seq-1).padStart(6,'0');
+        trailer=padRight(trailer,400,' ');
+        ret.push(trailer.substring(0,400));
+        return ret.join('\r\n');
+    }
+
+    // ==============================
+    // VALIDAÇÕES SAFRA E BANRISUL (com integridade)
+    // ==============================
+    function validateSafraIntegrity(lines, bank) {
+        return validateSafra(lines, bank);
+    }
+
+    function validateBanrisulIntegrity(lines, bank) {
+        return validateBanrisul240(lines, bank);
+    }
+
+    // ==============================
+    // EXTRAIR DADOS SAFRA E BANRISUL
+    // ==============================
+    function extractSafraData(lines) {
+        const titulos = [];
+        let headerLine = null;
+        for (let line of lines) {
+            if (line.trim().length === 0) continue;
+            if (line.length < 400) continue;
+            const tipoReg = getVal(line, [1,1]);
+            if (tipoReg === '0') { headerLine = line; }
+            else if (tipoReg === '1') {
+                titulos.push({
+                    tipo: 'safra',
+                    nossoNum: getVal(line, [63,71]).trim() || 'NÃO INFORMADO',
+                    seuNum: getVal(line, [111,120]).trim() || 'NÃO INFORMADO',
+                    vencimento: getVal(line, [121,126]),
+                    vencimentoFormat: formatVencimento6(getVal(line, [121,126])),
+                    valor: getVal(line, [127,139]),
+                    valorFormat: formatValor(getVal(line, [127,139])),
+                    especie: getVal(line, [148,149]) || 'N/I',
+                    carteira: getVal(line, [108,108]) || 'N/I',
+                    codMov: getVal(line, [109,110]) || 'N/I',
+                    pagador: getVal(line, [235,274]).trim() || 'NÃO INFORMADO',
+                    endereco: getVal(line, [275,314]).trim() || 'NÃO INFORMADO',
+                    bairro: getVal(line, [315,324]).trim() || 'NÃO INFORMADO',
+                    cep: getVal(line, [327,334]).trim() || 'NÃO INFORMADO',
+                    cidade: getVal(line, [335,349]).trim() || 'NÃO INFORMADO',
+                    uf: getVal(line, [350,351]).trim() || 'NÃO INFORMADO',
+                    linha: line,
+                    headerLine: headerLine
+                });
+            }
+        }
+        return titulos;
+    }
+
+    function extractBanrisul240Data(lines) {
+        const titulos = [];
+        let headerArq = null, headerLote = null, segmentosP = [], segmentosQ = [];
+        for (let line of lines) {
+            if (line.trim().length === 0) continue;
+            if (line.length < 240) continue;
+            const tipoReg = getVal(line, [8,8]);
+            if (tipoReg === '0') { headerArq = line; }
+            else if (tipoReg === '1') { headerLote = line; }
+            else if (tipoReg === '3') {
+                const seg = getVal(line, [14,14]);
+                const lote = getVal(line, [4,7]);
+                if (seg === 'P') { segmentosP.push({ lote: lote, linha: line }); }
+                else if (seg === 'Q') { segmentosQ.push({ lote: lote, linha: line }); }
+            }
+        }
+        for (let p of segmentosP) {
+            const q = segmentosQ.find(function(q) { return q.lote === p.lote; });
+            const linha = p.linha;
+            titulos.push({
+                tipo: 'banrisul240',
+                lote: p.lote || 'N/I',
+                nossoNum: getVal(linha, [38,57]).trim() || 'NÃO INFORMADO',
+                seuNum: getVal(linha, [63,77]).trim() || 'NÃO INFORMADO',
+                vencimento: getVal(linha, [78,85]),
+                vencimentoFormat: formatVencimento8(getVal(linha, [78,85])),
+                valor: getVal(linha, [86,100]),
+                valorFormat: formatValor(getVal(linha, [86,100])),
+                carteira: getVal(linha, [58,58]) || 'N/I',
+                codMov: getVal(linha, [16,17]) || 'N/I',
+                pagador: q ? getVal(q.linha, [34,73]).trim() : 'NÃO INFORMADO',
+                endereco: q ? getVal(q.linha, [74,113]).trim() : 'NÃO INFORMADO',
+                bairro: q ? getVal(q.linha, [114,128]).trim() : 'NÃO INFORMADO',
+                cep: q ? getVal(q.linha, [129,133]).trim() + (getVal(q.linha, [134,136]).trim() ? '-' + getVal(q.linha, [134,136]).trim() : '') : 'NÃO INFORMADO',
+                cidade: q ? getVal(q.linha, [137,151]).trim() : 'NÃO INFORMADO',
+                uf: q ? getVal(q.linha, [152,153]).trim() : 'NÃO INFORMADO',
+                linha: linha,
+                linhaQ: q ? q.linha : '',
+                headerArq: headerArq,
+                headerLote: headerLote
+            });
+        }
+        return titulos;
+    }
+
+    // ==============================
+    // GERAR RETORNO (SAFRA e BANRISUL)
+    // ==============================
+    function generateReturnSafra(lines) {
+        let ret = [];
+        let header = null, detalhes = [];
+        for (let line of lines) {
+            if (line.trim().length === 0) continue;
+            if (line.length < 400) continue;
+            const tipo = getVal(line, [1,1]);
+            if (tipo === '0') header = line;
+            else if (tipo === '1') detalhes.push(line);
+        }
+        if (!header) { header = '0 2RETORNO  01COBRANCA       422SAFRA                            '; header = padRight(header, 400, ' '); }
+        else { let h = header.split(''); h[1]='2'; const now=new Date(); const ds=String(now.getFullYear()).slice(2,4)+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0'); for(let i=0;i<6;i++) h[94+i]=ds[i]||'0'; header=h.join(''); }
+        ret.push(header.substring(0,400));
+        let seq=2;
+        for(let det of detalhes) {
+            let r=det.split('');
+            r[108]='0'; r[109]='6';
+            const now=new Date(); const ds=String(now.getFullYear()).slice(2,4)+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0');
+            for(let i=0;i<6;i++) r[110+i]=ds[i]||'0';
+            const valor=getVal(det,[127,139]);
+            for(let i=0;i<13;i++) r[253+i]=valor[i]||'0';
+            for(let i=0;i<6;i++) r[295+i]=ds[i]||'0';
+            const seqStr=String(seq).padStart(6,'0');
+            for(let i=0;i<6;i++) r[394+i]=seqStr[i]||'0';
+            ret.push(r.join('').substring(0,400));
+            seq++;
+        }
+        const qtde=detalhes.length;
+        let trailer='9'+padRight('',368,' ')+String(qtde).padStart(8,'0')+padRight('',15,' ')+String(seq-1).padStart(6,'0');
+        trailer=padRight(trailer,400,' ');
+        ret.push(trailer.substring(0,400));
+        return ret.join('\r\n');
+    }
+
+    function generateReturnBanrisul240(lines) {
+        let ret = [];
+        let headerArq = null, lotes = [], currentLote = null, segmentosP = [];
+        for (let line of lines) {
+            if (line.trim().length === 0) continue;
+            if (line.length < 240) continue;
+            const tipo = getVal(line, [8,8]);
+            if (tipo === '0') headerArq = line;
+            else if (tipo === '1') { if (currentLote && segmentosP.length > 0) { lotes.push({ header: currentLote, segmentos: segmentosP }); } currentLote = line; segmentosP = []; }
+            else if (tipo === '3') { const seg = getVal(line, [14,14]); if (seg === 'P') segmentosP.push(line); }
+        }
+        if (currentLote && segmentosP.length > 0) lotes.push({ header: currentLote, segmentos: segmentosP });
+        if (headerArq) { let h = headerArq.split(''); h[142]='2'; const now=new Date(); const ds=String(now.getFullYear()).padStart(4,'0')+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0'); const hs=String(now.getHours()).padStart(2,'0')+String(now.getMinutes()).padStart(2,'0')+String(now.getSeconds()).padStart(2,'0'); for(let i=0;i<8;i++) h[143+i]=ds[i]||'0'; for(let i=0;i<6;i++) h[151+i]=hs[i]||'0'; ret.push(h.join('').substring(0,240)); }
+        else { ret.push(padRight('04100000         04100000000000BANRISUL                    ',240,' ')); }
+        let seq=1;
+        for (let lote of lotes) {
+            let hl = lote.header;
+            if (hl) { let h = hl.split(''); const now=new Date(); const ds=String(now.getFullYear()).padStart(4,'0')+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0'); for(let i=0;i<8;i++) h[191+i]=ds[i]||'0'; ret.push(h.join('').substring(0,240)); }
+            for (let p of lote.segmentos) {
+                let t = p.split(''); t[13]='T'; t[15]='0'; t[16]='6'; const seqStr=String(seq).padStart(5,'0'); for(let i=0;i<5;i++) t[8+i]=seqStr[i]||'0'; ret.push(t.join('').substring(0,240)); seq++;
+                let u = p.split(''); u[13]='U'; u[15]='0'; u[16]='6'; const valor=getVal(p,[86,100]); for(let i=0;i<15;i++){ if(i<valor.length){ u[77+i]=valor[i]||'0'; u[92+i]=valor[i]||'0'; } } const now=new Date(); const ds=String(now.getFullYear()).padStart(4,'0')+String(now.getMonth()+1).padStart(2,'0')+String(now.getDate()).padStart(2,'0'); for(let i=0;i<8;i++){ u[137+i]=ds[i]||'0'; u[145+i]=ds[i]||'0'; } ret.push(u.join('').substring(0,240)); seq++;
+            }
+            const qtde = 1 + (lote.segmentos.length * 2) + 1;
+            let tl = '041' + getVal(lote.header, [4,7]) + '5' + padRight('',9,' ') + String(qtde).padStart(6,'0');
+            tl = padRight(tl,240,' '); ret.push(tl.substring(0,240));
+        }
+        const qtdeLotes = lotes.length;
+        const qtdeReg = ret.length;
+        let ta = '04199999' + '9' + padRight('',9,' ') + String(qtdeLotes).padStart(6,'0') + String(qtdeReg).padStart(6,'0');
+        ta = padRight(ta,240,' '); ret.push(ta.substring(0,240));
+        return ret.join('\r\n');
+    }
+
+    // ==============================
+    // ANALISAR SEGMENTOS
+    // ==============================
+    function analyzeSegments(lines, bank) {
+        var result = { header: null, lotes: [], trailer: null, totalRegistros: 0 };
+        if (bank === 'banrisul240') {
+            var loteData = null;
+            for (var i=0; i<lines.length; i++) {
+                var line = lines[i];
+                if (line.trim().length === 0) continue;
+                if (line.length < 240) continue;
+                result.totalRegistros++;
+                var tipoReg = getVal(line, [8,8]);
+                if (tipoReg === '0') result.header = { tipo: 'Header Arquivo' };
+                else if (tipoReg === '1') { if (loteData) result.lotes.push(loteData); loteData = { lote: getVal(line, [4,7]), segmentos: ['Header Lote'] }; }
+                else if (tipoReg === '3') { if (loteData) { var seg = getVal(line, [14,14]); loteData.segmentos.push('Segmento ' + seg); } }
+                else if (tipoReg === '5') { if (loteData) { loteData.segmentos.push('Trailer Lote'); result.lotes.push(loteData); loteData = null; } }
+                else if (tipoReg === '9') result.trailer = { tipo: 'Trailer Arquivo' };
+            }
+            if (loteData) result.lotes.push(loteData);
+        } else {
+            var loteData = null;
+            for (var i=0; i<lines.length; i++) {
+                var line = lines[i];
+                if (line.trim().length === 0) continue;
+                if (line.length < 400) continue;
+                result.totalRegistros++;
+                var tipoReg = getVal(line, [1,1]);
+                if (tipoReg === '0') result.header = { tipo: 'Header Arquivo' };
+                else if (tipoReg === '1') { if (!loteData) loteData = { lote: '01', segmentos: ['Header Lote'] }; var seg = getVal(line, [108,109]); loteData.segmentos.push('Registro Título (Mov ' + seg + ')'); }
+                else if (tipoReg === '2') { if (loteData) loteData.segmentos.push('Registro Tipo 2'); }
+                else if (tipoReg === '4') { if (loteData) loteData.segmentos.push('Registro Tipo 4'); }
+                else if (tipoReg === '6') { if (loteData) loteData.segmentos.push('Registro Tipo 6'); }
+                else if (tipoReg === '7') { if (loteData) loteData.segmentos.push('Registro Tipo 7'); }
+                else if (tipoReg === '8') { if (loteData) loteData.segmentos.push('Registro Tipo 8'); }
+                else if (tipoReg === '9') { if (loteData) { loteData.segmentos.push('Trailer Arquivo'); result.lotes.push(loteData); loteData = null; } result.trailer = { tipo: 'Trailer Arquivo' }; }
+            }
+            if (loteData) { if (loteData.segmentos.indexOf('Trailer Arquivo') === -1) loteData.segmentos.push('Trailer Arquivo (implícito)'); result.lotes.push(loteData); }
+        }
+        return result;
+    }
+
+    function renderSegmentos(analysis) {
+        if (!analysis || !analysis.lotes || analysis.lotes.length === 0) { segmentosContainer.innerHTML = '<div class="segment-info">Nenhum segmento encontrado.</div>'; return; }
+        var html = '';
+        if (analysis.header) html += '<div style="margin-bottom:8px;"><span class="segment-tag header">📌 '+analysis.header.tipo+'</span></div>';
+        var loteNum = 0;
+        for (var l=0; l<analysis.lotes.length; l++) {
+            var lote = analysis.lotes[l];
+            loteNum++;
+            html += '<div style="margin:8px 0;padding:8px 12px;background:#f7fafc;border-radius:8px;border-left:3px solid #4299e1;"><div style="font-weight:600;color:#1a365d;margin-bottom:4px;">📦 Lote '+loteNum+'</div><div class="segment-list">';
+            for (var s=0; s<lote.segmentos.length; s++) {
+                var seg = lote.segmentos[s];
+                var cls = 'opcional';
+                var sl = seg.toLowerCase();
+                if (sl.indexOf('header') !== -1) cls = 'header';
+                else if (sl.indexOf('lote') !== -1) cls = 'lote';
+                else if (sl.indexOf('segmento p') !== -1 || sl.indexOf('registro título') !== -1) cls = 'p';
+                else if (sl.indexOf('segmento q') !== -1 || sl.indexOf('registro tipo 2') !== -1) cls = 'q';
+                else if (sl.indexOf('segmento r') !== -1 || sl.indexOf('registro tipo 6') !== -1) cls = 'r';
+                else if (sl.indexOf('segmento s') !== -1 || sl.indexOf('registro tipo 7') !== -1) cls = 's';
+                else if (sl.indexOf('segmento t') !== -1) cls = 't';
+                else if (sl.indexOf('segmento u') !== -1) cls = 'u';
+                else if (sl.indexOf('segmento y') !== -1) cls = 'y';
+                else if (sl.indexOf('trailer') !== -1) cls = 'trailer';
+                html += '<span class="segment-tag '+cls+'">'+seg+'</span>';
+            }
+            html += '</div></div>';
+        }
+        if (analysis.trailer) html += '<div style="margin-top:8px;"><span class="segment-tag trailer">📌 '+analysis.trailer.tipo+'</span></div>';
+        html += '<div style="margin-top:12px;font-size:13px;color:#4a5568;">Total de registros: <strong>'+analysis.totalRegistros+'</strong> | Lotes: <strong>'+analysis.lotes.length+'</strong></div>';
+        html += '<div style="margin-top:12px;padding:8px 12px;background:#edf2f7;border-radius:8px;font-size:12px;color:#4a5568;"><strong>Legenda:</strong> <span class="segment-tag header" style="font-size:10px;">Header</span> <span class="segment-tag lote" style="font-size:10px;">Lote</span> <span class="segment-tag p" style="font-size:10px;">P</span> <span class="segment-tag q" style="font-size:10px;">Q</span> <span class="segment-tag r" style="font-size:10px;">R</span> <span class="segment-tag s" style="font-size:10px;">S</span> <span class="segment-tag t" style="font-size:10px;">T</span> <span class="segment-tag u" style="font-size:10px;">U</span> <span class="segment-tag y" style="font-size:10px;">Y</span> <span class="segment-tag trailer" style="font-size:10px;">Trailer</span> <span class="segment-tag opcional" style="font-size:10px;">Opcional</span></div>';
+        segmentosContainer.innerHTML = html;
+    }
+
+    // ==============================
+    // PROCESSAR ARQUIVO
+    // ==============================
+    function processFile(content, fileName) {
+        currentContent = content;
+        fileInfo.textContent = '📄 ' + fileName + ' (' + content.length + ' bytes)';
+        var lines = content.split(/\r?\n/).filter(function(l) { return l.trim().length > 0; });
+        var detection = detectBank(lines);
+        if (detection) {
+            currentBank = detection;
+            bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge ' + detection.bank + '">' + detection.label + '</span>';
+            addLog('✅ Banco identificado: ' + detection.label, 'ok');
+        } else {
+            currentBank = null;
+            bankDetected.innerHTML = '⚠️ Banco não identificado';
+            addLog('⚠️ Banco não identificado.', 'warn');
+            for (var li=0; li<lines.length; li++) {
+                var l = lines[li];
+                if (l.length >= 79) {
+                    var codBanco = l.substring(76, 79);
+                    if (codBanco === '136') { 
+                        currentBank = { bank: 'unicred', type: '400', label: 'Unicred (CNAB 400)' }; 
+                        bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge unicred">Unicred (CNAB 400)</span>';
+                        addLog('✅ Banco identificado: Unicred', 'ok');
+                        break;
+                    }
+                    if (codBanco === '422') { 
+                        currentBank = { bank: 'safra', type: '400', label: 'Safra (CNAB 400)' }; 
+                        bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge safra">Safra (CNAB 400)</span>';
+                        addLog('✅ Banco identificado: Safra', 'ok');
+                        break;
+                    }
+                    if (codBanco === '041') { 
+                        if (l.length >= 8 && l.substring(7,8) === '0') { 
+                            currentBank = { bank: 'banrisul240', type: '240', label: 'Banrisul (CNAB 240)' }; 
+                            bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge banrisul">Banrisul (CNAB 240)</span>';
+                            addLog('✅ Banco identificado: Banrisul (CNAB 240)', 'ok');
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!currentBank) {
+                for (var li2=0; li2<lines.length; li2++) {
+                    var l2 = lines[li2];
+                    if (l2.toUpperCase().indexOf('UNICRED') !== -1) { 
+                        currentBank = { bank: 'unicred', type: '400', label: 'Unicred (CNAB 400)' }; 
+                        bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge unicred">Unicred (CNAB 400)</span>';
+                        addLog('✅ Banco identificado pela menção "UNICRED"', 'ok');
+                        break;
+                    }
+                    if (l2.toUpperCase().indexOf('SAFRA') !== -1) { 
+                        currentBank = { bank: 'safra', type: '400', label: 'Safra (CNAB 400)' }; 
+                        bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge safra">Safra (CNAB 400)</span>';
+                        addLog('✅ Banco identificado pela menção "SAFRA"', 'ok');
+                        break;
+                    }
+                    if (l2.toUpperCase().indexOf('BANRISUL') !== -1) { 
+                        if (l2.length >= 8 && l2.substring(7,8) === '0') { 
+                            currentBank = { bank: 'banrisul240', type: '240', label: 'Banrisul (CNAB 240)' }; 
+                            bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge banrisul">Banrisul (CNAB 240)</span>';
+                            addLog('✅ Banco identificado pela menção "BANRISUL"', 'ok');
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!currentBank) addLog('❌ Não foi possível identificar o banco.', 'error');
+        }
+        btnValidate.disabled = false;
+        btnGenerate.disabled = true;
+    }
+
+    // ==============================
+    // DOM REFS
+    // ==============================
+    const fileInput = document.getElementById('fileInput');
+    const dropArea = document.getElementById('dropArea');
+    const fileInfo = document.getElementById('fileInfo');
+    const btnValidate = document.getElementById('btnValidate');
+    const btnGenerate = document.getElementById('btnGenerateReturn');
+    const btnClear = document.getElementById('btnClear');
+    const logArea = document.getElementById('logArea');
+    const logCount = document.getElementById('logCount');
+    const sumTotal = document.getElementById('sumTotal');
+    const sumLotes = document.getElementById('sumLotes');
+    const sumOk = document.getElementById('sumOk');
+    const sumErrors = document.getElementById('sumErrors');
+    const statusMsg = document.getElementById('statusMessage');
+    const bankDetected = document.getElementById('bankDetected');
+    const downloadLink = document.getElementById('downloadLink');
+    const btnCopyLog = document.getElementById('btnCopyLog');
+    const btnClearLog = document.getElementById('btnClearLog');
+    const dataSection = document.getElementById('dataSection');
+    const safraTableBody = document.getElementById('safraTableBody');
+    const unicredTableBody = document.getElementById('unicredTableBody');
+    const banrisul240TableBody = document.getElementById('banrisul240TableBody');
+    const segmentosContainer = document.getElementById('segmentosContainer');
+    const tituloCount = document.getElementById('tituloCount');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+    const modalClose = document.getElementById('modalClose');
+
+    let currentContent = '';
+    let currentBank = null;
+    let validationLog = [];
+    let extractedData = [];
+    let segmentAnalysis = null;
+
+    function addLog(msg, type) { if (type === undefined) type = 'info'; const types = { info: 'line-info', error: 'line-error', ok: 'line-ok', warn: 'line-warn' }; validationLog.push({ msg, type }); renderLog(); }
+    function renderLog() { logArea.innerHTML = validationLog.map(function(l) { return '<span class="' + (l.type || 'line-info') + '">' + escapeHtml(l.msg) + '</span>'; }).join('\n'); logArea.scrollTop = logArea.scrollHeight; logCount.textContent = validationLog.length + ' linhas'; }
+    function escapeHtml(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function clearLog() { validationLog = []; renderLog(); }
+
+    function closeModal() {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+    // ==============================
+    // OPEN MODAL - ATUALIZADO COM UNICRED
+    // ==============================
+    window.openModal = function(idx) {
+        if (!extractedData || extractedData.length === 0) {
+            alert('Nenhum dado de título encontrado. Clique em "Validar" primeiro.');
+            return;
+        }
+        if (idx < 0 || idx >= extractedData.length) {
+            alert('Título não encontrado. Índice: ' + idx + ', Total: ' + extractedData.length);
+            return;
+        }
+        const titulo = extractedData[idx];
+        const tipo = titulo.tipo || 'safra';
+        const linha = titulo.linha || '';
+        const linhaQ = titulo.linhaQ || '';
+        const headerLine = titulo.headerLine || '';
+        const headerArq = titulo.headerArq || '';
+        const headerLote = titulo.headerLote || '';
+        
+        let campos = [];
+        let camposHeader = [];
+        let tituloNome = '';
+        
+        if (tipo === 'unicred') {
+            campos = CAMPOS_UNICRED_TITULO.slice();
+            camposHeader = CAMPOS_UNICRED_HEADER.slice();
+            tituloNome = 'Unicred CNAB 400 - Título #' + (idx+1);
+        } else if (tipo === 'banrisul240') {
+            campos = [];
+            for (let c of CAMPOS_BANRISUL_HEADER_ARQUIVO) campos.push({ ...c });
+            for (let c of CAMPOS_BANRISUL_HEADER_LOTE) campos.push({ ...c });
+            for (let c of CAMPOS_BANRISUL_P) campos.push({ ...c });
+            for (let c of CAMPOS_BANRISUL_Q) {
+                const existe = campos.some(function(p) { return p.nome === c.nome && p.pos[0] === c.pos[0]; });
+                if (!existe) campos.push({ ...c });
+            }
+            tituloNome = 'Banrisul CNAB 240 - Título #' + (idx+1);
+        } else if (tipo === 'safra') {
+            campos = CAMPOS_SAFRA_TITULO.slice();
+            camposHeader = CAMPOS_SAFRA_HEADER.slice();
+            tituloNome = 'Safra CNAB 400 - Título #' + (idx+1);
+        } else {
+            campos = CAMPOS_SAFRA_TITULO.slice();
+            tituloNome = 'Título #' + (idx+1);
+        }
+        
+        modalTitle.textContent = tituloNome + ' - ' + titulo.nossoNum;
+        
+        let html = '<div class="resumo-titulo">' +
+            '<div class="item"><span class="label">Nosso Número:</span> <span class="value">' + titulo.nossoNum + '</span></div>' +
+            '<div class="item"><span class="label">Seu Número:</span> <span class="value">' + titulo.seuNum + '</span></div>' +
+            '<div class="item"><span class="label">Vencimento:</span> <span class="value">' + titulo.vencimentoFormat + '</span></div>' +
+            '<div class="item"><span class="label">Valor:</span> <span class="value">R$ ' + titulo.valorFormat + '</span></div>' +
+            (titulo.pagador && titulo.pagador !== 'NÃO INFORMADO' ? '<div class="item"><span class="label">Pagador:</span> <span class="value">' + titulo.pagador + '</span></div>' : '') +
+            (titulo.endereco && titulo.endereco !== 'NÃO INFORMADO' ? '<div class="item"><span class="label">Endereço:</span> <span class="value">' + titulo.endereco + '</span></div>' : '') +
+            (titulo.cidade && titulo.cidade !== 'NÃO INFORMADO' ? '<div class="item"><span class="label">Cidade/UF:</span> <span class="value">' + titulo.cidade + '/' + titulo.uf + '</span></div>' : '') +
+            '</div><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="detail-table"><thead><tr><th style="width:80px;">Posição</th><th style="width:40px;">Tam</th><th style="width:180px;">Campo</th><th style="width:100px;">Segmento</th><th style="width:180px;">Valor Lido</th><th>Descrição</th></tr></thead><tbody>';
+        
+        // HEADER (para Unicred e Safra)
+        if ((tipo === 'unicred' || tipo === 'safra') && headerLine) {
+            let currentSeg = '';
+            const headerCampos = tipo === 'unicred' ? CAMPOS_UNICRED_HEADER : CAMPOS_SAFRA_HEADER;
+            for (var hc=0; hc<headerCampos.length; hc++) {
+                var campo = headerCampos[hc];
+                const valor = getVal(headerLine, campo.pos);
+                if (campo.seg !== currentSeg) { 
+                    currentSeg = campo.seg; 
+                    html += '<tr class="seg-separator"><td colspan="6">📌 ' + campo.seg + ' (Header do Arquivo)</td></tr>'; 
+                }
+                const posStr = campo.pos[0] === campo.pos[1] ? campo.pos[0] : campo.pos[0] + '-' + campo.pos[1];
+                const tam = campo.pos[1] - campo.pos[0] + 1;
+                const isVazio = !valor || valor.trim() === '';
+                html += '<tr class="seg-header">' +
+                    '<td>' + posStr + '</td>' +
+                    '<td>' + tam + '</td>' +
+                    '<td class="campo-nome">' + campo.nome + '</td>' +
+                    '<td><span class="segment-tag header">HEADER</span></td>' +
+                    '<td class="' + (isVazio ? 'valor-vazio' : 'valor-lido') + '">' + (valor || '(vazio)') + '</td>' +
+                    '<td style="font-family:Segoe UI,system-ui,sans-serif;font-size:12px;color:#4a5568;">' + campo.desc + '</td>' +
+                    '</tr>';
+            }
+        }
+        
+        // TÍTULO
+        let currentSeg = '';
+        for (var c=0; c<campos.length; c++) {
+            var campo = campos[c];
+            let linhaAtual = linha;
+            if (tipo === 'banrisul240') {
+                if (campo.seg === 'HEADER ARQUIVO') linhaAtual = headerArq;
+                else if (campo.seg === 'HEADER LOTE') linhaAtual = headerLote;
+                else if (campo.seg === 'SEGMENTO Q') linhaAtual = linhaQ || linha;
+            }
+            const valor = getVal(linhaAtual, campo.pos);
+            const isHeader = campo.seg === 'HEADER ARQUIVO' || campo.seg === 'HEADER LOTE' || campo.seg === 'HEADER';
+            const isP = campo.seg === 'SEGMENTO P' || campo.seg === 'TÍTULO';
+            const isQ = campo.seg === 'SEGMENTO Q' || campo.seg === 'PAGADOR';
+            
+            const segClass = isHeader ? 'seg-header' : isP ? 'seg-p' : isQ ? 'seg-q' : 'seg-opcional';
+            
+            if (campo.seg !== currentSeg) { 
+                currentSeg = campo.seg; 
+                if (campo.seg !== 'HEADER') {
+                    const displayName = campo.seg.replace('HEADER ', '').replace('SEGMENTO ', '');
+                    html += '<tr class="seg-separator"><td colspan="6">📌 ' + displayName + '</td></tr>'; 
+                }
+            }
+            
+            const posStr = campo.pos[0] === campo.pos[1] ? campo.pos[0] : campo.pos[0] + '-' + campo.pos[1];
+            const tam = campo.pos[1] - campo.pos[0] + 1;
+            const isVazio = !valor || valor.trim() === '';
+            const isPagador = isQ;
+            const segTag = isHeader ? 'HEADER' : isP ? 'P' : isQ ? 'Q' : '';
+            html += '<tr class="' + segClass + (isPagador && !isVazio ? ' seg-pagador-preenchido' : '') + '">' +
+                '<td>' + posStr + '</td>' +
+                '<td>' + tam + '</td>' +
+                '<td class="campo-nome">' + campo.nome + '</td>' +
+                '<td><span class="segment-tag ' + segClass.replace('seg-', '') + '">' + segTag + '</span></td>' +
+                '<td class="' + (isVazio ? 'valor-vazio' : 'valor-lido') + '">' + (valor || '(vazio)') + '</td>' +
+                '<td style="font-family:Segoe UI,system-ui,sans-serif;font-size:12px;color:#4a5568;">' + campo.desc + '</td>' +
+                '</tr>';
+        }
+        html += '</tbody></table></div>';
+        modalContent.innerHTML = html;
+        modalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+
+    // ==============================
+    // RENDER TABELA UNICRED
+    // ==============================
+    function renderUnicredTable(titulos) {
+        unicredTableBody.innerHTML = '';
+        for (var idx=0; idx<titulos.length; idx++) {
+            var t = titulos[idx];
+            var tr = document.createElement('tr');
+            tr.className = 'row-ok';
+            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.carteira+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">🔍 Detalhes</button></td>';
+            unicredTableBody.appendChild(tr);
+        }
+    }
+
+    // ==============================
+    // RENDER DATATABLE ATUALIZADO
+    // ==============================
+    function renderDataTable(titulos, bank) {
+        if (!titulos || titulos.length === 0) { dataSection.style.display = 'none'; return; }
+        dataSection.style.display = 'block';
+        tituloCount.textContent = titulos.length + ' títulos';
+        document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
+        document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
+        if (bank === 'safra') { 
+            document.getElementById('tabSafra').classList.add('active'); 
+            document.querySelector('[data-tab="safra"]').classList.add('active'); 
+            renderSafraTable(titulos); 
+        } else if (bank === 'unicred') { 
+            document.getElementById('tabUnicred').classList.add('active'); 
+            document.querySelector('[data-tab="unicred"]').classList.add('active'); 
+            renderUnicredTable(titulos); 
+        } else if (bank === 'banrisul240') { 
+            document.getElementById('tabBanrisul240').classList.add('active'); 
+            document.querySelector('[data-tab="banrisul240"]').classList.add('active'); 
+            renderBanrisul240Table(titulos); 
+        }
+    }
+
+    // ==============================
+    // FUNÇÕES SAFRA E BANRISUL (mantidas)
+    // ==============================
+    function renderSafraTable(titulos) {
+        safraTableBody.innerHTML = '';
+        for (var idx=0; idx<titulos.length; idx++) {
+            var t = titulos[idx];
+            var tr = document.createElement('tr');
+            tr.className = 'row-ok';
+            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.especie+'</td><td class="mono">'+t.carteira+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">🔍 Detalhes</button></td>';
+            safraTableBody.appendChild(tr);
+        }
+    }
+
+    function renderBanrisul240Table(titulos) {
+        banrisul240TableBody.innerHTML = '';
+        for (var idx=0; idx<titulos.length; idx++) {
+            var t = titulos[idx];
+            var tr = document.createElement('tr');
+            tr.className = 'row-ok';
+            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.lote+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.carteira+'</td><td class="mono">'+t.codMov+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">🔍 Detalhes</button></td>';
+            banrisul240TableBody.appendChild(tr);
+        }
+    }
+
+    // ==============================
+    // EVENTOS
+    // ==============================
+    fileInput.addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(ev) { clearLog(); processFile(ev.target.result, file.name); };
+        reader.readAsText(file);
+    });
+
+    dropArea.addEventListener('click', function() { fileInput.click(); });
+    dropArea.addEventListener('dragover', function(e) { e.preventDefault(); dropArea.style.borderColor = '#2b6cb0'; });
+    dropArea.addEventListener('dragleave', function() { dropArea.style.borderColor = '#bdd3e8'; });
+    dropArea.addEventListener('drop', function(e) {
+        e.preventDefault(); dropArea.style.borderColor = '#bdd3e8';
+        var file = e.dataTransfer.files[0];
+        if (file) { var reader = new FileReader(); reader.onload = function(ev) { clearLog(); processFile(ev.target.result, file.name); }; reader.readAsText(file); }
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+            document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+            this.classList.add('active');
+            document.getElementById('tab' + this.dataset.tab.charAt(0).toUpperCase() + this.dataset.tab.slice(1)).classList.add('active');
+        });
+    });
+
+    btnValidate.addEventListener('click', function() {
+        if (!currentContent) { addLog('❌ Nenhum arquivo carregado.', 'error'); return; }
+        if (!currentBank) {
+            var lines = currentContent.split(/\r?\n/).filter(function(l) { return l.trim().length > 0; });
+            for (var li=0; li<lines.length; li++) {
+                var l = lines[li];
+                if (l.length >= 79) {
+                    var codBanco = l.substring(76, 79);
+                    if (codBanco === '136') { 
+                        currentBank = { bank: 'unicred', type: '400', label: 'Unicred (CNAB 400)' }; 
+                        bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge unicred">Unicred (CNAB 400)</span>';
+                        addLog('✅ Banco identificado: Unicred', 'ok');
+                        break;
+                    }
+                    if (codBanco === '422') { 
+                        currentBank = { bank: 'safra', type: '400', label: 'Safra (CNAB 400)' }; 
+                        bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge safra">Safra (CNAB 400)</span>';
+                        addLog('✅ Banco identificado: Safra', 'ok');
+                        break;
+                    }
+                    if (codBanco === '041') { 
+                        if (l.length >= 8 && l.substring(7,8) === '0') { 
+                            currentBank = { bank: 'banrisul240', type: '240', label: 'Banrisul (CNAB 240)' }; 
+                            bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge banrisul">Banrisul (CNAB 240)</span>';
+                            addLog('✅ Banco identificado: Banrisul (CNAB 240)', 'ok');
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!currentBank) { addLog('❌ Banco não identificado.', 'error'); return; }
+        }
+        clearLog();
+        var lines = currentContent.split(/\r?\n/).filter(function(l) { return l.trim().length > 0; });
+        var result;
+        var integrityErrors = [];
+        
+        if (currentBank.bank === 'banrisul240') { 
+            result = validateBanrisulIntegrity(lines, currentBank);
+            // Só extrai se não houver erros críticos de tamanho
+            if (result.errors.length === 0 || result.errors.every(function(e) { return !e.includes('caracteres'); })) {
+                extractedData = extractBanrisul240Data(lines); 
+            } else {
+                extractedData = [];
+                addLog('⚠️ Arquivo com problemas de tamanho. Extração pode estar incompleta.', 'warn');
+            }
+            addLog('✅ ' + extractedData.length + ' título(s) extraído(s) do Banrisul CNAB 240', 'info'); 
+        } else if (currentBank.bank === 'unicred') { 
+            result = validateUnicred(lines, currentBank);
+            if (result.errors.length === 0 || result.errors.every(function(e) { return !e.includes('caracteres'); })) {
+                extractedData = extractUnicredData(lines); 
+            } else {
+                extractedData = [];
+                addLog('⚠️ Arquivo com problemas de tamanho. Extração pode estar incompleta.', 'warn');
+            }
+            addLog('✅ ' + extractedData.length + ' título(s) extraído(s) do Unicred CNAB 400', 'info'); 
+        } else if (currentBank.bank === 'safra') { 
+            result = validateSafraIntegrity(lines, currentBank);
+            if (result.errors.length === 0 || result.errors.every(function(e) { return !e.includes('caracteres'); })) {
+                extractedData = extractSafraData(lines); 
+            } else {
+                extractedData = [];
+                addLog('⚠️ Arquivo com problemas de tamanho. Extração pode estar incompleta.', 'warn');
+            }
+            addLog('✅ ' + extractedData.length + ' título(s) extraído(s) do Safra CNAB 400', 'info'); 
+        } else { 
+            addLog('❌ Banco não suportado.', 'error'); 
+            return; 
+        }
+
+        // Adicionar logs de integridade
+        for (var ei=0; ei<result.errors.length; ei++) {
+            addLog('❌ ' + result.errors[ei], 'error');
+        }
+        for (var wi=0; wi<result.warns.length; wi++) {
+            addLog('⚠️ ' + result.warns[wi], 'warn');
+        }
+
+        segmentAnalysis = analyzeSegments(lines, currentBank.bank);
+        renderSegmentos(segmentAnalysis);
+
+        sumTotal.textContent = result.total;
+        sumLotes.textContent = result.lotes || 1;
+        sumErrors.textContent = result.errors.length;
+        sumOk.textContent = result.total - result.errors.length;
+
+        if (result.errors.length === 0 && result.warns.length === 0) statusMsg.innerHTML = '<span class="status-badge badge-ok">✅ Arquivo válido</span>';
+        else if (result.errors.length > 0) statusMsg.innerHTML = '<span class="status-badge badge-error">❌ ' + result.errors.length + ' erro(s) encontrado(s)</span>';
+        else statusMsg.innerHTML = '<span class="status-badge badge-warn">⚠️ ' + result.warns.length + ' advertência(s)</span>';
+
+        renderDataTable(extractedData, currentBank.bank);
+        btnGenerate.disabled = false;
+        addLog('✅ Validação concluída. ' + extractedData.length + ' título(s) disponíveis para detalhamento.', 'info');
+    });
+
+    btnGenerate.addEventListener('click', function() {
+        if (!currentContent || !currentBank) { addLog('❌ Nenhum arquivo carregado ou banco não identificado.', 'error'); return; }
+        var lines = currentContent.split(/\r?\n/).filter(function(l) { return l.trim().length > 0; });
+        var retorno;
+        if (currentBank.bank === 'banrisul240') retorno = generateReturnBanrisul240(lines);
+        else if (currentBank.bank === 'unicred') retorno = generateReturnUnicred(lines);
+        else if (currentBank.bank === 'safra') retorno = generateReturnSafra(lines);
+        else { addLog('❌ Banco não suportado para gerar retorno.', 'error'); return; }
+        var blob = new Blob([retorno], { type: 'text/plain' });
+        var url = URL.createObjectURL(blob);
+        downloadLink.href = url;
+        downloadLink.download = 'RETORNO_' + currentBank.bank.toUpperCase() + '.' + (currentBank.type === '240' ? '240' : 'REM');
+        downloadLink.click();
+        URL.revokeObjectURL(url);
+        addLog('📤 Arquivo de retorno simulado gerado e baixado.', 'ok');
+    });
+
+    btnClear.addEventListener('click', function() {
+        currentContent = ''; currentBank = null; extractedData = []; segmentAnalysis = null;
+        fileInfo.textContent = 'Nenhum arquivo carregado'; bankDetected.innerHTML = '';
+        btnValidate.disabled = true; btnGenerate.disabled = true;
+        clearLog();
+        sumTotal.textContent = '0'; sumLotes.textContent = '0'; sumOk.textContent = '0'; sumErrors.textContent = '0';
+        statusMsg.innerHTML = 'Aguardando arquivo...';
+        fileInput.value = '';
+        dataSection.style.display = 'none';
+        safraTableBody.innerHTML = ''; unicredTableBody.innerHTML = ''; banrisul240TableBody.innerHTML = '';
+        segmentosContainer.innerHTML = 'Carregando...';
+        tituloCount.textContent = '0 títulos';
+        closeModal();
+    });
+
+    btnCopyLog.addEventListener('click', function() {
+        var txt = validationLog.map(function(l) { return l.msg; }).join('\n');
+        navigator.clipboard.writeText(txt).then(function() { addLog('📋 Log copiado.', 'ok'); }).catch(function() { alert('Selecione manualmente.'); });
+    });
+
+    btnClearLog.addEventListener('click', clearLog);
+})();
+</script>
+</body>
+</html>
