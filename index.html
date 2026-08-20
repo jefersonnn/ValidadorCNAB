@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validador CNAB 路 Banrisul (240) 路 Unicred (400) 路 Cresol (400) 路 Rendimento (240)</title>
+    <title>Validador CNAB · Banrisul (240) · Unicred (400) · Cresol (400) · Rendimento (240)</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
         body { background: #f0f4f8; margin: 0; padding: 20px; display: flex; justify-content: center; }
@@ -139,33 +139,33 @@
 </head>
 <body>
 <div class="container">
-    <h1>馃搫 Validador CNAB 路 Banrisul (240) 路 Unicred (400) 路 Cresol (400) 路 Rendimento (240) <small>v8.0</small></h1>
+    <h1>📄 Validador CNAB · Banrisul (240) · Unicred (400) · Cresol (400) · Rendimento (240) <small>v8.0</small></h1>
     <div class="grid-2">
         <div>
             <div class="card">
-                <div class="card-header">馃摛 1. Carregar arquivo</div>
+                <div class="card-header">📤 1. Carregar arquivo</div>
                 <div class="file-drop" id="dropArea">
-                    <div style="font-size:40px;line-height:1.2;">馃搨</div>
+                    <div style="font-size:40px;line-height:1.2;">📂</div>
                     <div style="font-weight:500;color:#1a365d;">Arraste ou clique para selecionar</div>
-                    <div style="font-size:13px;color:#4a5568;">.240 路 .rem 路 .txt 路 at茅 10 MB</div>
+                    <div style="font-size:13px;color:#4a5568;">.240 · .rem · .txt · até 10 MB</div>
                     <input type="file" id="fileInput" accept=".240,.rem,.txt">
                 </div>
                 <div id="fileInfo" class="text-muted mt-16" style="font-size:14px;">Nenhum arquivo carregado</div>
                 <div class="flex-between mt-16">
                     <div class="btn-group">
-                        <button class="btn" id="btnValidate" disabled>馃攳 Validar</button>
-                        <button class="btn btn-success" id="btnGenerateReturn" disabled>馃攧 Gerar retorno</button>
+                        <button class="btn" id="btnValidate" disabled>🔍 Validar</button>
+                        <button class="btn btn-success" id="btnGenerateReturn" disabled>🔄 Gerar retorno</button>
                     </div>
                     <button class="btn btn-outline" id="btnClear">Limpar</button>
                 </div>
             </div>
             <div class="card" style="margin-top:16px;">
-                <div class="card-header">馃搳 Resumo da an谩lise</div>
+                <div class="card-header">📊 Resumo da análise</div>
                 <div id="summaryContainer">
                     <div class="summary-grid">
                         <div class="summary-item"><div class="num" id="sumTotal">0</div><div class="label">Registros</div></div>
                         <div class="summary-item"><div class="num" id="sumLotes">0</div><div class="label">Lotes</div></div>
-                        <div class="summary-item"><div class="num" id="sumOk">0</div><div class="label">V谩lidos</div></div>
+                        <div class="summary-item"><div class="num" id="sumOk">0</div><div class="label">Válidos</div></div>
                         <div class="summary-item"><div class="num" id="sumErrors">0</div><div class="label">Erros</div></div>
                     </div>
                     <div id="statusMessage" style="font-size:15px;margin-top:4px;">Aguardando arquivo...</div>
@@ -173,32 +173,32 @@
                 </div>
             </div>
             <div class="aviso-banco" id="avisoUnicred" style="display:none;">
-                <strong>馃敂 ATEN脟脙O - Teste Unicred</strong><br>
-                Ao gerar o retorno para <strong>Unicred</strong>, os dados de ag锚ncia e conta utilizados s茫o FIXOS para valida莽茫o:<br><br>
-                <span class="posicao">Posi莽茫o 018-021</span> 鈫?Ag锚ncia: <span class="valores">1102</span><br>
-                <span class="posicao">Posi莽茫o 022</span> 鈫?DV Ag锚ncia: <span class="valores">9</span><br>
-                <span class="posicao">Posi莽茫o 023-030</span> 鈫?Conta: <span class="valores">00077285</span><br>
-                <span class="posicao">Posi莽茫o 031</span> 鈫?DV Conta: <span class="valores">2</span>
+                <strong>🔔 ATENÇÃO - Teste Unicred</strong><br>
+                Ao gerar o retorno para <strong>Unicred</strong>, os dados de agência e conta utilizados são FIXOS para validação:<br><br>
+                <span class="posicao">Posição 018-021</span> → Agência: <span class="valores">1102</span><br>
+                <span class="posicao">Posição 022</span> → DV Agência: <span class="valores">9</span><br>
+                <span class="posicao">Posição 023-030</span> → Conta: <span class="valores">00077285</span><br>
+                <span class="posicao">Posição 031</span> → DV Conta: <span class="valores">2</span>
             </div>
             <div class="aviso-banco" id="avisoCresol" style="display:none;">
-                <strong>馃敂 ATEN脟脙O - Teste Cresol</strong><br>
-                O arquivo de retorno 茅 gerado com o HEADER <strong>'02RETORNO01COBRANCA'</strong> e TODAS as linhas com <strong>400 posi莽玫es</strong>.<br>
-                Dados extra铆dos do primeiro registro de detalhe da remessa:<br><br>
-                <span class="posicao">Posi莽茫o 025-029</span> 鈫?Ag锚ncia: <span class="valores" id="cresolAgencia">---</span><br>
-                <span class="posicao">Posi莽茫o 030-036</span> 鈫?Conta: <span class="valores" id="cresolConta">---</span><br>
-                <span class="posicao">Posi莽茫o 037</span> 鈫?DV Conta: <span class="valores" id="cresolDvConta">---</span>
+                <strong>🔔 ATENÇÃO - Teste Cresol</strong><br>
+                O arquivo de retorno é gerado com o HEADER <strong>'02RETORNO01COBRANCA'</strong> e TODAS as linhas com <strong>400 posições</strong>.<br>
+                Dados extraídos do primeiro registro de detalhe da remessa:<br><br>
+                <span class="posicao">Posição 025-029</span> → Agência: <span class="valores" id="cresolAgencia">---</span><br>
+                <span class="posicao">Posição 030-036</span> → Conta: <span class="valores" id="cresolConta">---</span><br>
+                <span class="posicao">Posição 037</span> → DV Conta: <span class="valores" id="cresolDvConta">---</span>
             </div>
         </div>
         <div>
             <div class="card" style="height:100%;display:flex;flex-direction:column;">
                 <div class="card-header" style="justify-content:space-between;">
-                    <span>馃搵 Log de valida莽茫o</span>
+                    <span>📋 Log de validação</span>
                     <span style="font-weight:400;font-size:13px;color:#4a5568;" id="logCount">0 linhas</span>
                 </div>
-                <div class="log-area" id="logArea"><span class="line-info">鉃?Aguardando a莽茫o...</span></div>
+                <div class="log-area" id="logArea"><span class="line-info">➜ Aguardando ação...</span></div>
                 <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">
-                    <button class="btn btn-outline" style="padding:4px 16px;font-size:12px;" id="btnCopyLog">馃搵 Copiar</button>
-                    <button class="btn btn-outline" style="padding:4px 16px;font-size:12px;" id="btnClearLog">馃棏锔?Limpar</button>
+                    <button class="btn btn-outline" style="padding:4px 16px;font-size:12px;" id="btnCopyLog">📋 Copiar</button>
+                    <button class="btn btn-outline" style="padding:4px 16px;font-size:12px;" id="btnClearLog">🗑️ Limpar</button>
                 </div>
             </div>
         </div>
@@ -206,43 +206,43 @@
     <div class="grid-full mt-16" id="dataSection" style="display:none;">
         <div class="card">
             <div class="card-header" style="justify-content:space-between;">
-                <span>馃搵 Dados dos T铆tulos</span>
-                <span id="tituloCount" style="font-weight:400;font-size:14px;color:#4a5568;">0 t铆tulos</span>
+                <span>📋 Dados dos Títulos</span>
+                <span id="tituloCount" style="font-weight:400;font-size:14px;color:#4a5568;">0 títulos</span>
             </div>
             <div class="tab-bar">
                 <button class="tab-btn active" data-tab="unicred">Unicred (CNAB 400)</button>
                 <button class="tab-btn" data-tab="banrisul240">Banrisul (CNAB 240)</button>
                 <button class="tab-btn" data-tab="cresol">Cresol (CNAB 400)</button>
                 <button class="tab-btn" data-tab="rendimento">Rendimento (CNAB 240)</button>
-                <button class="tab-btn" data-tab="segmentos">馃搳 Segmentos</button>
+                <button class="tab-btn" data-tab="segmentos">📊 Segmentos</button>
             </div>
-            <div id="tabUnicred" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="unicredTable"><thead><tr><th>#</th><th>Seu N煤mero</th><th>Nosso N煤mero</th><th>Vencimento</th><th>Valor (R$)</th><th>Carteira</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="unicredTableBody"></tbody></table></div></div>
-            <div id="tabBanrisul240" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="banrisul240Table"><thead><tr><th>#</th><th>Lote</th><th>Nosso N煤mero</th><th>Seu N煤mero</th><th>Vencimento</th><th>Valor (R$)</th><th>Carteira</th><th>Movimento</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="banrisul240TableBody"></tbody></table></div></div>
-            <div id="tabCresol" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="cresolTable"><thead><tr><th>#</th><th>Seu N煤mero</th><th>Nosso N煤mero</th><th>Vencimento</th><th>Valor (R$)</th><th>Carteira</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="cresolTableBody"></tbody></table></div></div>
-            <div id="tabRendimento" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="rendimentoTable"><thead><tr><th>#</th><th>Lote</th><th>Segmento</th><th>Nosso N煤mero</th><th>Seu N煤mero</th><th>Vencimento</th><th>Valor (R$)</th><th>Carteira</th><th>Movimento</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="rendimentoTableBody"></tbody></table></div></div>
+            <div id="tabUnicred" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="unicredTable"><thead><tr><th>#</th><th>Seu Número</th><th>Nosso Número</th><th>Vencimento</th><th>Valor (R$)</th><th>Carteira</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="unicredTableBody"></tbody></table></div></div>
+            <div id="tabBanrisul240" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="banrisul240Table"><thead><tr><th>#</th><th>Lote</th><th>Nosso Número</th><th>Seu Número</th><th>Vencimento</th><th>Valor (R$)</th><th>Carteira</th><th>Movimento</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="banrisul240TableBody"></tbody></table></div></div>
+            <div id="tabCresol" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="cresolTable"><thead><tr><th>#</th><th>Seu Número</th><th>Nosso Número</th><th>Vencimento</th><th>Valor (R$)</th><th>Carteira</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="cresolTableBody"></tbody></table></div></div>
+            <div id="tabRendimento" class="tab-content"><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="data-table" id="rendimentoTable"><thead><tr><th>#</th><th>Lote</th><th>Segmento</th><th>Nosso Número</th><th>Seu Número</th><th>Vencimento</th><th>Valor (R$)</th><th>Carteira</th><th>Movimento</th><th>Pagador</th><th>Status</th><th style="width:90px;">Detalhes</th></tr></thead><tbody id="rendimentoTableBody"></tbody></table></div></div>
             <div id="tabSegmentos" class="tab-content"><div id="segmentosContainer" style="padding:8px 0;"><div class="segment-info">Carregando...</div></div></div>
         </div>
     </div>
     
     <div class="grid-full mt-16">
         <div class="bank-index">
-            <span style="font-weight:600;color:#1a365d;font-size:14px;display:flex;align-items:center;gap:4px;">馃彟 Bancos Homologados:</span>
-            <div class="bank-index-item unicred"><span class="codigo">136</span><span class="layout">CNAB 400</span><span class="nome">Unicred</span><span class="badge">鉁?/span></div>
-            <div class="bank-index-item banrisul"><span class="codigo">041</span><span class="layout">CNAB 240</span><span class="nome">Banrisul</span><span class="badge">鉁?/span></div>
-            <div class="bank-index-item cresol"><span class="codigo">133</span><span class="layout">CNAB 400</span><span class="nome">Cresol</span><span class="badge">鉁?/span></div>
-            <div class="bank-index-item rendimento"><span class="codigo">633</span><span class="layout">CNAB 240</span><span class="nome">Rendimento</span><span class="badge">鉁?/span></div>
+            <span style="font-weight:600;color:#1a365d;font-size:14px;display:flex;align-items:center;gap:4px;">🏦 Bancos Homologados:</span>
+            <div class="bank-index-item unicred"><span class="codigo">136</span><span class="layout">CNAB 400</span><span class="nome">Unicred</span><span class="badge">✅</span></div>
+            <div class="bank-index-item banrisul"><span class="codigo">041</span><span class="layout">CNAB 240</span><span class="nome">Banrisul</span><span class="badge">✅</span></div>
+            <div class="bank-index-item cresol"><span class="codigo">133</span><span class="layout">CNAB 400</span><span class="nome">Cresol</span><span class="badge">✅</span></div>
+            <div class="bank-index-item rendimento"><span class="codigo">633</span><span class="layout">CNAB 240</span><span class="nome">Rendimento</span><span class="badge">✅</span></div>
             <span style="font-size:12px;color:#a0aec0;margin-left:auto;">Total: 4 bancos homologados</span>
         </div>
     </div>
     
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal-content">
-            <div class="modal-header"><h3 id="modalTitle">Detalhes do T铆tulo</h3><button class="modal-close" id="modalClose">脳</button></div>
+            <div class="modal-header"><h3 id="modalTitle">Detalhes do Título</h3><button class="modal-close" id="modalClose">×</button></div>
             <div class="modal-body" id="modalBody"><div id="modalContent">Carregando...</div></div>
         </div>
     </div>
     <a id="downloadLink" style="display:none;"></a>
-    <div class="footer-text">Ferramenta de valida莽茫o CNAB 路 Desenvolvida para homologa莽茫o de arquivos de remessa v8.0</div>
+    <div class="footer-text">Ferramenta de validação CNAB · Desenvolvida para homologação de arquivos de remessa v8.0</div>
 </div>
 <script>
 (function(){
@@ -270,424 +270,424 @@
     // CAMPOS RENDIMENTO (CNAB 240)
     // ==============================
     var CAMPOS_RENDIMENTO_HEADER_ARQUIVO = [
-        { nome: 'C贸digo Banco', pos: [1,3], seg: 'HEADER ARQUIVO', desc: '633 - Rendimento' },
+        { nome: 'Código Banco', pos: [1,3], seg: 'HEADER ARQUIVO', desc: '633 - Rendimento' },
         { nome: 'Lote', pos: [4,7], seg: 'HEADER ARQUIVO', desc: '0000' },
         { nome: 'Tipo Registro', pos: [8,8], seg: 'HEADER ARQUIVO', desc: '0 = Header de Arquivo' },
         { nome: 'CNAB', pos: [9,17], seg: 'HEADER ARQUIVO', desc: 'Brancos' },
-        { nome: 'Tipo Inscri莽茫o', pos: [18,18], seg: 'HEADER ARQUIVO', desc: '1=CPF, 2=CNPJ, 0=Isento' },
-        { nome: 'N潞 Inscri莽茫o', pos: [19,32], seg: 'HEADER ARQUIVO', desc: '14 d铆gitos' },
-        { nome: 'C贸digo Conv锚nio', pos: [33,52], seg: 'HEADER ARQUIVO', desc: '20 posi莽玫es' },
-        { nome: 'Ag锚ncia', pos: [53,57], seg: 'HEADER ARQUIVO', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia', pos: [58,58], seg: 'HEADER ARQUIVO', desc: 'D铆gito verificador' },
-        { nome: 'Conta Corrente', pos: [59,70], seg: 'HEADER ARQUIVO', desc: '12 d铆gitos' },
-        { nome: 'DV Conta', pos: [71,71], seg: 'HEADER ARQUIVO', desc: 'D铆gito verificador' },
-        { nome: 'DV Ag/Conta', pos: [72,72], seg: 'HEADER ARQUIVO', desc: 'D铆gito verificador' },
-        { nome: 'Nome Benefici谩rio', pos: [73,102], seg: 'HEADER ARQUIVO', desc: '30 posi莽玫es' },
+        { nome: 'Tipo Inscrição', pos: [18,18], seg: 'HEADER ARQUIVO', desc: '1=CPF, 2=CNPJ, 0=Isento' },
+        { nome: 'Nº Inscrição', pos: [19,32], seg: 'HEADER ARQUIVO', desc: '14 dígitos' },
+        { nome: 'Código Convênio', pos: [33,52], seg: 'HEADER ARQUIVO', desc: '20 posições' },
+        { nome: 'Agência', pos: [53,57], seg: 'HEADER ARQUIVO', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [58,58], seg: 'HEADER ARQUIVO', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [59,70], seg: 'HEADER ARQUIVO', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [71,71], seg: 'HEADER ARQUIVO', desc: 'Dígito verificador' },
+        { nome: 'DV Ag/Conta', pos: [72,72], seg: 'HEADER ARQUIVO', desc: 'Dígito verificador' },
+        { nome: 'Nome Beneficiário', pos: [73,102], seg: 'HEADER ARQUIVO', desc: '30 posições' },
         { nome: 'Nome Banco', pos: [103,132], seg: 'HEADER ARQUIVO', desc: 'RENDIMENTO' },
         { nome: 'CNAB', pos: [133,142], seg: 'HEADER ARQUIVO', desc: 'Brancos' },
-        { nome: 'C贸digo Remessa/Retorno', pos: [143,143], seg: 'HEADER ARQUIVO', desc: '1=Remessa, 2=Retorno' },
-        { nome: 'Data Gera莽茫o', pos: [144,151], seg: 'HEADER ARQUIVO', desc: 'DDMMAAAA' },
-        { nome: 'Hora Gera莽茫o', pos: [152,157], seg: 'HEADER ARQUIVO', desc: 'HHMMSS' },
-        { nome: 'Sequ锚ncia (NSA)', pos: [158,163], seg: 'HEADER ARQUIVO', desc: '6 d铆gitos' },
+        { nome: 'Código Remessa/Retorno', pos: [143,143], seg: 'HEADER ARQUIVO', desc: '1=Remessa, 2=Retorno' },
+        { nome: 'Data Geração', pos: [144,151], seg: 'HEADER ARQUIVO', desc: 'DDMMAAAA' },
+        { nome: 'Hora Geração', pos: [152,157], seg: 'HEADER ARQUIVO', desc: 'HHMMSS' },
+        { nome: 'Sequência (NSA)', pos: [158,163], seg: 'HEADER ARQUIVO', desc: '6 dígitos' },
         { nome: 'Leiaute Arquivo', pos: [164,166], seg: 'HEADER ARQUIVO', desc: '101' },
         { nome: 'Densidade', pos: [167,171], seg: 'HEADER ARQUIVO', desc: '01600' },
-        { nome: 'Reservado Banco', pos: [172,191], seg: 'HEADER ARQUIVO', desc: '20 posi莽玫es' },
-        { nome: 'Reservado Empresa', pos: [192,211], seg: 'HEADER ARQUIVO', desc: '20 posi莽玫es' },
+        { nome: 'Reservado Banco', pos: [172,191], seg: 'HEADER ARQUIVO', desc: '20 posições' },
+        { nome: 'Reservado Empresa', pos: [192,211], seg: 'HEADER ARQUIVO', desc: '20 posições' },
         { nome: 'CNAB', pos: [212,240], seg: 'HEADER ARQUIVO', desc: 'Brancos' }
     ];
 
     var CAMPOS_RENDIMENTO_HEADER_LOTE = [
-        { nome: 'C贸digo Banco', pos: [1,3], seg: 'HEADER LOTE', desc: '633 - Rendimento' },
+        { nome: 'Código Banco', pos: [1,3], seg: 'HEADER LOTE', desc: '633 - Rendimento' },
         { nome: 'Lote', pos: [4,7], seg: 'HEADER LOTE', desc: '0001 a 9999' },
         { nome: 'Tipo Registro', pos: [8,8], seg: 'HEADER LOTE', desc: '1 = Header de Lote' },
-        { nome: 'Opera莽茫o', pos: [9,9], seg: 'HEADER LOTE', desc: 'R=Remessa, T=Retorno' },
-        { nome: 'Servi莽o', pos: [10,11], seg: 'HEADER LOTE', desc: '01=Cobran莽a' },
+        { nome: 'Operação', pos: [9,9], seg: 'HEADER LOTE', desc: 'R=Remessa, T=Retorno' },
+        { nome: 'Serviço', pos: [10,11], seg: 'HEADER LOTE', desc: '01=Cobrança' },
         { nome: 'CNAB', pos: [12,13], seg: 'HEADER LOTE', desc: 'Brancos' },
         { nome: 'Leiaute Lote', pos: [14,16], seg: 'HEADER LOTE', desc: '030' },
         { nome: 'CNAB', pos: [17,17], seg: 'HEADER LOTE', desc: 'Brancos' },
-        { nome: 'Tipo Inscri莽茫o Empresa', pos: [18,18], seg: 'HEADER LOTE', desc: '1=CPF, 2=CNPJ' },
-        { nome: 'N潞 Inscri莽茫o Empresa', pos: [19,33], seg: 'HEADER LOTE', desc: '15 d铆gitos' },
-        { nome: 'C贸digo Conv锚nio', pos: [34,53], seg: 'HEADER LOTE', desc: '20 posi莽玫es' },
-        { nome: 'Ag锚ncia', pos: [54,58], seg: 'HEADER LOTE', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia', pos: [59,59], seg: 'HEADER LOTE', desc: 'D铆gito verificador' },
-        { nome: 'Conta Corrente', pos: [60,71], seg: 'HEADER LOTE', desc: '12 d铆gitos' },
-        { nome: 'DV Conta', pos: [72,72], seg: 'HEADER LOTE', desc: 'D铆gito verificador' },
-        { nome: 'DV Ag/Conta', pos: [73,73], seg: 'HEADER LOTE', desc: 'D铆gito verificador' },
-        { nome: 'Nome Empresa', pos: [74,103], seg: 'HEADER LOTE', desc: '30 posi莽玫es' },
-        { nome: 'Mensagem 1', pos: [104,143], seg: 'HEADER LOTE', desc: '40 posi莽玫es' },
-        { nome: 'Mensagem 2', pos: [144,183], seg: 'HEADER LOTE', desc: '40 posi莽玫es' },
-        { nome: 'N潞 Remessa/Retorno', pos: [184,191], seg: 'HEADER LOTE', desc: '8 d铆gitos' },
-        { nome: 'Data Grava莽茫o', pos: [192,199], seg: 'HEADER LOTE', desc: 'DDMMAAAA' },
-        { nome: 'Data Cr茅dito', pos: [200,207], seg: 'HEADER LOTE', desc: 'DDMMAAAA' },
+        { nome: 'Tipo Inscrição Empresa', pos: [18,18], seg: 'HEADER LOTE', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição Empresa', pos: [19,33], seg: 'HEADER LOTE', desc: '15 dígitos' },
+        { nome: 'Código Convênio', pos: [34,53], seg: 'HEADER LOTE', desc: '20 posições' },
+        { nome: 'Agência', pos: [54,58], seg: 'HEADER LOTE', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [59,59], seg: 'HEADER LOTE', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [60,71], seg: 'HEADER LOTE', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [72,72], seg: 'HEADER LOTE', desc: 'Dígito verificador' },
+        { nome: 'DV Ag/Conta', pos: [73,73], seg: 'HEADER LOTE', desc: 'Dígito verificador' },
+        { nome: 'Nome Empresa', pos: [74,103], seg: 'HEADER LOTE', desc: '30 posições' },
+        { nome: 'Mensagem 1', pos: [104,143], seg: 'HEADER LOTE', desc: '40 posições' },
+        { nome: 'Mensagem 2', pos: [144,183], seg: 'HEADER LOTE', desc: '40 posições' },
+        { nome: 'Nº Remessa/Retorno', pos: [184,191], seg: 'HEADER LOTE', desc: '8 dígitos' },
+        { nome: 'Data Gravação', pos: [192,199], seg: 'HEADER LOTE', desc: 'DDMMAAAA' },
+        { nome: 'Data Crédito', pos: [200,207], seg: 'HEADER LOTE', desc: 'DDMMAAAA' },
         { nome: 'CNAB', pos: [208,240], seg: 'HEADER LOTE', desc: 'Brancos' }
     ];
 
     var CAMPOS_RENDIMENTO_SEGMENTO_P = [
-        { nome: 'N潞 Sequencial', pos: [9,13], seg: 'SEGMENTO P', desc: 'N煤mero sequencial no lote' },
-        { nome: 'Segmento', pos: [14,14], seg: 'SEGMENTO P', desc: 'P = Dados do t铆tulo' },
-        { nome: 'C贸digo Movimento', pos: [16,17], seg: 'SEGMENTO P', desc: '01=Entrada, 02=Baixa, 09=Protesto' },
-        { nome: 'Ag锚ncia', pos: [18,22], seg: 'SEGMENTO P', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia', pos: [23,23], seg: 'SEGMENTO P', desc: 'D铆gito verificador' },
-        { nome: 'Conta Corrente', pos: [24,35], seg: 'SEGMENTO P', desc: '12 d铆gitos' },
-        { nome: 'DV Conta', pos: [36,36], seg: 'SEGMENTO P', desc: 'D铆gito verificador' },
-        { nome: 'DV Ag/Conta', pos: [37,37], seg: 'SEGMENTO P', desc: 'D铆gito verificador' },
-        { nome: 'Nosso N煤mero', pos: [47,57], seg: 'SEGMENTO P', desc: '11 d铆gitos (10+DV)' },
-        { nome: 'Carteira', pos: [58,58], seg: 'SEGMENTO P', desc: 'C贸digo da carteira' },
+        { nome: 'Nº Sequencial', pos: [9,13], seg: 'SEGMENTO P', desc: 'Número sequencial no lote' },
+        { nome: 'Segmento', pos: [14,14], seg: 'SEGMENTO P', desc: 'P = Dados do título' },
+        { nome: 'Código Movimento', pos: [16,17], seg: 'SEGMENTO P', desc: '01=Entrada, 02=Baixa, 09=Protesto' },
+        { nome: 'Agência', pos: [18,22], seg: 'SEGMENTO P', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [23,23], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [24,35], seg: 'SEGMENTO P', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [36,36], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'DV Ag/Conta', pos: [37,37], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'Nosso Número', pos: [47,57], seg: 'SEGMENTO P', desc: '11 dígitos (10+DV)' },
+        { nome: 'Carteira', pos: [58,58], seg: 'SEGMENTO P', desc: 'Código da carteira' },
         { nome: 'Forma Cadastramento', pos: [59,59], seg: 'SEGMENTO P', desc: 'Forma de cadastro no banco' },
         { nome: 'Tipo Documento', pos: [60,60], seg: 'SEGMENTO P', desc: '1=Tradicional' },
-        { nome: 'Emiss茫o Boleto', pos: [61,61], seg: 'SEGMENTO P', desc: '1=Banco emite, 2=Cliente emite' },
-        { nome: 'Distribui莽茫o Boleto', pos: [62,62], seg: 'SEGMENTO P', desc: '1=Banco distribui, 2=Cliente distribui' },
-        { nome: 'N潞 Documento', pos: [63,77], seg: 'SEGMENTO P', desc: '15 posi莽玫es' },
+        { nome: 'Emissão Boleto', pos: [61,61], seg: 'SEGMENTO P', desc: '1=Banco emite, 2=Cliente emite' },
+        { nome: 'Distribuição Boleto', pos: [62,62], seg: 'SEGMENTO P', desc: '1=Banco distribui, 2=Cliente distribui' },
+        { nome: 'Nº Documento', pos: [63,77], seg: 'SEGMENTO P', desc: '15 posições' },
         { nome: 'Data Vencimento', pos: [78,85], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
-        { nome: 'Valor T铆tulo', pos: [86,100], seg: 'SEGMENTO P', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Ag锚ncia Cobradora', pos: [101,105], seg: 'SEGMENTO P', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia Cobradora', pos: [106,106], seg: 'SEGMENTO P', desc: 'D铆gito verificador' },
-        { nome: 'Esp茅cie T铆tulo', pos: [107,108], seg: 'SEGMENTO P', desc: '02=DM, 12=NP, etc' },
-        { nome: 'Aceite', pos: [109,109], seg: 'SEGMENTO P', desc: 'A=Aceito, N=N茫o' },
-        { nome: 'Data Emiss茫o', pos: [110,117], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
-        { nome: 'C贸digo Juros Mora', pos: [118,118], seg: 'SEGMENTO P', desc: '1=Valor/Dia, 2=Taxa Mensal, 3=Isento' },
+        { nome: 'Valor Título', pos: [86,100], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Agência Cobradora', pos: [101,105], seg: 'SEGMENTO P', desc: '5 dígitos' },
+        { nome: 'DV Agência Cobradora', pos: [106,106], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'Espécie Título', pos: [107,108], seg: 'SEGMENTO P', desc: '02=DM, 12=NP, etc' },
+        { nome: 'Aceite', pos: [109,109], seg: 'SEGMENTO P', desc: 'A=Aceito, N=Não' },
+        { nome: 'Data Emissão', pos: [110,117], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
+        { nome: 'Código Juros Mora', pos: [118,118], seg: 'SEGMENTO P', desc: '1=Valor/Dia, 2=Taxa Mensal, 3=Isento' },
         { nome: 'Data Juros Mora', pos: [119,126], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
-        { nome: 'Juros Mora', pos: [127,141], seg: 'SEGMENTO P', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'C贸digo Desconto 1', pos: [142,142], seg: 'SEGMENTO P', desc: '1=Valor Fixo, 2=Percentual' },
+        { nome: 'Juros Mora', pos: [127,141], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Código Desconto 1', pos: [142,142], seg: 'SEGMENTO P', desc: '1=Valor Fixo, 2=Percentual' },
         { nome: 'Data Desconto 1', pos: [143,150], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
-        { nome: 'Valor Desconto 1', pos: [151,165], seg: 'SEGMENTO P', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Valor IOF', pos: [166,180], seg: 'SEGMENTO P', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Valor Abatimento', pos: [181,195], seg: 'SEGMENTO P', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Uso Empresa', pos: [196,220], seg: 'SEGMENTO P', desc: '25 posi莽玫es (Seu N煤mero)' },
-        { nome: 'C贸digo Protesto', pos: [221,221], seg: 'SEGMENTO P', desc: '1=Protestar, 2=Dias 脷teis, 3=N茫o' },
-        { nome: 'Prazo Protesto', pos: [222,223], seg: 'SEGMENTO P', desc: '2 d铆gitos' },
-        { nome: 'C贸digo Baixa/Devolu莽茫o', pos: [224,224], seg: 'SEGMENTO P', desc: '1=Baixar/Devolver, 2=N茫o' },
-        { nome: 'Prazo Baixa/Devolu莽茫o', pos: [225,227], seg: 'SEGMENTO P', desc: '3 d铆gitos' },
-        { nome: 'C贸digo Moeda', pos: [228,229], seg: 'SEGMENTO P', desc: '09=Real' },
-        { nome: 'N潞 Contrato', pos: [230,239], seg: 'SEGMENTO P', desc: '10 d铆gitos' },
-        { nome: 'Autoriza莽茫o Pagamento Parcial', pos: [240,240], seg: 'SEGMENTO P', desc: '1=N茫o, 2=Sim' }
+        { nome: 'Valor Desconto 1', pos: [151,165], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor IOF', pos: [166,180], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor Abatimento', pos: [181,195], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Uso Empresa', pos: [196,220], seg: 'SEGMENTO P', desc: '25 posições (Seu Número)' },
+        { nome: 'Código Protesto', pos: [221,221], seg: 'SEGMENTO P', desc: '1=Protestar, 2=Dias Úteis, 3=Não' },
+        { nome: 'Prazo Protesto', pos: [222,223], seg: 'SEGMENTO P', desc: '2 dígitos' },
+        { nome: 'Código Baixa/Devolução', pos: [224,224], seg: 'SEGMENTO P', desc: '1=Baixar/Devolver, 2=Não' },
+        { nome: 'Prazo Baixa/Devolução', pos: [225,227], seg: 'SEGMENTO P', desc: '3 dígitos' },
+        { nome: 'Código Moeda', pos: [228,229], seg: 'SEGMENTO P', desc: '09=Real' },
+        { nome: 'Nº Contrato', pos: [230,239], seg: 'SEGMENTO P', desc: '10 dígitos' },
+        { nome: 'Autorização Pagamento Parcial', pos: [240,240], seg: 'SEGMENTO P', desc: '1=Não, 2=Sim' }
     ];
 
     var CAMPOS_RENDIMENTO_SEGMENTO_Q = [
-        { nome: 'Tipo Inscri莽茫o Pagador', pos: [18,18], seg: 'SEGMENTO Q', desc: '1=CPF, 2=CNPJ' },
-        { nome: 'N潞 Inscri莽茫o Pagador', pos: [19,33], seg: 'SEGMENTO Q', desc: '15 d铆gitos' },
-        { nome: 'Nome Pagador', pos: [34,73], seg: 'SEGMENTO Q', desc: '40 posi莽玫es' },
-        { nome: 'Endere莽o Pagador', pos: [74,113], seg: 'SEGMENTO Q', desc: '40 posi莽玫es' },
-        { nome: 'Bairro Pagador', pos: [114,128], seg: 'SEGMENTO Q', desc: '15 posi莽玫es' },
-        { nome: 'CEP Pagador', pos: [129,133], seg: 'SEGMENTO Q', desc: '5 d铆gitos' },
-        { nome: 'Sufixo CEP', pos: [134,136], seg: 'SEGMENTO Q', desc: '3 d铆gitos' },
-        { nome: 'Cidade Pagador', pos: [137,151], seg: 'SEGMENTO Q', desc: '15 posi莽玫es' },
-        { nome: 'UF Pagador', pos: [152,153], seg: 'SEGMENTO Q', desc: '2 posi莽玫es' },
-        { nome: 'Tipo Inscri莽茫o Sacador/Avalista', pos: [154,154], seg: 'SEGMENTO Q', desc: '1=CPF, 2=CNPJ' },
-        { nome: 'N潞 Inscri莽茫o Sacador/Avalista', pos: [155,169], seg: 'SEGMENTO Q', desc: '15 d铆gitos' },
-        { nome: 'Nome Sacador/Avalista', pos: [170,209], seg: 'SEGMENTO Q', desc: '40 posi莽玫es' },
-        { nome: 'C贸d. Banco Correspondente', pos: [210,212], seg: 'SEGMENTO Q', desc: '3 d铆gitos' },
-        { nome: 'Nosso N煤m. Bco. Correspondente', pos: [213,232], seg: 'SEGMENTO Q', desc: '20 posi莽玫es' },
-        { nome: 'CNAB', pos: [233,240], seg: 'SEGMENTO Q', desc: '8 posi莽玫es' }
+        { nome: 'Tipo Inscrição Pagador', pos: [18,18], seg: 'SEGMENTO Q', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição Pagador', pos: [19,33], seg: 'SEGMENTO Q', desc: '15 dígitos' },
+        { nome: 'Nome Pagador', pos: [34,73], seg: 'SEGMENTO Q', desc: '40 posições' },
+        { nome: 'Endereço Pagador', pos: [74,113], seg: 'SEGMENTO Q', desc: '40 posições' },
+        { nome: 'Bairro Pagador', pos: [114,128], seg: 'SEGMENTO Q', desc: '15 posições' },
+        { nome: 'CEP Pagador', pos: [129,133], seg: 'SEGMENTO Q', desc: '5 dígitos' },
+        { nome: 'Sufixo CEP', pos: [134,136], seg: 'SEGMENTO Q', desc: '3 dígitos' },
+        { nome: 'Cidade Pagador', pos: [137,151], seg: 'SEGMENTO Q', desc: '15 posições' },
+        { nome: 'UF Pagador', pos: [152,153], seg: 'SEGMENTO Q', desc: '2 posições' },
+        { nome: 'Tipo Inscrição Sacador/Avalista', pos: [154,154], seg: 'SEGMENTO Q', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição Sacador/Avalista', pos: [155,169], seg: 'SEGMENTO Q', desc: '15 dígitos' },
+        { nome: 'Nome Sacador/Avalista', pos: [170,209], seg: 'SEGMENTO Q', desc: '40 posições' },
+        { nome: 'Cód. Banco Correspondente', pos: [210,212], seg: 'SEGMENTO Q', desc: '3 dígitos' },
+        { nome: 'Nosso Núm. Bco. Correspondente', pos: [213,232], seg: 'SEGMENTO Q', desc: '20 posições' },
+        { nome: 'CNAB', pos: [233,240], seg: 'SEGMENTO Q', desc: '8 posições' }
     ];
 
     var CAMPOS_RENDIMENTO_SEGMENTO_R = [
-        { nome: 'C贸digo Desconto 2', pos: [18,18], seg: 'SEGMENTO R', desc: '1=Valor Fixo, 2=Percentual' },
+        { nome: 'Código Desconto 2', pos: [18,18], seg: 'SEGMENTO R', desc: '1=Valor Fixo, 2=Percentual' },
         { nome: 'Data Desconto 2', pos: [19,26], seg: 'SEGMENTO R', desc: 'DDMMAAAA' },
-        { nome: 'Valor Desconto 2', pos: [27,41], seg: 'SEGMENTO R', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'C贸digo Desconto 3', pos: [42,42], seg: 'SEGMENTO R', desc: '1=Valor Fixo, 2=Percentual' },
+        { nome: 'Valor Desconto 2', pos: [27,41], seg: 'SEGMENTO R', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Código Desconto 3', pos: [42,42], seg: 'SEGMENTO R', desc: '1=Valor Fixo, 2=Percentual' },
         { nome: 'Data Desconto 3', pos: [43,50], seg: 'SEGMENTO R', desc: 'DDMMAAAA' },
-        { nome: 'Valor Desconto 3', pos: [51,65], seg: 'SEGMENTO R', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'C贸digo Multa', pos: [66,66], seg: 'SEGMENTO R', desc: '1=Valor Fixo, 2=Percentual, 0=N茫o' },
+        { nome: 'Valor Desconto 3', pos: [51,65], seg: 'SEGMENTO R', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Código Multa', pos: [66,66], seg: 'SEGMENTO R', desc: '1=Valor Fixo, 2=Percentual, 0=Não' },
         { nome: 'Data Multa', pos: [67,74], seg: 'SEGMENTO R', desc: 'DDMMAAAA' },
-        { nome: 'Valor/Percentual Multa', pos: [75,89], seg: 'SEGMENTO R', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Informa莽茫o ao Sacado', pos: [90,99], seg: 'SEGMENTO R', desc: '10 posi莽玫es' },
-        { nome: 'Mensagem 3', pos: [100,139], seg: 'SEGMENTO R', desc: '40 posi莽玫es' },
-        { nome: 'Mensagem 4', pos: [140,179], seg: 'SEGMENTO R', desc: '40 posi莽玫es' }
+        { nome: 'Valor/Percentual Multa', pos: [75,89], seg: 'SEGMENTO R', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Informação ao Sacado', pos: [90,99], seg: 'SEGMENTO R', desc: '10 posições' },
+        { nome: 'Mensagem 3', pos: [100,139], seg: 'SEGMENTO R', desc: '40 posições' },
+        { nome: 'Mensagem 4', pos: [140,179], seg: 'SEGMENTO R', desc: '40 posições' }
     ];
 
     var CAMPOS_RENDIMENTO_SEGMENTO_T = [
-        { nome: 'C贸digo Movimento Retorno', pos: [16,17], seg: 'SEGMENTO T', desc: '06=Liquida莽茫o, 09=Baixa, etc' },
-        { nome: 'Ag锚ncia', pos: [18,22], seg: 'SEGMENTO T', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia', pos: [23,23], seg: 'SEGMENTO T', desc: 'D铆gito verificador' },
-        { nome: 'Conta Corrente', pos: [24,35], seg: 'SEGMENTO T', desc: '12 d铆gitos' },
-        { nome: 'DV Conta', pos: [36,36], seg: 'SEGMENTO T', desc: 'D铆gito verificador' },
-        { nome: 'DV Ag/Conta', pos: [37,37], seg: 'SEGMENTO T', desc: 'D铆gito verificador' },
-        { nome: 'Nosso N煤mero', pos: [47,57], seg: 'SEGMENTO T', desc: '11 d铆gitos (10+DV)' },
-        { nome: 'Carteira', pos: [58,58], seg: 'SEGMENTO T', desc: 'C贸digo da carteira' },
-        { nome: 'N潞 Documento', pos: [59,73], seg: 'SEGMENTO T', desc: '15 posi莽玫es' },
+        { nome: 'Código Movimento Retorno', pos: [16,17], seg: 'SEGMENTO T', desc: '06=Liquidação, 09=Baixa, etc' },
+        { nome: 'Agência', pos: [18,22], seg: 'SEGMENTO T', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [23,23], seg: 'SEGMENTO T', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [24,35], seg: 'SEGMENTO T', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [36,36], seg: 'SEGMENTO T', desc: 'Dígito verificador' },
+        { nome: 'DV Ag/Conta', pos: [37,37], seg: 'SEGMENTO T', desc: 'Dígito verificador' },
+        { nome: 'Nosso Número', pos: [47,57], seg: 'SEGMENTO T', desc: '11 dígitos (10+DV)' },
+        { nome: 'Carteira', pos: [58,58], seg: 'SEGMENTO T', desc: 'Código da carteira' },
+        { nome: 'Nº Documento', pos: [59,73], seg: 'SEGMENTO T', desc: '15 posições' },
         { nome: 'Data Vencimento', pos: [74,81], seg: 'SEGMENTO T', desc: 'DDMMAAAA' },
-        { nome: 'Valor T铆tulo', pos: [82,96], seg: 'SEGMENTO T', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Banco Cobrador/Recebedor', pos: [97,99], seg: 'SEGMENTO T', desc: '3 d铆gitos' },
-        { nome: 'Ag锚ncia Cobradora/Recebedora', pos: [100,104], seg: 'SEGMENTO T', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia Cobradora', pos: [105,105], seg: 'SEGMENTO T', desc: 'D铆gito verificador' },
-        { nome: 'Uso Empresa', pos: [106,130], seg: 'SEGMENTO T', desc: '25 posi莽玫es' },
-        { nome: 'C贸digo Moeda', pos: [131,132], seg: 'SEGMENTO T', desc: '09=Real' },
-        { nome: 'Tipo Inscri莽茫o Sacado', pos: [133,133], seg: 'SEGMENTO T', desc: '1=CPF, 2=CNPJ' },
-        { nome: 'N潞 Inscri莽茫o Sacado', pos: [134,148], seg: 'SEGMENTO T', desc: '15 d铆gitos' },
-        { nome: 'Nome Sacado', pos: [149,188], seg: 'SEGMENTO T', desc: '40 posi莽玫es' },
-        { nome: 'N潞 Contrato', pos: [189,198], seg: 'SEGMENTO T', desc: '10 posi莽玫es' },
-        { nome: 'Valor Tarifa/Custas', pos: [199,213], seg: 'SEGMENTO T', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Motivo Ocorr锚ncia', pos: [214,223], seg: 'SEGMENTO T', desc: '10 posi莽玫es' }
+        { nome: 'Valor Título', pos: [82,96], seg: 'SEGMENTO T', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Banco Cobrador/Recebedor', pos: [97,99], seg: 'SEGMENTO T', desc: '3 dígitos' },
+        { nome: 'Agência Cobradora/Recebedora', pos: [100,104], seg: 'SEGMENTO T', desc: '5 dígitos' },
+        { nome: 'DV Agência Cobradora', pos: [105,105], seg: 'SEGMENTO T', desc: 'Dígito verificador' },
+        { nome: 'Uso Empresa', pos: [106,130], seg: 'SEGMENTO T', desc: '25 posições' },
+        { nome: 'Código Moeda', pos: [131,132], seg: 'SEGMENTO T', desc: '09=Real' },
+        { nome: 'Tipo Inscrição Sacado', pos: [133,133], seg: 'SEGMENTO T', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição Sacado', pos: [134,148], seg: 'SEGMENTO T', desc: '15 dígitos' },
+        { nome: 'Nome Sacado', pos: [149,188], seg: 'SEGMENTO T', desc: '40 posições' },
+        { nome: 'Nº Contrato', pos: [189,198], seg: 'SEGMENTO T', desc: '10 posições' },
+        { nome: 'Valor Tarifa/Custas', pos: [199,213], seg: 'SEGMENTO T', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Motivo Ocorrência', pos: [214,223], seg: 'SEGMENTO T', desc: '10 posições' }
     ];
 
     var CAMPOS_RENDIMENTO_SEGMENTO_U = [
-        { nome: 'Juros/Multa/Encargos', pos: [18,32], seg: 'SEGMENTO U', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Valor Desconto', pos: [33,47], seg: 'SEGMENTO U', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Valor Abatimento', pos: [48,62], seg: 'SEGMENTO U', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Valor IOF', pos: [63,77], seg: 'SEGMENTO U', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Valor Pago', pos: [78,92], seg: 'SEGMENTO U', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Valor L铆quido', pos: [93,107], seg: 'SEGMENTO U', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Outras Despesas', pos: [108,122], seg: 'SEGMENTO U', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Outros Cr茅ditos', pos: [123,137], seg: 'SEGMENTO U', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Data Ocorr锚ncia', pos: [138,145], seg: 'SEGMENTO U', desc: 'DDMMAAAA' },
-        { nome: 'Data Cr茅dito', pos: [146,153], seg: 'SEGMENTO U', desc: 'DDMMAAAA' },
-        { nome: 'C贸digo Ocorr锚ncia Sacado', pos: [154,157], seg: 'SEGMENTO U', desc: '4 posi莽玫es' },
-        { nome: 'Data Ocorr锚ncia Sacado', pos: [158,165], seg: 'SEGMENTO U', desc: 'DDMMAAAA' },
-        { nome: 'Valor Ocorr锚ncia Sacado', pos: [166,180], seg: 'SEGMENTO U', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Complemento Ocorr锚ncia', pos: [181,210], seg: 'SEGMENTO U', desc: '30 posi莽玫es' },
-        { nome: 'C贸d. Banco Correspondente', pos: [211,213], seg: 'SEGMENTO U', desc: '3 d铆gitos' },
-        { nome: 'Nosso N煤m. Banco Correspondente', pos: [214,233], seg: 'SEGMENTO U', desc: '20 posi莽玫es' },
-        { nome: 'CNAB', pos: [234,240], seg: 'SEGMENTO U', desc: '7 posi莽玫es' }
+        { nome: 'Juros/Multa/Encargos', pos: [18,32], seg: 'SEGMENTO U', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor Desconto', pos: [33,47], seg: 'SEGMENTO U', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor Abatimento', pos: [48,62], seg: 'SEGMENTO U', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor IOF', pos: [63,77], seg: 'SEGMENTO U', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor Pago', pos: [78,92], seg: 'SEGMENTO U', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor Líquido', pos: [93,107], seg: 'SEGMENTO U', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Outras Despesas', pos: [108,122], seg: 'SEGMENTO U', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Outros Créditos', pos: [123,137], seg: 'SEGMENTO U', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Data Ocorrência', pos: [138,145], seg: 'SEGMENTO U', desc: 'DDMMAAAA' },
+        { nome: 'Data Crédito', pos: [146,153], seg: 'SEGMENTO U', desc: 'DDMMAAAA' },
+        { nome: 'Código Ocorrência Sacado', pos: [154,157], seg: 'SEGMENTO U', desc: '4 posições' },
+        { nome: 'Data Ocorrência Sacado', pos: [158,165], seg: 'SEGMENTO U', desc: 'DDMMAAAA' },
+        { nome: 'Valor Ocorrência Sacado', pos: [166,180], seg: 'SEGMENTO U', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Complemento Ocorrência', pos: [181,210], seg: 'SEGMENTO U', desc: '30 posições' },
+        { nome: 'Cód. Banco Correspondente', pos: [211,213], seg: 'SEGMENTO U', desc: '3 dígitos' },
+        { nome: 'Nosso Núm. Banco Correspondente', pos: [214,233], seg: 'SEGMENTO U', desc: '20 posições' },
+        { nome: 'CNAB', pos: [234,240], seg: 'SEGMENTO U', desc: '7 posições' }
     ];
 
     // ==============================
     // CAMPOS UNICRED (original)
     // ==============================
     var CAMPOS_UNICRED_HEADER = [
-        { nome: 'Identifica莽茫o Registro', pos: [1,1], seg: 'HEADER', desc: '0' },
-        { nome: 'Identifica莽茫o Arquivo', pos: [2,2], seg: 'HEADER', desc: '1=Remessa' },
+        { nome: 'Identificação Registro', pos: [1,1], seg: 'HEADER', desc: '0' },
+        { nome: 'Identificação Arquivo', pos: [2,2], seg: 'HEADER', desc: '1=Remessa' },
         { nome: 'Literal Remessa', pos: [3,9], seg: 'HEADER', desc: 'REMESSA' },
-        { nome: 'C贸digo Servi莽o', pos: [10,11], seg: 'HEADER', desc: '01' },
-        { nome: 'Literal Servi莽o', pos: [12,26], seg: 'HEADER', desc: 'COBRANCA' },
-        { nome: 'C贸digo Benefici谩rio', pos: [27,46], seg: 'HEADER', desc: '20 posi莽玫es' },
-        { nome: 'Nome Empresa', pos: [47,76], seg: 'HEADER', desc: '30 posi莽玫es' },
-        { nome: 'C贸digo UNICRED', pos: [77,79], seg: 'HEADER', desc: '136' },
+        { nome: 'Código Serviço', pos: [10,11], seg: 'HEADER', desc: '01' },
+        { nome: 'Literal Serviço', pos: [12,26], seg: 'HEADER', desc: 'COBRANCA' },
+        { nome: 'Código Beneficiário', pos: [27,46], seg: 'HEADER', desc: '20 posições' },
+        { nome: 'Nome Empresa', pos: [47,76], seg: 'HEADER', desc: '30 posições' },
+        { nome: 'Código UNICRED', pos: [77,79], seg: 'HEADER', desc: '136' },
         { nome: 'Nome Banco', pos: [80,94], seg: 'HEADER', desc: 'UNICRED' },
-        { nome: 'Data Grava莽茫o', pos: [95,100], seg: 'HEADER', desc: 'DDMMAA' },
+        { nome: 'Data Gravação', pos: [95,100], seg: 'HEADER', desc: 'DDMMAA' },
         { nome: 'Branco', pos: [101,107], seg: 'HEADER', desc: 'Brancos' },
-        { nome: 'C贸digo Varia莽茫o', pos: [108,110], seg: 'HEADER', desc: '000' },
-        { nome: 'N潞 Sequencial Arquivo', pos: [111,117], seg: 'HEADER', desc: '7 d铆gitos' },
+        { nome: 'Código Variação', pos: [108,110], seg: 'HEADER', desc: '000' },
+        { nome: 'Nº Sequencial Arquivo', pos: [111,117], seg: 'HEADER', desc: '7 dígitos' },
         { nome: 'Branco', pos: [118,394], seg: 'HEADER', desc: 'Brancos' },
-        { nome: 'N潞 Sequencial Registro', pos: [395,400], seg: 'HEADER', desc: '000001' }
+        { nome: 'Nº Sequencial Registro', pos: [395,400], seg: 'HEADER', desc: '000001' }
     ];
 
     var CAMPOS_UNICRED_TITULO = [
-        { nome: 'Identifica莽茫o Registro', pos: [1,1], seg: 'T脥TULO', desc: '1' },
-        { nome: 'Ag锚ncia', pos: [2,6], seg: 'T脥TULO', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia', pos: [7,7], seg: 'T脥TULO', desc: 'D铆gito verificador' },
-        { nome: 'Conta Corrente', pos: [8,19], seg: 'T脥TULO', desc: '12 d铆gitos' },
-        { nome: 'DV Conta', pos: [20,20], seg: 'T脥TULO', desc: 'D铆gito verificador' },
-        { nome: 'Zero', pos: [21,21], seg: 'T脥TULO', desc: 'Zero' },
-        { nome: 'C贸digo Carteira', pos: [22,24], seg: 'T脥TULO', desc: '21=Cobran莽a Com Registro' },
-        { nome: 'Zeros', pos: [25,37], seg: 'T脥TULO', desc: 'Zeros' },
-        { nome: 'N潞 Controle Participante', pos: [38,62], seg: 'T脥TULO', desc: 'Uso da empresa' },
-        { nome: 'C贸digo Banco', pos: [63,65], seg: 'T脥TULO', desc: '136' },
-        { nome: 'Zeros', pos: [66,67], seg: 'T脥TULO', desc: 'Zeros' },
-        { nome: 'Branco', pos: [68,92], seg: 'T脥TULO', desc: 'Brancos' },
-        { nome: 'Filler', pos: [93,93], seg: 'T脥TULO', desc: 'Zeros' },
-        { nome: 'C贸digo Multa', pos: [94,94], seg: 'T脥TULO', desc: '1=Valor, 2=Taxa, 3=Isento' },
-        { nome: 'Valor/Percentual Multa', pos: [95,104], seg: 'T脥TULO', desc: '10 d铆gitos, 2 decimais' },
-        { nome: 'Tipo Valor Mora', pos: [105,105], seg: 'T脥TULO', desc: '1=Valor Dia, 2=Taxa Mensal, 5=Isento' },
-        { nome: 'T铆tulo Descont谩vel', pos: [106,106], seg: 'T脥TULO', desc: 'S=Sim, N=N茫o' },
-        { nome: 'Branco', pos: [107,108], seg: 'T脥TULO', desc: 'Brancos' },
-        { nome: 'Identifica莽茫o Ocorr锚ncia', pos: [109,110], seg: 'T脥TULO', desc: '01=Remessa, 02=Baixa, 09=Protesto' },
-        { nome: 'N潞 Documento (Seu N煤mero)', pos: [111,120], seg: 'T脥TULO', desc: '10 posi莽玫es' },
-        { nome: 'Data Vencimento', pos: [121,126], seg: 'T脥TULO', desc: 'DDMMAA' },
-        { nome: 'Valor T铆tulo', pos: [127,139], seg: 'T脥TULO', desc: '13 d铆gitos, 2 decimais' },
-        { nome: 'Filler', pos: [140,149], seg: 'T脥TULO', desc: 'Zeros' },
-        { nome: 'C贸digo Desconto', pos: [150,150], seg: 'T脥TULO', desc: '0=Isento, 1=Valor Fixo' },
-        { nome: 'Data Emiss茫o', pos: [151,156], seg: 'T脥TULO', desc: 'DDMMAA' },
-        { nome: 'Filler', pos: [157,157], seg: 'T脥TULO', desc: 'Zeros' },
-        { nome: 'C贸digo Protesto/Negativa莽茫o', pos: [158,158], seg: 'T脥TULO', desc: '1=Protesto Dias, 4=Negativar' },
-        { nome: 'Dias Protesto/Negativa莽茫o', pos: [159,160], seg: 'T脥TULO', desc: '2 d铆gitos' },
-        { nome: 'Valor Mora', pos: [161,173], seg: 'T脥TULO', desc: '13 d铆gitos, 2 decimais' },
-        { nome: 'Data Limite Desconto', pos: [174,179], seg: 'T脥TULO', desc: 'DDMMAA' },
-        { nome: 'Valor Desconto', pos: [180,192], seg: 'T脥TULO', desc: '13 d铆gitos, 2 decimais' },
-        { nome: 'Nosso N煤mero', pos: [193,203], seg: 'T脥TULO', desc: '11 d铆gitos (10+DV)' },
-        { nome: 'Zeros', pos: [204,205], seg: 'T脥TULO', desc: 'Zeros' },
-        { nome: 'Valor Abatimento', pos: [206,218], seg: 'T脥TULO', desc: '13 d铆gitos, 2 decimais' },
-        { nome: 'Tipo Inscri莽茫o Pagador', pos: [219,220], seg: 'PAGADOR', desc: '01=CPF, 02=CNPJ' },
-        { nome: 'N潞 Inscri莽茫o Pagador', pos: [221,234], seg: 'PAGADOR', desc: '14 d铆gitos' },
-        { nome: 'Nome Pagador', pos: [235,274], seg: 'PAGADOR', desc: '40 posi莽玫es' },
-        { nome: 'Endere莽o Pagador', pos: [275,314], seg: 'PAGADOR', desc: '40 posi莽玫es' },
-        { nome: 'Bairro Pagador', pos: [315,326], seg: 'PAGADOR', desc: '12 posi莽玫es' },
-        { nome: 'CEP Pagador', pos: [327,334], seg: 'PAGADOR', desc: '8 d铆gitos' },
-        { nome: 'Cidade Pagador', pos: [335,354], seg: 'PAGADOR', desc: '20 posi莽玫es' },
-        { nome: 'UF Pagador', pos: [355,356], seg: 'PAGADOR', desc: '2 posi莽玫es' },
-        { nome: 'Pagador/Avalista', pos: [357,394], seg: 'PAGADOR', desc: '38 posi莽玫es' },
-        { nome: 'N潞 Sequencial Registro', pos: [395,400], seg: 'T脥TULO', desc: '6 d铆gitos' }
+        { nome: 'Identificação Registro', pos: [1,1], seg: 'TÍTULO', desc: '1' },
+        { nome: 'Agência', pos: [2,6], seg: 'TÍTULO', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [7,7], seg: 'TÍTULO', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [8,19], seg: 'TÍTULO', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [20,20], seg: 'TÍTULO', desc: 'Dígito verificador' },
+        { nome: 'Zero', pos: [21,21], seg: 'TÍTULO', desc: 'Zero' },
+        { nome: 'Código Carteira', pos: [22,24], seg: 'TÍTULO', desc: '21=Cobrança Com Registro' },
+        { nome: 'Zeros', pos: [25,37], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Nº Controle Participante', pos: [38,62], seg: 'TÍTULO', desc: 'Uso da empresa' },
+        { nome: 'Código Banco', pos: [63,65], seg: 'TÍTULO', desc: '136' },
+        { nome: 'Zeros', pos: [66,67], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Branco', pos: [68,92], seg: 'TÍTULO', desc: 'Brancos' },
+        { nome: 'Filler', pos: [93,93], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Código Multa', pos: [94,94], seg: 'TÍTULO', desc: '1=Valor, 2=Taxa, 3=Isento' },
+        { nome: 'Valor/Percentual Multa', pos: [95,104], seg: 'TÍTULO', desc: '10 dígitos, 2 decimais' },
+        { nome: 'Tipo Valor Mora', pos: [105,105], seg: 'TÍTULO', desc: '1=Valor Dia, 2=Taxa Mensal, 5=Isento' },
+        { nome: 'Título Descontável', pos: [106,106], seg: 'TÍTULO', desc: 'S=Sim, N=Não' },
+        { nome: 'Branco', pos: [107,108], seg: 'TÍTULO', desc: 'Brancos' },
+        { nome: 'Identificação Ocorrência', pos: [109,110], seg: 'TÍTULO', desc: '01=Remessa, 02=Baixa, 09=Protesto' },
+        { nome: 'Nº Documento (Seu Número)', pos: [111,120], seg: 'TÍTULO', desc: '10 posições' },
+        { nome: 'Data Vencimento', pos: [121,126], seg: 'TÍTULO', desc: 'DDMMAA' },
+        { nome: 'Valor Título', pos: [127,139], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Filler', pos: [140,149], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Código Desconto', pos: [150,150], seg: 'TÍTULO', desc: '0=Isento, 1=Valor Fixo' },
+        { nome: 'Data Emissão', pos: [151,156], seg: 'TÍTULO', desc: 'DDMMAA' },
+        { nome: 'Filler', pos: [157,157], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Código Protesto/Negativação', pos: [158,158], seg: 'TÍTULO', desc: '1=Protesto Dias, 4=Negativar' },
+        { nome: 'Dias Protesto/Negativação', pos: [159,160], seg: 'TÍTULO', desc: '2 dígitos' },
+        { nome: 'Valor Mora', pos: [161,173], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Data Limite Desconto', pos: [174,179], seg: 'TÍTULO', desc: 'DDMMAA' },
+        { nome: 'Valor Desconto', pos: [180,192], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Nosso Número', pos: [193,203], seg: 'TÍTULO', desc: '11 dígitos (10+DV)' },
+        { nome: 'Zeros', pos: [204,205], seg: 'TÍTULO', desc: 'Zeros' },
+        { nome: 'Valor Abatimento', pos: [206,218], seg: 'TÍTULO', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Tipo Inscrição Pagador', pos: [219,220], seg: 'PAGADOR', desc: '01=CPF, 02=CNPJ' },
+        { nome: 'Nº Inscrição Pagador', pos: [221,234], seg: 'PAGADOR', desc: '14 dígitos' },
+        { nome: 'Nome Pagador', pos: [235,274], seg: 'PAGADOR', desc: '40 posições' },
+        { nome: 'Endereço Pagador', pos: [275,314], seg: 'PAGADOR', desc: '40 posições' },
+        { nome: 'Bairro Pagador', pos: [315,326], seg: 'PAGADOR', desc: '12 posições' },
+        { nome: 'CEP Pagador', pos: [327,334], seg: 'PAGADOR', desc: '8 dígitos' },
+        { nome: 'Cidade Pagador', pos: [335,354], seg: 'PAGADOR', desc: '20 posições' },
+        { nome: 'UF Pagador', pos: [355,356], seg: 'PAGADOR', desc: '2 posições' },
+        { nome: 'Pagador/Avalista', pos: [357,394], seg: 'PAGADOR', desc: '38 posições' },
+        { nome: 'Nº Sequencial Registro', pos: [395,400], seg: 'TÍTULO', desc: '6 dígitos' }
     ];
 
     // ==============================
     // CAMPOS BANRISUL (original)
     // ==============================
     var CAMPOS_BANRISUL_HEADER_ARQUIVO = [
-        { nome: 'C贸digo Banco', pos: [1,3], seg: 'HEADER ARQUIVO', desc: '041 - Banrisul' },
+        { nome: 'Código Banco', pos: [1,3], seg: 'HEADER ARQUIVO', desc: '041 - Banrisul' },
         { nome: 'Lote', pos: [4,7], seg: 'HEADER ARQUIVO', desc: '0000' },
         { nome: 'Tipo Registro', pos: [8,8], seg: 'HEADER ARQUIVO', desc: '0 = Header de Arquivo' },
         { nome: 'CNAB', pos: [9,17], seg: 'HEADER ARQUIVO', desc: 'Brancos' },
-        { nome: 'Tipo Inscri莽茫o', pos: [18,18], seg: 'HEADER ARQUIVO', desc: '1=CPF, 2=CNPJ' },
-        { nome: 'N潞 Inscri莽茫o', pos: [19,32], seg: 'HEADER ARQUIVO', desc: '14 d铆gitos' },
-        { nome: 'C贸digo Conv锚nio', pos: [33,52], seg: 'HEADER ARQUIVO', desc: '20 posi莽玫es' },
-        { nome: 'Ag锚ncia', pos: [53,57], seg: 'HEADER ARQUIVO', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia', pos: [58,58], seg: 'HEADER ARQUIVO', desc: 'D铆gito verificador' },
-        { nome: 'Conta Corrente', pos: [59,70], seg: 'HEADER ARQUIVO', desc: '12 d铆gitos' },
-        { nome: 'DV Conta', pos: [71,71], seg: 'HEADER ARQUIVO', desc: 'D铆gito verificador' },
-        { nome: 'DV Ag/Conta', pos: [72,72], seg: 'HEADER ARQUIVO', desc: 'D铆gito verificador' },
-        { nome: 'Nome Benefici谩rio', pos: [73,102], seg: 'HEADER ARQUIVO', desc: '30 posi莽玫es' },
+        { nome: 'Tipo Inscrição', pos: [18,18], seg: 'HEADER ARQUIVO', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição', pos: [19,32], seg: 'HEADER ARQUIVO', desc: '14 dígitos' },
+        { nome: 'Código Convênio', pos: [33,52], seg: 'HEADER ARQUIVO', desc: '20 posições' },
+        { nome: 'Agência', pos: [53,57], seg: 'HEADER ARQUIVO', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [58,58], seg: 'HEADER ARQUIVO', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [59,70], seg: 'HEADER ARQUIVO', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [71,71], seg: 'HEADER ARQUIVO', desc: 'Dígito verificador' },
+        { nome: 'DV Ag/Conta', pos: [72,72], seg: 'HEADER ARQUIVO', desc: 'Dígito verificador' },
+        { nome: 'Nome Beneficiário', pos: [73,102], seg: 'HEADER ARQUIVO', desc: '30 posições' },
         { nome: 'Nome Banco', pos: [103,132], seg: 'HEADER ARQUIVO', desc: 'BANRISUL' },
         { nome: 'CNAB', pos: [133,142], seg: 'HEADER ARQUIVO', desc: 'Brancos' },
-        { nome: 'C贸digo Remessa/Retorno', pos: [143,143], seg: 'HEADER ARQUIVO', desc: '1=Remessa, 2=Retorno' },
-        { nome: 'Data Gera莽茫o', pos: [144,151], seg: 'HEADER ARQUIVO', desc: 'DDMMAAAA' },
-        { nome: 'Hora Gera莽茫o', pos: [152,157], seg: 'HEADER ARQUIVO', desc: 'HHMMSS' },
-        { nome: 'Sequ锚ncia (NSA)', pos: [158,163], seg: 'HEADER ARQUIVO', desc: '6 d铆gitos' },
+        { nome: 'Código Remessa/Retorno', pos: [143,143], seg: 'HEADER ARQUIVO', desc: '1=Remessa, 2=Retorno' },
+        { nome: 'Data Geração', pos: [144,151], seg: 'HEADER ARQUIVO', desc: 'DDMMAAAA' },
+        { nome: 'Hora Geração', pos: [152,157], seg: 'HEADER ARQUIVO', desc: 'HHMMSS' },
+        { nome: 'Sequência (NSA)', pos: [158,163], seg: 'HEADER ARQUIVO', desc: '6 dígitos' },
         { nome: 'Leiaute Arquivo', pos: [164,166], seg: 'HEADER ARQUIVO', desc: '103' },
-        { nome: 'Densidade', pos: [167,171], seg: 'HEADER ARQUIVO', desc: '5 d铆gitos' },
-        { nome: 'Reservado Banco', pos: [172,191], seg: 'HEADER ARQUIVO', desc: '20 posi莽玫es' },
-        { nome: 'Reservado Empresa', pos: [192,211], seg: 'HEADER ARQUIVO', desc: '20 posi莽玫es' },
+        { nome: 'Densidade', pos: [167,171], seg: 'HEADER ARQUIVO', desc: '5 dígitos' },
+        { nome: 'Reservado Banco', pos: [172,191], seg: 'HEADER ARQUIVO', desc: '20 posições' },
+        { nome: 'Reservado Empresa', pos: [192,211], seg: 'HEADER ARQUIVO', desc: '20 posições' },
         { nome: 'CNAB', pos: [212,240], seg: 'HEADER ARQUIVO', desc: 'Brancos' }
     ];
 
     var CAMPOS_BANRISUL_HEADER_LOTE = [
-        { nome: 'C贸digo Banco', pos: [1,3], seg: 'HEADER LOTE', desc: '041 - Banrisul' },
+        { nome: 'Código Banco', pos: [1,3], seg: 'HEADER LOTE', desc: '041 - Banrisul' },
         { nome: 'Lote', pos: [4,7], seg: 'HEADER LOTE', desc: '0001 a 9999' },
         { nome: 'Tipo Registro', pos: [8,8], seg: 'HEADER LOTE', desc: '1 = Header de Lote' },
-        { nome: 'Opera莽茫o', pos: [9,9], seg: 'HEADER LOTE', desc: 'R=Remessa, T=Retorno' },
-        { nome: 'Servi莽o', pos: [10,11], seg: 'HEADER LOTE', desc: '01=Cobran莽a' },
+        { nome: 'Operação', pos: [9,9], seg: 'HEADER LOTE', desc: 'R=Remessa, T=Retorno' },
+        { nome: 'Serviço', pos: [10,11], seg: 'HEADER LOTE', desc: '01=Cobrança' },
         { nome: 'CNAB', pos: [12,13], seg: 'HEADER LOTE', desc: 'Brancos' },
         { nome: 'Leiaute Lote', pos: [14,16], seg: 'HEADER LOTE', desc: '060' },
         { nome: 'CNAB', pos: [17,17], seg: 'HEADER LOTE', desc: 'Brancos' },
-        { nome: 'Tipo Inscri莽茫o Empresa', pos: [18,18], seg: 'HEADER LOTE', desc: '1=CPF, 2=CNPJ' },
-        { nome: 'N潞 Inscri莽茫o Empresa', pos: [19,33], seg: 'HEADER LOTE', desc: '15 d铆gitos' },
-        { nome: 'C贸digo Conv锚nio', pos: [34,53], seg: 'HEADER LOTE', desc: '20 posi莽玫es' },
-        { nome: 'Ag锚ncia', pos: [54,58], seg: 'HEADER LOTE', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia', pos: [59,59], seg: 'HEADER LOTE', desc: 'D铆gito verificador' },
-        { nome: 'Conta Corrente', pos: [60,71], seg: 'HEADER LOTE', desc: '12 d铆gitos' },
-        { nome: 'DV Conta', pos: [72,72], seg: 'HEADER LOTE', desc: 'D铆gito verificador' },
-        { nome: 'DV Ag/Conta', pos: [73,73], seg: 'HEADER LOTE', desc: 'D铆gito verificador' },
-        { nome: 'Nome Empresa', pos: [74,103], seg: 'HEADER LOTE', desc: '30 posi莽玫es' },
-        { nome: 'Informa莽茫o 1', pos: [104,143], seg: 'HEADER LOTE', desc: '40 posi莽玫es' },
-        { nome: 'Informa莽茫o 2', pos: [144,183], seg: 'HEADER LOTE', desc: '40 posi莽玫es' },
-        { nome: 'N潞 Remessa/Retorno', pos: [184,191], seg: 'HEADER LOTE', desc: '8 d铆gitos' },
-        { nome: 'Data Grava莽茫o', pos: [192,199], seg: 'HEADER LOTE', desc: 'DDMMAAAA' },
-        { nome: 'Data Cr茅dito', pos: [200,207], seg: 'HEADER LOTE', desc: 'DDMMAAAA' },
+        { nome: 'Tipo Inscrição Empresa', pos: [18,18], seg: 'HEADER LOTE', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição Empresa', pos: [19,33], seg: 'HEADER LOTE', desc: '15 dígitos' },
+        { nome: 'Código Convênio', pos: [34,53], seg: 'HEADER LOTE', desc: '20 posições' },
+        { nome: 'Agência', pos: [54,58], seg: 'HEADER LOTE', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [59,59], seg: 'HEADER LOTE', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [60,71], seg: 'HEADER LOTE', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [72,72], seg: 'HEADER LOTE', desc: 'Dígito verificador' },
+        { nome: 'DV Ag/Conta', pos: [73,73], seg: 'HEADER LOTE', desc: 'Dígito verificador' },
+        { nome: 'Nome Empresa', pos: [74,103], seg: 'HEADER LOTE', desc: '30 posições' },
+        { nome: 'Informação 1', pos: [104,143], seg: 'HEADER LOTE', desc: '40 posições' },
+        { nome: 'Informação 2', pos: [144,183], seg: 'HEADER LOTE', desc: '40 posições' },
+        { nome: 'Nº Remessa/Retorno', pos: [184,191], seg: 'HEADER LOTE', desc: '8 dígitos' },
+        { nome: 'Data Gravação', pos: [192,199], seg: 'HEADER LOTE', desc: 'DDMMAAAA' },
+        { nome: 'Data Crédito', pos: [200,207], seg: 'HEADER LOTE', desc: 'DDMMAAAA' },
         { nome: 'CNAB', pos: [208,240], seg: 'HEADER LOTE', desc: 'Brancos' }
     ];
 
     var CAMPOS_BANRISUL_P = [
-        { nome: 'N潞 Sequencial', pos: [9,13], seg: 'SEGMENTO P', desc: 'N煤mero sequencial no lote' },
-        { nome: 'Segmento', pos: [14,14], seg: 'SEGMENTO P', desc: 'P = Dados do t铆tulo' },
-        { nome: 'C贸digo Movimento', pos: [16,17], seg: 'SEGMENTO P', desc: '01=Entrada, 02=Baixa' },
-        { nome: 'Ag锚ncia', pos: [18,22], seg: 'SEGMENTO P', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia', pos: [23,23], seg: 'SEGMENTO P', desc: 'D铆gito verificador' },
-        { nome: 'Conta Corrente', pos: [24,35], seg: 'SEGMENTO P', desc: '12 d铆gitos' },
-        { nome: 'DV Conta', pos: [36,36], seg: 'SEGMENTO P', desc: 'D铆gito verificador' },
-        { nome: 'DV Ag/Conta', pos: [37,37], seg: 'SEGMENTO P', desc: 'D铆gito verificador' },
-        { nome: 'Nosso N煤mero', pos: [38,57], seg: 'SEGMENTO P', desc: '20 posi莽玫es' },
+        { nome: 'Nº Sequencial', pos: [9,13], seg: 'SEGMENTO P', desc: 'Número sequencial no lote' },
+        { nome: 'Segmento', pos: [14,14], seg: 'SEGMENTO P', desc: 'P = Dados do título' },
+        { nome: 'Código Movimento', pos: [16,17], seg: 'SEGMENTO P', desc: '01=Entrada, 02=Baixa' },
+        { nome: 'Agência', pos: [18,22], seg: 'SEGMENTO P', desc: '5 dígitos' },
+        { nome: 'DV Agência', pos: [23,23], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'Conta Corrente', pos: [24,35], seg: 'SEGMENTO P', desc: '12 dígitos' },
+        { nome: 'DV Conta', pos: [36,36], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'DV Ag/Conta', pos: [37,37], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'Nosso Número', pos: [38,57], seg: 'SEGMENTO P', desc: '20 posições' },
         { nome: 'Carteira', pos: [58,58], seg: 'SEGMENTO P', desc: '1=Simples, 4=Descontada' },
         { nome: 'Forma Cadastramento', pos: [59,59], seg: 'SEGMENTO P', desc: '1=Com cadastramento' },
         { nome: 'Tipo Documento', pos: [60,60], seg: 'SEGMENTO P', desc: '1=Tradicional' },
-        { nome: 'Emiss茫o Boleto', pos: [61,61], seg: 'SEGMENTO P', desc: '1=Banco emite, 2=Cliente emite' },
-        { nome: 'Distribui莽茫o Boleto', pos: [62,62], seg: 'SEGMENTO P', desc: '1=Banco distribui' },
-        { nome: 'N潞 Documento', pos: [63,77], seg: 'SEGMENTO P', desc: '15 posi莽玫es' },
+        { nome: 'Emissão Boleto', pos: [61,61], seg: 'SEGMENTO P', desc: '1=Banco emite, 2=Cliente emite' },
+        { nome: 'Distribuição Boleto', pos: [62,62], seg: 'SEGMENTO P', desc: '1=Banco distribui' },
+        { nome: 'Nº Documento', pos: [63,77], seg: 'SEGMENTO P', desc: '15 posições' },
         { nome: 'Data Vencimento', pos: [78,85], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
-        { nome: 'Valor T铆tulo', pos: [86,100], seg: 'SEGMENTO P', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Ag锚ncia Cobradora', pos: [101,105], seg: 'SEGMENTO P', desc: '5 d铆gitos' },
-        { nome: 'DV Ag锚ncia Cobradora', pos: [106,106], seg: 'SEGMENTO P', desc: 'D铆gito verificador' },
-        { nome: 'Esp茅cie T铆tulo', pos: [107,108], seg: 'SEGMENTO P', desc: '02=DM, 12=NP' },
-        { nome: 'Aceite', pos: [109,109], seg: 'SEGMENTO P', desc: 'A=Aceito, N=N茫o' },
-        { nome: 'Data Emiss茫o', pos: [110,117], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
-        { nome: 'C贸digo Juros Mora', pos: [118,118], seg: 'SEGMENTO P', desc: '1=Valor/Dia, 2=Taxa' },
+        { nome: 'Valor Título', pos: [86,100], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Agência Cobradora', pos: [101,105], seg: 'SEGMENTO P', desc: '5 dígitos' },
+        { nome: 'DV Agência Cobradora', pos: [106,106], seg: 'SEGMENTO P', desc: 'Dígito verificador' },
+        { nome: 'Espécie Título', pos: [107,108], seg: 'SEGMENTO P', desc: '02=DM, 12=NP' },
+        { nome: 'Aceite', pos: [109,109], seg: 'SEGMENTO P', desc: 'A=Aceito, N=Não' },
+        { nome: 'Data Emissão', pos: [110,117], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
+        { nome: 'Código Juros Mora', pos: [118,118], seg: 'SEGMENTO P', desc: '1=Valor/Dia, 2=Taxa' },
         { nome: 'Data Juros Mora', pos: [119,126], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
-        { nome: 'Juros Mora', pos: [127,141], seg: 'SEGMENTO P', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'C贸digo Desconto 1', pos: [142,142], seg: 'SEGMENTO P', desc: '1=Valor, 2=Percentual' },
+        { nome: 'Juros Mora', pos: [127,141], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Código Desconto 1', pos: [142,142], seg: 'SEGMENTO P', desc: '1=Valor, 2=Percentual' },
         { nome: 'Data Desconto 1', pos: [143,150], seg: 'SEGMENTO P', desc: 'DDMMAAAA' },
-        { nome: 'Valor Desconto 1', pos: [151,165], seg: 'SEGMENTO P', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Valor IOF', pos: [166,180], seg: 'SEGMENTO P', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Valor Abatimento', pos: [181,195], seg: 'SEGMENTO P', desc: '15 d铆gitos, 2 decimais' },
-        { nome: 'Uso Empresa', pos: [196,220], seg: 'SEGMENTO P', desc: '25 posi莽玫es' },
-        { nome: 'C贸digo Protesto', pos: [221,221], seg: 'SEGMENTO P', desc: '1=Protestar, 3=N茫o' },
-        { nome: 'Prazo Protesto', pos: [222,223], seg: 'SEGMENTO P', desc: '2 d铆gitos' },
-        { nome: 'C贸digo Baixa', pos: [224,224], seg: 'SEGMENTO P', desc: '1=Baixar' },
-        { nome: 'Prazo Baixa', pos: [225,227], seg: 'SEGMENTO P', desc: '3 d铆gitos' },
-        { nome: 'C贸digo Moeda', pos: [228,229], seg: 'SEGMENTO P', desc: '09=Real' },
-        { nome: 'C贸digo Esp茅cie Cobran莽a', pos: [230,239], seg: 'SEGMENTO P', desc: '10 d铆gitos' },
-        { nome: 'Autoriza莽茫o Pagamento Parcial', pos: [240,240], seg: 'SEGMENTO P', desc: '1=N茫o, 2=Sim' }
+        { nome: 'Valor Desconto 1', pos: [151,165], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor IOF', pos: [166,180], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Valor Abatimento', pos: [181,195], seg: 'SEGMENTO P', desc: '15 dígitos, 2 decimais' },
+        { nome: 'Uso Empresa', pos: [196,220], seg: 'SEGMENTO P', desc: '25 posições' },
+        { nome: 'Código Protesto', pos: [221,221], seg: 'SEGMENTO P', desc: '1=Protestar, 3=Não' },
+        { nome: 'Prazo Protesto', pos: [222,223], seg: 'SEGMENTO P', desc: '2 dígitos' },
+        { nome: 'Código Baixa', pos: [224,224], seg: 'SEGMENTO P', desc: '1=Baixar' },
+        { nome: 'Prazo Baixa', pos: [225,227], seg: 'SEGMENTO P', desc: '3 dígitos' },
+        { nome: 'Código Moeda', pos: [228,229], seg: 'SEGMENTO P', desc: '09=Real' },
+        { nome: 'Código Espécie Cobrança', pos: [230,239], seg: 'SEGMENTO P', desc: '10 dígitos' },
+        { nome: 'Autorização Pagamento Parcial', pos: [240,240], seg: 'SEGMENTO P', desc: '1=Não, 2=Sim' }
     ];
 
     var CAMPOS_BANRISUL_Q = [
-        { nome: 'Tipo Inscri莽茫o Pagador', pos: [18,18], seg: 'SEGMENTO Q', desc: '1=CPF, 2=CNPJ' },
-        { nome: 'N潞 Inscri莽茫o Pagador', pos: [19,33], seg: 'SEGMENTO Q', desc: '15 d铆gitos' },
-        { nome: 'Nome Pagador', pos: [34,73], seg: 'SEGMENTO Q', desc: '40 posi莽玫es' },
-        { nome: 'Endere莽o Pagador', pos: [74,113], seg: 'SEGMENTO Q', desc: '40 posi莽玫es' },
-        { nome: 'Bairro Pagador', pos: [114,128], seg: 'SEGMENTO Q', desc: '15 posi莽玫es' },
-        { nome: 'CEP Pagador', pos: [129,133], seg: 'SEGMENTO Q', desc: '5 d铆gitos' },
-        { nome: 'Sufixo CEP', pos: [134,136], seg: 'SEGMENTO Q', desc: '3 d铆gitos' },
-        { nome: 'Cidade Pagador', pos: [137,151], seg: 'SEGMENTO Q', desc: '15 posi莽玫es' },
-        { nome: 'UF Pagador', pos: [152,153], seg: 'SEGMENTO Q', desc: '2 posi莽玫es' },
-        { nome: 'Tipo Inscri莽茫o Sacador', pos: [154,154], seg: 'SEGMENTO Q', desc: '1=CPF, 2=CNPJ' },
-        { nome: 'N潞 Inscri莽茫o Sacador', pos: [155,169], seg: 'SEGMENTO Q', desc: '15 d铆gitos' },
-        { nome: 'Nome Sacador', pos: [170,209], seg: 'SEGMENTO Q', desc: '40 posi莽玫es' }
+        { nome: 'Tipo Inscrição Pagador', pos: [18,18], seg: 'SEGMENTO Q', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição Pagador', pos: [19,33], seg: 'SEGMENTO Q', desc: '15 dígitos' },
+        { nome: 'Nome Pagador', pos: [34,73], seg: 'SEGMENTO Q', desc: '40 posições' },
+        { nome: 'Endereço Pagador', pos: [74,113], seg: 'SEGMENTO Q', desc: '40 posições' },
+        { nome: 'Bairro Pagador', pos: [114,128], seg: 'SEGMENTO Q', desc: '15 posições' },
+        { nome: 'CEP Pagador', pos: [129,133], seg: 'SEGMENTO Q', desc: '5 dígitos' },
+        { nome: 'Sufixo CEP', pos: [134,136], seg: 'SEGMENTO Q', desc: '3 dígitos' },
+        { nome: 'Cidade Pagador', pos: [137,151], seg: 'SEGMENTO Q', desc: '15 posições' },
+        { nome: 'UF Pagador', pos: [152,153], seg: 'SEGMENTO Q', desc: '2 posições' },
+        { nome: 'Tipo Inscrição Sacador', pos: [154,154], seg: 'SEGMENTO Q', desc: '1=CPF, 2=CNPJ' },
+        { nome: 'Nº Inscrição Sacador', pos: [155,169], seg: 'SEGMENTO Q', desc: '15 dígitos' },
+        { nome: 'Nome Sacador', pos: [170,209], seg: 'SEGMENTO Q', desc: '40 posições' }
     ];
 
     // ==============================
     // CAMPOS CRESOL (original)
     // ==============================
     var CAMPOS_CRESOL_HEADER = [
-        { nome: 'Identifica莽茫o Registro', pos: [1,1], seg: 'HEADER', desc: '0' },
-        { nome: 'Identifica莽茫o Arquivo', pos: [2,2], seg: 'HEADER', desc: '1=Remessa' },
+        { nome: 'Identificação Registro', pos: [1,1], seg: 'HEADER', desc: '0' },
+        { nome: 'Identificação Arquivo', pos: [2,2], seg: 'HEADER', desc: '1=Remessa' },
         { nome: 'Literal Remessa', pos: [3,9], seg: 'HEADER', desc: 'REMESSA' },
-        { nome: 'C贸digo Servi莽o', pos: [10,11], seg: 'HEADER', desc: '01' },
-        { nome: 'Literal Servi莽o', pos: [12,26], seg: 'HEADER', desc: 'COBRANCA' },
-        { nome: 'C贸digo Empresa', pos: [27,46], seg: 'HEADER', desc: 'Conta do Cooperado' },
-        { nome: 'Nome Empresa', pos: [47,76], seg: 'HEADER', desc: 'Raz茫o Social' },
-        { nome: 'C贸digo Cresol', pos: [77,79], seg: 'HEADER', desc: '133' },
+        { nome: 'Código Serviço', pos: [10,11], seg: 'HEADER', desc: '01' },
+        { nome: 'Literal Serviço', pos: [12,26], seg: 'HEADER', desc: 'COBRANCA' },
+        { nome: 'Código Empresa', pos: [27,46], seg: 'HEADER', desc: 'Conta do Cooperado' },
+        { nome: 'Nome Empresa', pos: [47,76], seg: 'HEADER', desc: 'Razão Social' },
+        { nome: 'Código Cresol', pos: [77,79], seg: 'HEADER', desc: '133' },
         { nome: 'Nome Banco', pos: [80,94], seg: 'HEADER', desc: 'CRESOL' },
-        { nome: 'Data Grava莽茫o', pos: [95,100], seg: 'HEADER', desc: 'DDMMAA' },
+        { nome: 'Data Gravação', pos: [95,100], seg: 'HEADER', desc: 'DDMMAA' },
         { nome: 'Branco', pos: [101,108], seg: 'HEADER', desc: 'Brancos' },
         { nome: 'Branco', pos: [109,110], seg: 'HEADER', desc: 'Brancos' },
-        { nome: 'N潞 Sequencial Remessa', pos: [111,117], seg: 'HEADER', desc: '7 d铆gitos' },
+        { nome: 'Nº Sequencial Remessa', pos: [111,117], seg: 'HEADER', desc: '7 dígitos' },
         { nome: 'Branco', pos: [118,394], seg: 'HEADER', desc: 'Brancos' },
-        { nome: 'N潞 Sequencial Registro', pos: [395,400], seg: 'HEADER', desc: '000001' }
+        { nome: 'Nº Sequencial Registro', pos: [395,400], seg: 'HEADER', desc: '000001' }
     ];
 
     var CAMPOS_CRESOL_DETALHE = [
-        { nome: 'Identifica莽茫o Registro', pos: [1,1], seg: 'DETALHE', desc: '1' },
-        { nome: 'Ag锚ncia D茅bito', pos: [2,6], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'DV Ag锚ncia D茅bito', pos: [7,7], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Raz茫o Conta Corrente', pos: [8,12], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Identificação Registro', pos: [1,1], seg: 'DETALHE', desc: '1' },
+        { nome: 'Agência Débito', pos: [2,6], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'DV Agência Débito', pos: [7,7], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Razão Conta Corrente', pos: [8,12], seg: 'DETALHE', desc: 'Brancos' },
         { nome: 'Conta Corrente', pos: [13,19], seg: 'DETALHE', desc: 'Brancos' },
         { nome: 'DV Conta Corrente', pos: [20,20], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Identifica莽茫o Empresa', pos: [21,37], seg: 'DETALHE', desc: '21=Zero, 22-24=Carteira, 25-29=Ag锚ncia, 30-36=Conta, 37=DV Conta' },
-        { nome: 'N潞 Controle Participante', pos: [38,62], seg: 'DETALHE', desc: 'Seu N煤mero (25 posi莽玫es)' },
-        { nome: 'C贸digo Banco', pos: [63,65], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Identificação Empresa', pos: [21,37], seg: 'DETALHE', desc: '21=Zero, 22-24=Carteira, 25-29=Agência, 30-36=Conta, 37=DV Conta' },
+        { nome: 'Nº Controle Participante', pos: [38,62], seg: 'DETALHE', desc: 'Seu Número (25 posições)' },
+        { nome: 'Código Banco', pos: [63,65], seg: 'DETALHE', desc: 'Brancos' },
         { nome: 'Campo Multa', pos: [66,66], seg: 'DETALHE', desc: '2=Percentual Multa, 0=Sem Multa' },
-        { nome: 'Percentual Multa', pos: [67,70], seg: 'DETALHE', desc: '4 d铆gitos' },
-        { nome: 'Identifica莽茫o T铆tulo no Banco', pos: [71,81], seg: 'DETALHE', desc: 'Nosso N煤mero (11 d铆gitos)' },
-        { nome: 'DV Auto Confer锚ncia', pos: [82,82], seg: 'DETALHE', desc: 'D铆gito do Nosso N煤mero' },
-        { nome: 'Desconto Bonifica莽茫o', pos: [83,92], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Condi莽茫o Emiss茫o Papeleta', pos: [93,93], seg: 'DETALHE', desc: '1=Banco emite, 2=Cliente emite' },
-        { nome: 'Identifica莽茫o D茅bito Autom谩tico', pos: [94,94], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Identifica莽茫o Opera莽茫o Banco', pos: [95,104], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Indicador Rateio Cr茅dito', pos: [105,105], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Endere莽amento Aviso D茅bito', pos: [106,106], seg: 'DETALHE', desc: '2=N茫o emite aviso' },
+        { nome: 'Percentual Multa', pos: [67,70], seg: 'DETALHE', desc: '4 dígitos' },
+        { nome: 'Identificação Título no Banco', pos: [71,81], seg: 'DETALHE', desc: 'Nosso Número (11 dígitos)' },
+        { nome: 'DV Auto Conferência', pos: [82,82], seg: 'DETALHE', desc: 'Dígito do Nosso Número' },
+        { nome: 'Desconto Bonificação', pos: [83,92], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Condição Emissão Papeleta', pos: [93,93], seg: 'DETALHE', desc: '1=Banco emite, 2=Cliente emite' },
+        { nome: 'Identificação Débito Automático', pos: [94,94], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Identificação Operação Banco', pos: [95,104], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Indicador Rateio Crédito', pos: [105,105], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Endereçamento Aviso Débito', pos: [106,106], seg: 'DETALHE', desc: '2=Não emite aviso' },
         { nome: 'Quantidade Pagamento', pos: [107,108], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Identifica莽茫o Ocorr锚ncia', pos: [109,110], seg: 'DETALHE', desc: '01=Remessa, 02=Baixa, 04=Abatimento, 06=Alterar Vencimento, 09=Protesto' },
-        { nome: 'N潞 Documento (Seu N煤mero)', pos: [111,120], seg: 'DETALHE', desc: '10 posi莽玫es' },
+        { nome: 'Identificação Ocorrência', pos: [109,110], seg: 'DETALHE', desc: '01=Remessa, 02=Baixa, 04=Abatimento, 06=Alterar Vencimento, 09=Protesto' },
+        { nome: 'Nº Documento (Seu Número)', pos: [111,120], seg: 'DETALHE', desc: '10 posições' },
         { nome: 'Data Vencimento', pos: [121,126], seg: 'DETALHE', desc: 'DDMMAA' },
-        { nome: 'Valor T铆tulo', pos: [127,139], seg: 'DETALHE', desc: '13 d铆gitos, 2 decimais' },
+        { nome: 'Valor Título', pos: [127,139], seg: 'DETALHE', desc: '13 dígitos, 2 decimais' },
         { nome: 'Banco Encarregado', pos: [140,142], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Ag锚ncia Deposit谩ria', pos: [143,147], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Esp茅cie T铆tulo', pos: [148,149], seg: 'DETALHE', desc: '01=Cheque, 02=DM, 04=DS, 06=DR, 07=LC, 12=NP, 17=RC, 19=ND, 26=WR, 99=Outros' },
-        { nome: 'Identifica莽茫o', pos: [150,150], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Data Emiss茫o', pos: [151,156], seg: 'DETALHE', desc: 'DDMMAA' },
-        { nome: 'Primeira Instru莽茫o', pos: [157,158], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Segunda Instru莽茫o', pos: [159,160], seg: 'DETALHE', desc: 'Brancos' },
-        { nome: 'Valor Mora por Dia', pos: [161,173], seg: 'DETALHE', desc: '13 d铆gitos, 2 decimais' },
+        { nome: 'Agência Depositária', pos: [143,147], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Espécie Título', pos: [148,149], seg: 'DETALHE', desc: '01=Cheque, 02=DM, 04=DS, 06=DR, 07=LC, 12=NP, 17=RC, 19=ND, 26=WR, 99=Outros' },
+        { nome: 'Identificação', pos: [150,150], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Data Emissão', pos: [151,156], seg: 'DETALHE', desc: 'DDMMAA' },
+        { nome: 'Primeira Instrução', pos: [157,158], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Segunda Instrução', pos: [159,160], seg: 'DETALHE', desc: 'Brancos' },
+        { nome: 'Valor Mora por Dia', pos: [161,173], seg: 'DETALHE', desc: '13 dígitos, 2 decimais' },
         { nome: 'Data Limite Desconto', pos: [174,179], seg: 'DETALHE', desc: 'DDMMAA' },
-        { nome: 'Valor Desconto', pos: [180,192], seg: 'DETALHE', desc: '13 d铆gitos, 2 decimais' },
-        { nome: 'Valor IOF', pos: [193,205], seg: 'DETALHE', desc: '13 d铆gitos, 2 decimais' },
-        { nome: 'Valor Abatimento', pos: [206,218], seg: 'DETALHE', desc: '13 d铆gitos, 2 decimais' },
-        { nome: 'Tipo Inscri莽茫o Pagador', pos: [219,220], seg: 'PAGADOR', desc: '01=CPF, 02=CNPJ' },
-        { nome: 'N潞 Inscri莽茫o Pagador', pos: [221,234], seg: 'PAGADOR', desc: '14 d铆gitos' },
-        { nome: 'Nome Pagador', pos: [235,274], seg: 'PAGADOR', desc: '40 posi莽玫es' },
-        { nome: 'Endere莽o Pagador', pos: [275,314], seg: 'PAGADOR', desc: '40 posi莽玫es' },
+        { nome: 'Valor Desconto', pos: [180,192], seg: 'DETALHE', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Valor IOF', pos: [193,205], seg: 'DETALHE', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Valor Abatimento', pos: [206,218], seg: 'DETALHE', desc: '13 dígitos, 2 decimais' },
+        { nome: 'Tipo Inscrição Pagador', pos: [219,220], seg: 'PAGADOR', desc: '01=CPF, 02=CNPJ' },
+        { nome: 'Nº Inscrição Pagador', pos: [221,234], seg: 'PAGADOR', desc: '14 dígitos' },
+        { nome: 'Nome Pagador', pos: [235,274], seg: 'PAGADOR', desc: '40 posições' },
+        { nome: 'Endereço Pagador', pos: [275,314], seg: 'PAGADOR', desc: '40 posições' },
         { nome: 'Primeira Mensagem', pos: [315,326], seg: 'PAGADOR', desc: 'Brancos' },
-        { nome: 'CEP Pagador', pos: [327,331], seg: 'PAGADOR', desc: '5 d铆gitos' },
-        { nome: 'Sufixo CEP', pos: [332,334], seg: 'PAGADOR', desc: '3 d铆gitos' },
-        { nome: 'Sacador/Avalista', pos: [335,394], seg: 'PAGADOR', desc: '60 posi莽玫es' },
-        { nome: 'N潞 Sequencial Registro', pos: [395,400], seg: 'DETALHE', desc: '6 d铆gitos' }
+        { nome: 'CEP Pagador', pos: [327,331], seg: 'PAGADOR', desc: '5 dígitos' },
+        { nome: 'Sufixo CEP', pos: [332,334], seg: 'PAGADOR', desc: '3 dígitos' },
+        { nome: 'Sacador/Avalista', pos: [335,394], seg: 'PAGADOR', desc: '60 posições' },
+        { nome: 'Nº Sequencial Registro', pos: [395,400], seg: 'DETALHE', desc: '6 dígitos' }
     ];
 
     // ==============================
@@ -800,20 +800,20 @@
                 tipo: 'rendimento',
                 lote: pItem.lote || 'N/I',
                 segmentos: ['P' + (rFound ? ', R' : '')],
-                nossoNum: linha.substring(46, 57).trim() || 'N脙O INFORMADO',
-                seuNum: linha.substring(62, 77).trim() || 'N脙O INFORMADO',
+                nossoNum: linha.substring(46, 57).trim() || 'NÃO INFORMADO',
+                seuNum: linha.substring(62, 77).trim() || 'NÃO INFORMADO',
                 vencimento: linha.substring(77, 85),
                 vencimentoFormat: formatVencimento8(linha.substring(77, 85)),
                 valor: linha.substring(85, 100),
                 valorFormat: formatValor(linha.substring(85, 100)),
                 carteira: linha.substring(57, 58) || 'N/I',
                 codMov: linha.substring(15, 17) || 'N/I',
-                pagador: qFound ? qFound.linha.substring(33, 73).trim() : 'N脙O INFORMADO',
-                endereco: qFound ? qFound.linha.substring(73, 113).trim() : 'N脙O INFORMADO',
-                bairro: qFound ? qFound.linha.substring(113, 128).trim() : 'N脙O INFORMADO',
-                cep: qFound ? qFound.linha.substring(128, 133).trim() + (qFound.linha.substring(133, 136).trim() ? '-' + qFound.linha.substring(133, 136).trim() : '') : 'N脙O INFORMADO',
-                cidade: qFound ? qFound.linha.substring(136, 151).trim() : 'N脙O INFORMADO',
-                uf: qFound ? qFound.linha.substring(151, 153).trim() : 'N脙O INFORMADO',
+                pagador: qFound ? qFound.linha.substring(33, 73).trim() : 'NÃO INFORMADO',
+                endereco: qFound ? qFound.linha.substring(73, 113).trim() : 'NÃO INFORMADO',
+                bairro: qFound ? qFound.linha.substring(113, 128).trim() : 'NÃO INFORMADO',
+                cep: qFound ? qFound.linha.substring(128, 133).trim() + (qFound.linha.substring(133, 136).trim() ? '-' + qFound.linha.substring(133, 136).trim() : '') : 'NÃO INFORMADO',
+                cidade: qFound ? qFound.linha.substring(136, 151).trim() : 'NÃO INFORMADO',
+                uf: qFound ? qFound.linha.substring(151, 153).trim() : 'NÃO INFORMADO',
                 linha: linha,
                 linhaQ: qFound ? qFound.linha : '',
                 linhaR: rFound ? rFound.linha : '',
@@ -842,20 +842,20 @@
             } else if (tipoReg === '1') {
                 titulos.push({
                     tipo: 'unicred',
-                    nossoNum: line.substring(192, 203).trim() || 'N脙O INFORMADO',
-                    seuNum: line.substring(110, 120).trim() || 'N脙O INFORMADO',
+                    nossoNum: line.substring(192, 203).trim() || 'NÃO INFORMADO',
+                    seuNum: line.substring(110, 120).trim() || 'NÃO INFORMADO',
                     vencimento: line.substring(120, 126),
                     vencimentoFormat: formatVencimento6(line.substring(120, 126)),
                     valor: line.substring(126, 139),
                     valorFormat: formatValor(line.substring(126, 139)),
                     carteira: line.substring(21, 24) || 'N/I',
                     codMov: line.substring(108, 110) || 'N/I',
-                    pagador: line.substring(234, 274).trim() || 'N脙O INFORMADO',
-                    endereco: line.substring(274, 314).trim() || 'N脙O INFORMADO',
-                    bairro: line.substring(314, 326).trim() || 'N脙O INFORMADO',
-                    cep: line.substring(326, 334).trim() || 'N脙O INFORMADO',
-                    cidade: line.substring(334, 354).trim() || 'N脙O INFORMADO',
-                    uf: line.substring(354, 356).trim() || 'N脙O INFORMADO',
+                    pagador: line.substring(234, 274).trim() || 'NÃO INFORMADO',
+                    endereco: line.substring(274, 314).trim() || 'NÃO INFORMADO',
+                    bairro: line.substring(314, 326).trim() || 'NÃO INFORMADO',
+                    cep: line.substring(326, 334).trim() || 'NÃO INFORMADO',
+                    cidade: line.substring(334, 354).trim() || 'NÃO INFORMADO',
+                    uf: line.substring(354, 356).trim() || 'NÃO INFORMADO',
                     linha: line,
                     headerLine: headerLine
                 });
@@ -906,20 +906,20 @@
             titulos.push({
                 tipo: 'banrisul240',
                 lote: pItem.lote || 'N/I',
-                nossoNum: linha.substring(37, 57).trim() || 'N脙O INFORMADO',
-                seuNum: linha.substring(62, 77).trim() || 'N脙O INFORMADO',
+                nossoNum: linha.substring(37, 57).trim() || 'NÃO INFORMADO',
+                seuNum: linha.substring(62, 77).trim() || 'NÃO INFORMADO',
                 vencimento: linha.substring(77, 85),
                 vencimentoFormat: formatVencimento8(linha.substring(77, 85)),
                 valor: linha.substring(85, 100),
                 valorFormat: formatValor(linha.substring(85, 100)),
                 carteira: linha.substring(57, 58) || 'N/I',
                 codMov: linha.substring(15, 17) || 'N/I',
-                pagador: qFound ? qFound.linha.substring(33, 73).trim() : 'N脙O INFORMADO',
-                endereco: qFound ? qFound.linha.substring(73, 113).trim() : 'N脙O INFORMADO',
-                bairro: qFound ? qFound.linha.substring(113, 128).trim() : 'N脙O INFORMADO',
-                cep: qFound ? qFound.linha.substring(128, 133).trim() + (qFound.linha.substring(133, 136).trim() ? '-' + qFound.linha.substring(133, 136).trim() : '') : 'N脙O INFORMADO',
-                cidade: qFound ? qFound.linha.substring(136, 151).trim() : 'N脙O INFORMADO',
-                uf: qFound ? qFound.linha.substring(151, 153).trim() : 'N脙O INFORMADO',
+                pagador: qFound ? qFound.linha.substring(33, 73).trim() : 'NÃO INFORMADO',
+                endereco: qFound ? qFound.linha.substring(73, 113).trim() : 'NÃO INFORMADO',
+                bairro: qFound ? qFound.linha.substring(113, 128).trim() : 'NÃO INFORMADO',
+                cep: qFound ? qFound.linha.substring(128, 133).trim() + (qFound.linha.substring(133, 136).trim() ? '-' + qFound.linha.substring(133, 136).trim() : '') : 'NÃO INFORMADO',
+                cidade: qFound ? qFound.linha.substring(136, 151).trim() : 'NÃO INFORMADO',
+                uf: qFound ? qFound.linha.substring(151, 153).trim() : 'NÃO INFORMADO',
                 linha: linha,
                 linhaQ: qFound ? qFound.linha : '',
                 headerArq: headerArq,
@@ -945,17 +945,17 @@
             } else if (tipoReg === '1') {
                 titulos.push({
                     tipo: 'cresol',
-                    nossoNum: line.substring(70, 81).trim() || 'N脙O INFORMADO',
-                    seuNum: line.substring(110, 120).trim() || 'N脙O INFORMADO',
+                    nossoNum: line.substring(70, 81).trim() || 'NÃO INFORMADO',
+                    seuNum: line.substring(110, 120).trim() || 'NÃO INFORMADO',
                     vencimento: line.substring(120, 126),
                     vencimentoFormat: formatVencimento6(line.substring(120, 126)),
                     valor: line.substring(126, 139),
                     valorFormat: formatValor(line.substring(126, 139)),
                     carteira: line.substring(21, 24) || 'N/I',
                     codMov: line.substring(108, 110) || 'N/I',
-                    pagador: line.substring(234, 274).trim() || 'N脙O INFORMADO',
-                    endereco: line.substring(274, 314).trim() || 'N脙O INFORMADO',
-                    cep: line.substring(326, 334).trim() || 'N脙O INFORMADO',
+                    pagador: line.substring(234, 274).trim() || 'NÃO INFORMADO',
+                    endereco: line.substring(274, 314).trim() || 'NÃO INFORMADO',
+                    cep: line.substring(326, 334).trim() || 'NÃO INFORMADO',
                     linha: line,
                     headerLine: headerLine,
                     agencia: line.substring(24, 29).trim() || 'N/I',
@@ -968,7 +968,7 @@
     }
 
     // ==============================
-    // VALIDA脟脮ES
+    // VALIDAÇÕES
     // ==============================
     function validateFileIntegrity(lines, bank) {
         var errors = [];
@@ -985,7 +985,7 @@
             var line = lines[li];
             linhaNum++;
             if (line.length === 0) {
-                warns.push('Linha ' + linhaNum + ' est谩 vazia.');
+                warns.push('Linha ' + linhaNum + ' está vazia.');
                 continue;
             }
             if (line.length < expectedLength) {
@@ -1013,9 +1013,9 @@
                 else if (tipoReg === '9') hasTrailer = true;
             }
         }
-        if (!hasHeader) errors.push('Header de Arquivo (tipo 0) n茫o encontrado.');
-        if (!hasDetalhe) warns.push('Nenhum registro de detalhe (t铆tulo) encontrado.');
-        if (!hasTrailer) errors.push('Trailer de Arquivo (tipo 9) n茫o encontrado.');
+        if (!hasHeader) errors.push('Header de Arquivo (tipo 0) não encontrado.');
+        if (!hasDetalhe) warns.push('Nenhum registro de detalhe (título) encontrado.');
+        if (!hasTrailer) errors.push('Trailer de Arquivo (tipo 9) não encontrado.');
         return { errors: errors, warns: warns, hasError: errors.length > 0 };
     }
 
@@ -1118,7 +1118,7 @@
                 for (var j=0; j<5; j++) t[8+j] = seqStr[j] || '0';
                 t[13] = 'T';
                 t[14] = ' ';
-                t[15] = '0'; t[16] = '6'; // Liquida莽茫o
+                t[15] = '0'; t[16] = '6'; // Liquidação
                 
                 // Copiar dados do P
                 var agencia = pLine.substring(17, 22) || '00000';
@@ -1693,7 +1693,7 @@
             var t = titulos[idx];
             var tr = document.createElement('tr');
             tr.className = 'row-ok';
-            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.carteira+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">馃攳 Detalhes</button></td>';
+            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.carteira+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">🔍 Detalhes</button></td>';
             tbody.appendChild(tr);
         }
     }
@@ -1705,7 +1705,7 @@
             var t = titulos[idx];
             var tr = document.createElement('tr');
             tr.className = 'row-ok';
-            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.lote+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.carteira+'</td><td class="mono">'+t.codMov+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">馃攳 Detalhes</button></td>';
+            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.lote+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.carteira+'</td><td class="mono">'+t.codMov+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">🔍 Detalhes</button></td>';
             tbody.appendChild(tr);
         }
     }
@@ -1717,7 +1717,7 @@
             var t = titulos[idx];
             var tr = document.createElement('tr');
             tr.className = 'row-ok';
-            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.carteira+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">馃攳 Detalhes</button></td>';
+            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.carteira+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">🔍 Detalhes</button></td>';
             tbody.appendChild(tr);
         }
     }
@@ -1729,7 +1729,7 @@
             var t = titulos[idx];
             var tr = document.createElement('tr');
             tr.className = 'row-ok';
-            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.lote+'</td><td class="mono">'+(t.segmentos ? t.segmentos.join(', ') : 'P')+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.carteira+'</td><td class="mono">'+t.codMov+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">馃攳 Detalhes</button></td>';
+            tr.innerHTML = '<td>'+(idx+1)+'</td><td class="mono">'+t.lote+'</td><td class="mono">'+(t.segmentos ? t.segmentos.join(', ') : 'P')+'</td><td class="mono">'+t.nossoNum+'</td><td class="mono">'+t.seuNum+'</td><td class="mono">'+t.vencimentoFormat+'</td><td class="mono">R$ '+t.valorFormat+'</td><td class="mono">'+t.carteira+'</td><td class="mono">'+t.codMov+'</td><td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="'+t.pagador+'">'+t.pagador+'</td><td><span class="badge-status ok">OK</span></td><td><button class="btn-detail" onclick="window.openModal('+idx+')">🔍 Detalhes</button></td>';
             tbody.appendChild(tr);
         }
     }
@@ -1740,7 +1740,7 @@
             return;
         }
         document.getElementById('dataSection').style.display = 'block';
-        document.getElementById('tituloCount').textContent = titulos.length + ' t铆tulos';
+        document.getElementById('tituloCount').textContent = titulos.length + ' títulos';
         
         var tabMap = {
             'unicred': { tab: 'tabUnicred', btn: '[data-tab="unicred"]' },
@@ -1801,7 +1801,7 @@
                 }
                 else if (tipoReg === '9') { if (loteData) { loteData.segmentos.push('Trailer Arquivo'); result.lotes.push(loteData); loteData = null; } result.trailer = { tipo: 'Trailer Arquivo' }; }
             }
-            if (loteData) { if (loteData.segmentos.indexOf('Trailer Arquivo') === -1) loteData.segmentos.push('Trailer Arquivo (impl铆cito)'); result.lotes.push(loteData); }
+            if (loteData) { if (loteData.segmentos.indexOf('Trailer Arquivo') === -1) loteData.segmentos.push('Trailer Arquivo (implícito)'); result.lotes.push(loteData); }
         }
         return result;
     }
@@ -1813,12 +1813,12 @@
             return;
         }
         var html = '';
-        if (analysis.header) html += '<div style="margin-bottom:8px;"><span class="segment-tag header">馃搶 '+analysis.header.tipo+'</span></div>';
+        if (analysis.header) html += '<div style="margin-bottom:8px;"><span class="segment-tag header">📌 '+analysis.header.tipo+'</span></div>';
         var loteNum = 0;
         for (var l=0; l<analysis.lotes.length; l++) {
             var lote = analysis.lotes[l];
             loteNum++;
-            html += '<div style="margin:8px 0;padding:8px 12px;background:#f7fafc;border-radius:8px;border-left:3px solid #4299e1;"><div style="font-weight:600;color:#1a365d;margin-bottom:4px;">馃摝 Lote '+loteNum+'</div><div class="segment-list">';
+            html += '<div style="margin:8px 0;padding:8px 12px;background:#f7fafc;border-radius:8px;border-left:3px solid #4299e1;"><div style="font-weight:600;color:#1a365d;margin-bottom:4px;">📦 Lote '+loteNum+'</div><div class="segment-list">';
             for (var s=0; s<lote.segmentos.length; s++) {
                 var seg = lote.segmentos[s];
                 var cls = 'opcional';
@@ -1833,7 +1833,7 @@
             }
             html += '</div></div>';
         }
-        if (analysis.trailer) html += '<div style="margin-top:8px;"><span class="segment-tag trailer">馃搶 '+analysis.trailer.tipo+'</span></div>';
+        if (analysis.trailer) html += '<div style="margin-top:8px;"><span class="segment-tag trailer">📌 '+analysis.trailer.tipo+'</span></div>';
         html += '<div style="margin-top:12px;font-size:13px;color:#4a5568;">Total de registros: <strong>'+analysis.totalRegistros+'</strong> | Lotes: <strong>'+analysis.lotes.length+'</strong></div>';
         container.innerHTML = html;
     }
@@ -1843,11 +1843,11 @@
     // ==============================
     window.openModal = function(idx) {
         if (!extractedData || extractedData.length === 0) {
-            alert('Nenhum dado de t铆tulo encontrado. Clique em "Validar" primeiro.');
+            alert('Nenhum dado de título encontrado. Clique em "Validar" primeiro.');
             return;
         }
         if (idx < 0 || idx >= extractedData.length) {
-            alert('T铆tulo n茫o encontrado. 脥ndice: ' + idx + ', Total: ' + extractedData.length);
+            alert('Título não encontrado. Índice: ' + idx + ', Total: ' + extractedData.length);
             return;
         }
         var titulo = extractedData[idx];
@@ -1864,7 +1864,7 @@
         
         if (tipo === 'unicred') {
             campos = CAMPOS_UNICRED_TITULO.slice();
-            tituloNome = 'Unicred CNAB 400 - T铆tulo #' + (idx+1);
+            tituloNome = 'Unicred CNAB 400 - Título #' + (idx+1);
         } else if (tipo === 'banrisul240') {
             campos = [];
             for (var ci=0; ci<CAMPOS_BANRISUL_HEADER_ARQUIVO.length; ci++) campos.push(CAMPOS_BANRISUL_HEADER_ARQUIVO[ci]);
@@ -1879,10 +1879,10 @@
                 }
                 if (!existe) campos.push(CAMPOS_BANRISUL_Q[ci]);
             }
-            tituloNome = 'Banrisul CNAB 240 - T铆tulo #' + (idx+1);
+            tituloNome = 'Banrisul CNAB 240 - Título #' + (idx+1);
         } else if (tipo === 'cresol') {
             campos = CAMPOS_CRESOL_DETALHE.slice();
-            tituloNome = 'Cresol CNAB 400 - T铆tulo #' + (idx+1);
+            tituloNome = 'Cresol CNAB 400 - Título #' + (idx+1);
         } else if (tipo === 'rendimento') {
             campos = [];
             for (var ci=0; ci<CAMPOS_RENDIMENTO_HEADER_ARQUIVO.length; ci++) campos.push(CAMPOS_RENDIMENTO_HEADER_ARQUIVO[ci]);
@@ -1906,23 +1906,23 @@
                 }
                 if (!existe) campos.push(CAMPOS_RENDIMENTO_SEGMENTO_R[ci]);
             }
-            tituloNome = 'Rendimento CNAB 240 - T铆tulo #' + (idx+1);
+            tituloNome = 'Rendimento CNAB 240 - Título #' + (idx+1);
         } else {
             campos = CAMPOS_UNICRED_TITULO.slice();
-            tituloNome = 'T铆tulo #' + (idx+1);
+            tituloNome = 'Título #' + (idx+1);
         }
         
         document.getElementById('modalTitle').textContent = tituloNome + ' - ' + titulo.nossoNum;
         
         var html = '<div class="resumo-titulo">' +
-            '<div class="item"><span class="label">Nosso N煤mero:</span> <span class="value">' + titulo.nossoNum + '</span></div>' +
-            '<div class="item"><span class="label">Seu N煤mero:</span> <span class="value">' + titulo.seuNum + '</span></div>' +
+            '<div class="item"><span class="label">Nosso Número:</span> <span class="value">' + titulo.nossoNum + '</span></div>' +
+            '<div class="item"><span class="label">Seu Número:</span> <span class="value">' + titulo.seuNum + '</span></div>' +
             '<div class="item"><span class="label">Vencimento:</span> <span class="value">' + titulo.vencimentoFormat + '</span></div>' +
             '<div class="item"><span class="label">Valor:</span> <span class="value">R$ ' + titulo.valorFormat + '</span></div>' +
-            (titulo.pagador && titulo.pagador !== 'N脙O INFORMADO' ? '<div class="item"><span class="label">Pagador:</span> <span class="value">' + titulo.pagador + '</span></div>' : '') +
-            (titulo.endereco && titulo.endereco !== 'N脙O INFORMADO' ? '<div class="item"><span class="label">Endere莽o:</span> <span class="value">' + titulo.endereco + '</span></div>' : '') +
-            (titulo.cidade && titulo.cidade !== 'N脙O INFORMADO' ? '<div class="item"><span class="label">Cidade/UF:</span> <span class="value">' + titulo.cidade + '/' + titulo.uf + '</span></div>' : '') +
-            '</div><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="detail-table"><thead><tr><th style="width:80px;">Posi莽茫o</th><th style="width:40px;">Tam</th><th style="width:180px;">Campo</th><th style="width:100px;">Segmento</th><th style="width:180px;">Valor Lido</th><th>Descri莽茫o</th></tr></thead><tbody>';
+            (titulo.pagador && titulo.pagador !== 'NÃO INFORMADO' ? '<div class="item"><span class="label">Pagador:</span> <span class="value">' + titulo.pagador + '</span></div>' : '') +
+            (titulo.endereco && titulo.endereco !== 'NÃO INFORMADO' ? '<div class="item"><span class="label">Endereço:</span> <span class="value">' + titulo.endereco + '</span></div>' : '') +
+            (titulo.cidade && titulo.cidade !== 'NÃO INFORMADO' ? '<div class="item"><span class="label">Cidade/UF:</span> <span class="value">' + titulo.cidade + '/' + titulo.uf + '</span></div>' : '') +
+            '</div><div class="data-table-wrapper" style="max-height:500px;overflow-y:auto;"><table class="detail-table"><thead><tr><th style="width:80px;">Posição</th><th style="width:40px;">Tam</th><th style="width:180px;">Campo</th><th style="width:100px;">Segmento</th><th style="width:180px;">Valor Lido</th><th>Descrição</th></tr></thead><tbody>';
         
         if ((tipo === 'unicred') && headerLine) {
             var currentSeg = '';
@@ -1932,7 +1932,7 @@
                 var valor = headerLine.substring(campo.pos[0]-1, campo.pos[1]);
                 if (campo.seg !== currentSeg) {
                     currentSeg = campo.seg;
-                    html += '<tr class="seg-separator"><td colspan="6">馃搶 ' + campo.seg + ' (Header do Arquivo)</td></tr>';
+                    html += '<tr class="seg-separator"><td colspan="6">📌 ' + campo.seg + ' (Header do Arquivo)</td></tr>';
                 }
                 var posStr = campo.pos[0] === campo.pos[1] ? campo.pos[0] : campo.pos[0] + '-' + campo.pos[1];
                 var tam = campo.pos[1] - campo.pos[0] + 1;
@@ -1956,7 +1956,7 @@
                 var valor = headerLine.substring(campo.pos[0]-1, campo.pos[1]);
                 if (campo.seg !== currentSeg) {
                     currentSeg = campo.seg;
-                    html += '<tr class="seg-separator"><td colspan="6">馃搶 ' + campo.seg + ' (Header do Arquivo)</td></tr>';
+                    html += '<tr class="seg-separator"><td colspan="6">📌 ' + campo.seg + ' (Header do Arquivo)</td></tr>';
                 }
                 var posStr = campo.pos[0] === campo.pos[1] ? campo.pos[0] : campo.pos[0] + '-' + campo.pos[1];
                 var tam = campo.pos[1] - campo.pos[0] + 1;
@@ -1988,7 +1988,7 @@
             }
             var valor = linhaAtual ? linhaAtual.substring(campo.pos[0]-1, campo.pos[1]) : '';
             var isHeader = campo.seg === 'HEADER ARQUIVO' || campo.seg === 'HEADER LOTE' || campo.seg === 'HEADER';
-            var isP = campo.seg === 'SEGMENTO P' || campo.seg === 'T脥TULO' || campo.seg === 'DETALHE';
+            var isP = campo.seg === 'SEGMENTO P' || campo.seg === 'TÍTULO' || campo.seg === 'DETALHE';
             var isQ = campo.seg === 'SEGMENTO Q' || campo.seg === 'PAGADOR';
             
             var segClass = isHeader ? 'seg-header' : isP ? 'seg-p' : isQ ? 'seg-q' : 'seg-opcional';
@@ -1997,7 +1997,7 @@
                 currentSeg = campo.seg;
                 if (campo.seg !== 'HEADER' && campo.seg !== 'HEADER ARQUIVO' && campo.seg !== 'HEADER LOTE') {
                     var displayName = campo.seg.replace('SEGMENTO ', '').replace('HEADER ', '');
-                    html += '<tr class="seg-separator"><td colspan="6">馃搶 ' + displayName + '</td></tr>';
+                    html += '<tr class="seg-separator"><td colspan="6">📌 ' + displayName + '</td></tr>';
                 }
             }
             
@@ -2079,7 +2079,7 @@
     // ==============================
     function processFile(content, fileName) {
         currentContent = content;
-        fileInfo.textContent = '馃搫 ' + fileName + ' (' + content.length + ' bytes)';
+        fileInfo.textContent = '📄 ' + fileName + ' (' + content.length + ' bytes)';
         var lines = content.split(/\r?\n/);
         var nonEmptyLines = [];
         for (var i=0; i<lines.length; i++) {
@@ -2089,8 +2089,8 @@
         var detection = detectBank(nonEmptyLines);
         if (detection) {
             currentBank = detection;
-            bankDetected.innerHTML = '馃彟 Banco detectado: <span class="bank-badge ' + detection.bank + '">' + detection.label + '</span>';
-            addLog('鉁?Banco identificado: ' + detection.label, 'ok');
+            bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge ' + detection.bank + '">' + detection.label + '</span>';
+            addLog('✅ Banco identificado: ' + detection.label, 'ok');
             
             avisoUnicred.style.display = 'none';
             avisoCresol.style.display = 'none';
@@ -2112,8 +2112,8 @@
             }
         } else {
             currentBank = null;
-            bankDetected.innerHTML = '鈿狅笍 Banco n茫o identificado';
-            addLog('鈿狅笍 Banco n茫o identificado.', 'warn');
+            bankDetected.innerHTML = '⚠️ Banco não identificado';
+            addLog('⚠️ Banco não identificado.', 'warn');
             avisoUnicred.style.display = 'none';
             avisoCresol.style.display = 'none';
             
@@ -2124,31 +2124,31 @@
                     var codBanco = l.substring(76, 79);
                     if (codBanco === '136') {
                         currentBank = { bank: 'unicred', type: '400', label: 'Unicred (CNAB 400)' };
-                        bankDetected.innerHTML = '馃彟 Banco detectado: <span class="bank-badge unicred">Unicred (CNAB 400)</span>';
-                        addLog('鉁?Banco identificado: Unicred', 'ok');
+                        bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge unicred">Unicred (CNAB 400)</span>';
+                        addLog('✅ Banco identificado: Unicred', 'ok');
                         avisoUnicred.style.display = 'block';
                         break;
                     }
                     if (codBanco === '133') {
                         currentBank = { bank: 'cresol', type: '400', label: 'Cresol (CNAB 400)' };
-                        bankDetected.innerHTML = '馃彟 Banco detectado: <span class="bank-badge cresol">Cresol (CNAB 400)</span>';
-                        addLog('鉁?Banco identificado: Cresol', 'ok');
+                        bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge cresol">Cresol (CNAB 400)</span>';
+                        addLog('✅ Banco identificado: Cresol', 'ok');
                         avisoCresol.style.display = 'block';
                         break;
                     }
                     if (codBanco === '041') {
                         if (l.length >= 8 && l.substring(7,8) === '0') {
                             currentBank = { bank: 'banrisul240', type: '240', label: 'Banrisul (CNAB 240)' };
-                            bankDetected.innerHTML = '馃彟 Banco detectado: <span class="bank-badge banrisul">Banrisul (CNAB 240)</span>';
-                            addLog('鉁?Banco identificado: Banrisul (CNAB 240)', 'ok');
+                            bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge banrisul">Banrisul (CNAB 240)</span>';
+                            addLog('✅ Banco identificado: Banrisul (CNAB 240)', 'ok');
                             break;
                         }
                     }
                     if (codBanco === '633') {
                         if (l.length >= 8 && l.substring(7,8) === '0') {
                             currentBank = { bank: 'rendimento', type: '240', label: 'Rendimento (CNAB 240)' };
-                            bankDetected.innerHTML = '馃彟 Banco detectado: <span class="bank-badge rendimento">Rendimento (CNAB 240)</span>';
-                            addLog('鉁?Banco identificado: Rendimento (CNAB 240)', 'ok');
+                            bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge rendimento">Rendimento (CNAB 240)</span>';
+                            addLog('✅ Banco identificado: Rendimento (CNAB 240)', 'ok');
                             break;
                         }
                     }
@@ -2160,37 +2160,37 @@
                     var upper = l2.toUpperCase();
                     if (upper.indexOf('UNICRED') !== -1) {
                         currentBank = { bank: 'unicred', type: '400', label: 'Unicred (CNAB 400)' };
-                        bankDetected.innerHTML = '馃彟 Banco detectado: <span class="bank-badge unicred">Unicred (CNAB 400)</span>';
-                        addLog('鉁?Banco identificado pela men莽茫o "UNICRED"', 'ok');
+                        bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge unicred">Unicred (CNAB 400)</span>';
+                        addLog('✅ Banco identificado pela menção "UNICRED"', 'ok');
                         avisoUnicred.style.display = 'block';
                         break;
                     }
                     if (upper.indexOf('CRESOL') !== -1) {
                         currentBank = { bank: 'cresol', type: '400', label: 'Cresol (CNAB 400)' };
-                        bankDetected.innerHTML = '馃彟 Banco detectado: <span class="bank-badge cresol">Cresol (CNAB 400)</span>';
-                        addLog('鉁?Banco identificado pela men莽茫o "CRESOL"', 'ok');
+                        bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge cresol">Cresol (CNAB 400)</span>';
+                        addLog('✅ Banco identificado pela menção "CRESOL"', 'ok');
                         avisoCresol.style.display = 'block';
                         break;
                     }
                     if (upper.indexOf('BANRISUL') !== -1) {
                         if (l2.length >= 8 && l2.substring(7,8) === '0') {
                             currentBank = { bank: 'banrisul240', type: '240', label: 'Banrisul (CNAB 240)' };
-                            bankDetected.innerHTML = '馃彟 Banco detectado: <span class="bank-badge banrisul">Banrisul (CNAB 240)</span>';
-                            addLog('鉁?Banco identificado pela men莽茫o "BANRISUL"', 'ok');
+                            bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge banrisul">Banrisul (CNAB 240)</span>';
+                            addLog('✅ Banco identificado pela menção "BANRISUL"', 'ok');
                             break;
                         }
                     }
                     if (upper.indexOf('RENDIMENTO') !== -1) {
                         if (l2.length >= 8 && l2.substring(7,8) === '0') {
                             currentBank = { bank: 'rendimento', type: '240', label: 'Rendimento (CNAB 240)' };
-                            bankDetected.innerHTML = '馃彟 Banco detectado: <span class="bank-badge rendimento">Rendimento (CNAB 240)</span>';
-                            addLog('鉁?Banco identificado pela men莽茫o "RENDIMENTO"', 'ok');
+                            bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge rendimento">Rendimento (CNAB 240)</span>';
+                            addLog('✅ Banco identificado pela menção "RENDIMENTO"', 'ok');
                             break;
                         }
                     }
                 }
             }
-            if (!currentBank) addLog('鉂?N茫o foi poss铆vel identificar o banco.', 'error');
+            if (!currentBank) addLog('❌ Não foi possível identificar o banco.', 'error');
         }
         btnValidate.disabled = false;
         btnGenerate.disabled = true;
@@ -2208,7 +2208,7 @@
             processFile(ev.target.result, file.name);
         };
         reader.onerror = function() {
-            addLog('鉂?Erro ao ler o arquivo.', 'error');
+            addLog('❌ Erro ao ler o arquivo.', 'error');
         };
         reader.readAsText(file, 'ISO-8859-1');
     });
@@ -2242,7 +2242,7 @@
 
     btnValidate.addEventListener('click', function() {
         if (!currentContent) {
-            addLog('鉂?Nenhum arquivo carregado.', 'error');
+            addLog('❌ Nenhum arquivo carregado.', 'error');
             return;
         }
         
@@ -2256,14 +2256,14 @@
             var detection = detectBank(nonEmptyLines);
             if (detection) {
                 currentBank = detection;
-                bankDetected.innerHTML = '馃彟 Banco detectado: <span class="bank-badge ' + detection.bank + '">' + detection.label + '</span>';
-                addLog('鉁?Banco identificado: ' + detection.label, 'ok');
+                bankDetected.innerHTML = '🏦 Banco detectado: <span class="bank-badge ' + detection.bank + '">' + detection.label + '</span>';
+                addLog('✅ Banco identificado: ' + detection.label, 'ok');
                 avisoUnicred.style.display = 'none';
                 avisoCresol.style.display = 'none';
                 if (detection.bank === 'unicred') avisoUnicred.style.display = 'block';
                 else if (detection.bank === 'cresol') avisoCresol.style.display = 'block';
             } else {
-                addLog('鉂?Banco n茫o identificado.', 'error');
+                addLog('❌ Banco não identificado.', 'error');
                 return;
             }
         }
@@ -2273,30 +2273,30 @@
         
         if (currentBank.bank === 'banrisul240') {
             extractedData = extractBanrisul240Data(nonEmptyLines);
-            addLog('馃搳 ' + extractedData.length + ' t铆tulo(s) extra铆do(s) do Banrisul CNAB 240', 'info');
+            addLog('📊 ' + extractedData.length + ' título(s) extraído(s) do Banrisul CNAB 240', 'info');
         } else if (currentBank.bank === 'unicred') {
             extractedData = extractUnicredData(nonEmptyLines);
-            addLog('馃搳 ' + extractedData.length + ' t铆tulo(s) extra铆do(s) do Unicred CNAB 400', 'info');
+            addLog('📊 ' + extractedData.length + ' título(s) extraído(s) do Unicred CNAB 400', 'info');
         } else if (currentBank.bank === 'cresol') {
             extractedData = extractCresolData(nonEmptyLines);
-            addLog('馃搳 ' + extractedData.length + ' t铆tulo(s) extra铆do(s) do Cresol CNAB 400', 'info');
+            addLog('📊 ' + extractedData.length + ' título(s) extraído(s) do Cresol CNAB 400', 'info');
         } else if (currentBank.bank === 'rendimento') {
             extractedData = extractRendimentoData(nonEmptyLines);
-            addLog('馃搳 ' + extractedData.length + ' t铆tulo(s) extra铆do(s) do Rendimento CNAB 240', 'info');
+            addLog('📊 ' + extractedData.length + ' título(s) extraído(s) do Rendimento CNAB 240', 'info');
         } else {
-            addLog('鉂?Banco n茫o suportado.', 'error');
+            addLog('❌ Banco não suportado.', 'error');
             return;
         }
 
         for (var ei=0; ei<result.errors.length; ei++) {
-            addLog('鉂?' + result.errors[ei], 'error');
+            addLog('❌ ' + result.errors[ei], 'error');
         }
         for (var wi=0; wi<result.warns.length; wi++) {
-            addLog('鈿狅笍 ' + result.warns[wi], 'warn');
+            addLog('⚠️ ' + result.warns[wi], 'warn');
         }
         
         if (result.errors.length === 0 && result.warns.length === 0) {
-            addLog('鉁?Arquivo v谩lido (sem erros ou advert锚ncias)', 'ok');
+            addLog('✅ Arquivo válido (sem erros ou advertências)', 'ok');
         }
 
         segmentAnalysis = analyzeSegments(nonEmptyLines, currentBank.bank);
@@ -2308,39 +2308,39 @@
         sumOk.textContent = extractedData.length;
 
         if (result.errors.length === 0 && result.warns.length === 0) {
-            statusMsg.innerHTML = '<span class="status-badge badge-ok">鉁?Arquivo v谩lido</span>';
+            statusMsg.innerHTML = '<span class="status-badge badge-ok">✅ Arquivo válido</span>';
         } else if (result.errors.length > 0) {
-            statusMsg.innerHTML = '<span class="status-badge badge-error">鉂?' + result.errors.length + ' erro(s) encontrado(s)</span>';
+            statusMsg.innerHTML = '<span class="status-badge badge-error">❌ ' + result.errors.length + ' erro(s) encontrado(s)</span>';
         } else {
-            statusMsg.innerHTML = '<span class="status-badge badge-warn">鈿狅笍 ' + result.warns.length + ' advert锚ncia(s)</span>';
+            statusMsg.innerHTML = '<span class="status-badge badge-warn">⚠️ ' + result.warns.length + ' advertência(s)</span>';
         }
 
         renderDataTable(extractedData, currentBank.bank);
         btnGenerate.disabled = false;
-        addLog('鉁?Valida莽茫o conclu铆da. ' + extractedData.length + ' t铆tulo(s) dispon铆veis.', 'info');
+        addLog('✅ Validação concluída. ' + extractedData.length + ' título(s) disponíveis.', 'info');
     });
 
     btnGenerate.addEventListener('click', function() {
         if (!currentContent || !currentBank) {
-            addLog('鉂?Nenhum arquivo carregado ou banco n茫o identificado.', 'error');
+            addLog('❌ Nenhum arquivo carregado ou banco não identificado.', 'error');
             return;
         }
         var lines = currentContent.split(/\r?\n/);
         var retorno;
         if (currentBank.bank === 'banrisul240') {
             retorno = generateReturnBanrisul240(lines);
-            addLog('馃摛 Gerando retorno Banrisul CNAB 240', 'info');
+            addLog('📤 Gerando retorno Banrisul CNAB 240', 'info');
         } else if (currentBank.bank === 'unicred') {
             retorno = generateReturnUnicred(lines);
-            addLog('馃摛 Gerando retorno Unicred CNAB 400', 'info');
+            addLog('📤 Gerando retorno Unicred CNAB 400', 'info');
         } else if (currentBank.bank === 'cresol') {
             retorno = generateReturnCresol(lines);
-            addLog('馃摛 Gerando retorno Cresol CNAB 400 (TODAS as linhas com 400 posi莽玫es)', 'info');
+            addLog('📤 Gerando retorno Cresol CNAB 400 (TODAS as linhas com 400 posições)', 'info');
         } else if (currentBank.bank === 'rendimento') {
             retorno = generateReturnRendimento(lines);
-            addLog('馃摛 Gerando retorno Rendimento CNAB 240', 'info');
+            addLog('📤 Gerando retorno Rendimento CNAB 240', 'info');
         } else {
-            addLog('鉂?Banco n茫o suportado para gerar retorno.', 'error');
+            addLog('❌ Banco não suportado para gerar retorno.', 'error');
             return;
         }
         var blob = new Blob([retorno], { type: 'text/plain' });
@@ -2350,7 +2350,7 @@
         downloadLink.download = 'RETORNO_' + currentBank.bank.toUpperCase() + '.' + ext;
         downloadLink.click();
         URL.revokeObjectURL(url);
-        addLog('馃摛 Arquivo de retorno simulado gerado e baixado.', 'ok');
+        addLog('📤 Arquivo de retorno simulado gerado e baixado.', 'ok');
     });
 
     btnClear.addEventListener('click', function() {
@@ -2375,7 +2375,7 @@
         document.getElementById('cresolTableBody').innerHTML = '';
         document.getElementById('rendimentoTableBody').innerHTML = '';
         document.getElementById('segmentosContainer').innerHTML = 'Carregando...';
-        document.getElementById('tituloCount').textContent = '0 t铆tulos';
+        document.getElementById('tituloCount').textContent = '0 títulos';
         avisoUnicred.style.display = 'none';
         avisoCresol.style.display = 'none';
         closeModal();
@@ -2387,7 +2387,7 @@
             txt += validationLog[i].msg + '\n';
         }
         navigator.clipboard.writeText(txt).then(function() {
-            addLog('馃搵 Log copiado.', 'ok');
+            addLog('📋 Log copiado.', 'ok');
         }).catch(function() {
             alert('Selecione manualmente.');
         });
